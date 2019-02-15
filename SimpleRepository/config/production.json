@@ -1,0 +1,5 @@
+{
+    "apiHost" : "http://localhost:3000",
+    "appLabel" : "SimpleRepository",
+    "dburl" : "mongodb://localhost:27017/SimpleRepository"
+}
