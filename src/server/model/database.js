@@ -32,11 +32,9 @@ module.exports = class Database {
   }
 
   connect() {
-    console.log('Connect database start');
     mongoose.Promise = global.Promise;
-    mongoose.connect(config.get('dburl'), err => {
+    mongoose.connect(config.get('dburl'), { useNewUrlParser: true }, err => {
       if (err) {
-        console.log('connection Error!');
         console.log(err);
       } else {
         console.log('connection success!');

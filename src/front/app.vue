@@ -42,7 +42,7 @@ export default {
     'document': Document,
     'myContent': Content,
     'error-dialog': ErrorDialog,
-    'success-dialog': SuccessDialog
+    'success-dialog': SuccessDialog,
   },
   computed: {
     styleHeader() {

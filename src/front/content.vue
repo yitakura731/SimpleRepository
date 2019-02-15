@@ -1,35 +1,35 @@
 <template>
-  <b-card no-body no-header class="h-100 py-1 border-0">
-    <b-form inline>
-      <b-button @click="setScale(10)" type="button">
-        <font-awesome-icon icon="plus"/>
-      </b-button>
-      <b-button @click="setScale(-10)" type="button" class="ml-1">
-        <font-awesome-icon icon="minus"/>
-      </b-button>
-      <b-input v-model="scale" class="pageLabel ml-1" readonly/>
-      <div class="ml-1 pageText">%</div>
+    <b-card no-body no-header class="h-100 py-1 border-0">
+      <b-form inline>
+        <b-button @click="setScale(10)" type="button">
+          <font-awesome-icon icon="plus"/>
+        </b-button>
+        <b-button @click="setScale(-10)" type="button" class="ml-1">
+          <font-awesome-icon icon="minus"/>
+        </b-button>
+        <div class="contents-number ml-1">{{scale}}</div>
+        <div class="ml-1 contents-label">%</div>
 
-      <b-button @click="setPage(-1)" type="button" class="ml-5">
-        <font-awesome-icon icon="caret-left"/>
-      </b-button>
-      <b-button @click="setPage(1)" type="button" class="ml-1">
-        <font-awesome-icon icon="caret-right"/>
-      </b-button>
-      <b-input v-model="page" class="border pageLabel ml-1"/>
-      <div class="ml-1 pageText">/</div>
-      <b-input v-model="numPages" class="pageLabel ml-1" readonly/>
-    </b-form>
+        <b-button @click="setPage(-1)" type="button" class="ml-5">
+          <font-awesome-icon icon="caret-left"/>
+        </b-button>
+        <b-button @click="setPage(1)" type="button" class="ml-1">
+          <font-awesome-icon icon="caret-right"/>
+        </b-button>
+        <div class="contents-number ml-1">{{page}}</div>
+        <div class="ml-1 contents-label">/</div>
+        <div class="contents-number ml-1">{{numPages}}</div>
+      </b-form>
 
-    <div ref="canvasParent" class="canvasParent border mt-1 h-100">
-      <div v-show="hasContent">
-        <canvas ref="contentsCanvas" :contentId="contentId"/>
+      <div ref="canvasParent" class="canvas-parent border mt-1 h-100">
+        <div v-show="hasContent">
+          <canvas ref="contentsCanvas" :contentId="contentId"/>
+        </div>
+        <div v-show="!hasContent" class="w-100 h-100 img-parent">
+          <img src="/images/no-file.png" class="mx-auto">
+        </div>
       </div>
-      <div v-show="!hasContent" class="w-100 h-100 imgParent">
-        <img src="/images/no-file.png" class="mx-auto">
-      </div>
-    </div>
-  </b-card>
+    </b-card>
 </template>
 
 <script>
@@ -127,17 +127,20 @@ export default {
 </script>
 
 <style scoped>
-.pageLabel {
+.contents-number {
+  font-size: 25px;
+  text-align: center;
+  border: thin solid gray;
   width: 60px;
-  border: 1px;
+  border-radius: 5px;	
 }
-.pageText {
+.contents-label {
   font-size: 24px;
 }
-.canvasParent {
+.canvas-parent {
   overflow: scroll;
 }
-.imgParent {
+.img-parent {
   display: flex;
   align-items: center;
   background-color: lightgrey;

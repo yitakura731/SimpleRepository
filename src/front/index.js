@@ -14,8 +14,6 @@ import i18next from 'i18next';
 import languageDetecotr from 'i18next-browser-languagedetector';
 import xhr from 'i18next-xhr-backend';
 
-// My Root Component
-
 // font
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
@@ -31,6 +29,8 @@ import {
   faChevronDown
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+
+// My Root Component
 import App from './app.vue';
 import store from './store';
 
