@@ -19,13 +19,13 @@
     </b-input-group>
 
     <!-- 一覧エリア -->
-    <div class="border listItemParent mt-1 h-100">
+    <div class="border list-item-parent mt-1 h-100">
       <div v-show="hasDocuments">
         <div v-for="(tag, index) in documents" :key="tag.tagId">
           <list-tag-item :tag="tag" :index="index" :key="tag.tagId"/>
         </div>
       </div>
-      <div v-show="!hasDocuments" class="imgParent w-100 h-100">
+      <div v-show="!hasDocuments" class="img-parent w-100 h-100">
         <img src="/images/no-file.png" class="mx-auto" width="200" height="200">
       </div>
     </div>
@@ -89,12 +89,12 @@ export default {
 </script>
 
 <style scoped>
-.imgParent {
+.img-parent {
   display: flex;
   align-items: center;
   background-color: lightgrey;
 }
-.listItemParent {
+.list-item-parent {
   overflow: scroll;
 }
 </style>

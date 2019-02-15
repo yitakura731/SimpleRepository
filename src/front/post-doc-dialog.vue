@@ -48,7 +48,7 @@
         <hr>
         <!-- 登録ボタン -->
         <div class="mt-3 w-100">
-          <b-button class="w-100" variant="Secondary" @click="post">{{postBtnTitle}}</b-button>
+          <b-button class="w-100" variant="outline-secondary" @click="post">{{postBtnTitle}}</b-button>
         </div>
       </b-container>
     </b-modal>

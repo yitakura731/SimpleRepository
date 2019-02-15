@@ -37,9 +37,9 @@ export default {
   computed: {
     icon() {
       if (this.isOpen) {
-        return "chevron-right";
-      } else {
         return "chevron-down";
+      } else {
+        return "chevron-right";
       }
     },
     style() {
