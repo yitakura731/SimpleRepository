@@ -6,15 +6,15 @@
     <!-- コンポーネント -->
     <b-container fluid :style="styleContents" class="contentsArea">
       <b-row no-gutters class="mx-4 h-100">
-        <b-col lg="2">
+        <b-col lg="2" class="pl-2 pr-2">
           <!-- スペースエリア -->
           <space/>
         </b-col>
-        <b-col lg="3" class="pl-4">
+        <b-col lg="2" class="pl-2 pr-2">
           <!-- 文書ツリーエリア -->
           <document/>
         </b-col>
-        <b-col lg="7" class="pl-4">
+        <b-col lg="8" class="pl-2 pr-2">
           <!-- コンテンツエリア -->
           <myContent/>
         </b-col>

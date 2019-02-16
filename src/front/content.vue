@@ -1,4 +1,5 @@
 <template>
+  <div class="h-100">
     <b-card no-body no-header class="h-100 py-1 border-0">
       <b-form inline>
         <b-button @click="setScale(10)" type="button">
@@ -30,19 +31,28 @@
         </div>
       </div>
     </b-card>
+    <transition name="fade">
+      <loading-spinner v-show="loading"/>
+    </transition>
+  </div>
 </template>
 
 <script>
 import Facade from './facade';
 import { DialogEvent } from './event-bus';
+import LoadingSpinner from './loading-spinner';
 
 export default {
+  components: {
+    'loading-spinner': LoadingSpinner
+  },
   data() {
     return {
       scale: 100,
       page: 0,
       numPages: 0,
-      showContent: false
+      showContent: false,
+      loading: false,
     };
   },
   computed: {
@@ -94,6 +104,7 @@ export default {
       const context = canvas.getContext('2d');
       const pdf = this.$store.getters.selectedDocument;
       let numPages = 0;
+      this.loading = true;
       Facade.getContent(pdf.docId)
         .then(pdf => {
           numPages = pdf.numPages;
@@ -106,7 +117,7 @@ export default {
           const x1 = pWidth / orgViewport.width;
           const y1 = pHeight / orgViewport.height;
           const viewport = page.getViewport((x1 * this.scale) / 100);
-          canvas.width = pWidth;
+          canvas.width = viewport.width;
           canvas.height = viewport.height;
           const renderContext = {
             canvasContext: context,
@@ -117,9 +128,11 @@ export default {
         .then(() => {
           this.numPages = numPages;
           this.showContent = true;
+          this.loading = false;
         })
         .catch(error => {
           DialogEvent.$emit('showError', error);
+          this.loading = false;
         });
     }
   }
@@ -132,7 +145,7 @@ export default {
   text-align: center;
   border: thin solid gray;
   width: 60px;
-  border-radius: 5px;	
+  border-radius: 5px;
 }
 .contents-label {
   font-size: 24px;
@@ -144,5 +157,11 @@ export default {
   display: flex;
   align-items: center;
   background-color: lightgrey;
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2s
+}
+.fade-enter,  .fade-leave-to {
+  opacity: 0
 }
 </style>

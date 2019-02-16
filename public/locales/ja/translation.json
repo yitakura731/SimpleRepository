@@ -23,6 +23,7 @@
   "successPostDocument": "文書の登録に成功しました",
   "successPostSpace": "スペースの登録に成功しました",
   "successPostTag": "タグの登録に成功しました",
+  "loading-title" : "読み込み中",
 
   "nullSpaceId" : "スペースIDがNULLまたは空です",
   "nullTagId" : "タグIDがNULLまたは空です",
