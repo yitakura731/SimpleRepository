@@ -22,11 +22,11 @@
         <div class="contents-number ml-1">{{numPages}}</div>
       </b-form>
 
-      <div ref="canvasParent" class="canvas-parent border mt-1 h-100">
-        <div v-show="hasContent">
+      <div ref="contentsArea" class="border mt-1 h-100">
+        <div v-show="hasContent" ref="canvasParent" class="canvas-parent" :style="styles()">
           <canvas ref="contentsCanvas" :contentId="contentId"/>
         </div>
-        <div v-show="!hasContent" class="w-100 h-100 img-parent">
+        <div v-show="!hasContent" class="h-100 img-parent">
           <img src="/images/no-file.png" class="mx-auto">
         </div>
       </div>
@@ -55,7 +55,7 @@ export default {
       loading: false,
     };
   },
-  computed: {
+  computed : {
     contentId() {
       let retVal = null;
       const canvas = this.$refs.contentsCanvas;
@@ -88,6 +88,16 @@ export default {
     }
   },
   methods: {
+    styles() {
+      const contentsArea = this.$refs.contentsArea;
+      let retVal = null;
+      if (contentsArea != null) {
+        retVal = { 'height' : contentsArea.clientHeight + 'px'};
+      } else {
+        retVal = { 'height' : 150 + 'px'};
+      }
+      return retVal;
+    },
     setScale(input) {
       this.scale += input;
       this.renderPDF();
@@ -112,18 +122,15 @@ export default {
         })
         .then(page => {
           const pWidth = parent.clientWidth;
-          const pHeight = parent.clientHeight;
           const orgViewport = page.getViewport(1);
           const x1 = pWidth / orgViewport.width;
-          const y1 = pHeight / orgViewport.height;
           const viewport = page.getViewport((x1 * this.scale) / 100);
           canvas.width = viewport.width;
           canvas.height = viewport.height;
-          const renderContext = {
+          return page.render({
             canvasContext: context,
             viewport: viewport
-          };
-          return page.render(renderContext);
+          });
         })
         .then(() => {
           this.numPages = numPages;
