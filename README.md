@@ -11,5 +11,6 @@ Can regist pdf file with tagging, to specified location. And can view registerd 
 - i18next
 - bootstrap/bootstrapVue
 
-## Image
+## Capture of application 
+### Top View
 <img src=./public/images/capture01.png width="600">
