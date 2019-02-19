@@ -17,7 +17,14 @@ module.exports = class Repository {
   constructor(docFileRoot, spaceFileRoot) {
     this.docFileRoot = docFileRoot;
     this.spaceFileRoot = spaceFileRoot;
-    database.connect();
+    database
+      .connect()
+      .then(() => {
+        console.log('connection success!');
+      })
+      .catch(err => {
+        console.log(err);
+      });
   }
 
   async postDocumet(spaceId, tagId, name, file) {

@@ -6,6 +6,7 @@
     "start": "node bin/www",
     "build-prod": "webpack --mode production",
     "build": "webpack --mode development",
+    "migrate": "node src/server/setup/migrate.js",
     "dev": "webpack-dev-server --mode development"
   },
   "dependencies": {

@@ -33,13 +33,12 @@ module.exports = class Database {
 
   connect() {
     mongoose.Promise = global.Promise;
-    mongoose.connect(config.get('dburl'), { useNewUrlParser: true }, err => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log('connection success!');
-      }
-    });
+    const url = `${config.get('dbURL')}/${config.get('dbName')}`;
+    return mongoose.connect(url, { useNewUrlParser: true });
+  }
+
+  getConnection() {
+    return mongoose.createConnection();
   }
 
   checkId(target, message) {
