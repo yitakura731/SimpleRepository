@@ -36,6 +36,8 @@
   "invalidSpaceId" : "スペースIDの形式が不正です",
   "nullName" : "名前がNULLまたは空です",
   "nullFile" : "ファイルがNULLまたは空です",
-  
+  "nullContentsStorage" : "コンテントファイル格納先がNULLです",
+  "nullSpaceStorage" : "スペースファイル格納先がNULLです",
+
   "errorNotFound": "指定されたページは見つかりません"
 } 

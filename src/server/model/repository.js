@@ -15,6 +15,8 @@ const Tag = mongoose.model('tags');
 
 module.exports = class Repository {
   constructor(docFileRoot, spaceFileRoot) {
+    util.checkEmpty(docFileRoot, i18next.t('nullContentsStorage'));
+    util.checkEmpty(spaceFileRoot, i18next.t('nullSpaceStorage'));
     this.docFileRoot = docFileRoot;
     this.spaceFileRoot = spaceFileRoot;
     database

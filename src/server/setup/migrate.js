@@ -1,7 +1,7 @@
 const config = require('config');
 const mongoClient = require('mongodb').MongoClient;
 
-const url = config.get('dbURL');
+const url = config.get('dbServerURL');
 const name = config.get('dbName');
 
 async function createCollection(dbo) {

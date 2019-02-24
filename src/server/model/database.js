@@ -33,7 +33,7 @@ module.exports = class Database {
 
   connect() {
     mongoose.Promise = global.Promise;
-    const url = `${config.get('dbURL')}/${config.get('dbName')}`;
+    const url = `${config.get('dbServerURL')}/${config.get('dbName')}`;
     return mongoose.connect(url, { useNewUrlParser: true });
   }
 

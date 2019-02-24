@@ -1,6 +1,10 @@
 {
-    "apiHost" : "http://localhost:3000",
+    "apiServerURL" : "http://localhost:3000",
     "appLabel" : "SimpleRepository",
-    "dbURL" : "mongodb://localhost:27017",
-    "dbName" : "SimpleRepository"
+    "dbServerURL" : "mongodb://localhost:27017",
+    "dbName" : "SimpleRepository",
+    "storage" : {
+        "document" : "storage\\document",
+        "space" : "storage\\space"
+   }
 }

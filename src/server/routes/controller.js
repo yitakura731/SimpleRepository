@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const multer = require('multer');
+const config = require('config');
 
 const router = express.Router();
 
@@ -9,7 +10,9 @@ const upload = multer({ storage });
 
 const Repository = require('./../model/repository');
 
-const repository = new Repository('Storage\\doc', 'public\\spaces');
+const contentsStorage = config.get('contentsStorage');
+
+const repository = new Repository(contentsStorage, 'public\\spaces');
 
 router.post('/documents', cors(), upload.single('docFile'), (req, res, next) => {
   repository

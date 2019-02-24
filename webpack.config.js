@@ -47,7 +47,7 @@ module.exports = {
     }),
     new VueLoaderPlugin(),
     new webpack.EnvironmentPlugin({
-      API_URL: config.get('apiHost')
+      API_URL: config.get('apiServerURL')
     })
   ]
 };
