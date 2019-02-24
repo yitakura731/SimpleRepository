@@ -35,15 +35,21 @@
 
 1. Edit configuration json file
 
-    ```json
-    {
-        "apiServerURL" : "http://localhost:3000",    // Application server URL
-        "appLabel" : "SimpleRepository",             // Application label
-        "dbServerURL" : "mongodb://localhost:27017", // MongoDB server URL
-        "dbName" : "SimpleRepository"                // MongoDB server database name,
-        "contentsStorage" : "storage\\contents"      // Direcotry path of the stored file
-    }
-    ```
+    * apiServerURL：Set api server URL
+    * appLabel：Set application label
+    * dbServerURL :  Set database server URL
+    * dbName : Set database name
+    * contentsStorage : Set contents storage directory
+    * Example：
+        ```json
+        {
+            "apiServerURL" : "http://localhost:3000",
+            "appLabel" : "SimpleRepository",
+            "dbServerURL" : "mongodb://localhost:27017",
+            "dbName" : "SimpleRepository",
+            "contentsStorage" : "storage\\contents"
+        }
+        ```
 
 1. Create database which name is key _dbName_ value in configration file
 
