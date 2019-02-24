@@ -31,7 +31,7 @@
 
 1. Run npm install
 
-    `npm run install`
+    `npm install`
 
 1. Edit configuration json file
 
