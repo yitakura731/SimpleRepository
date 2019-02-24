@@ -65,7 +65,7 @@
 
     `npm run start`
 
-# Access vai brower
+# Access
 
 - set following url in your brower
 
