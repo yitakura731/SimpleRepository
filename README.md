@@ -42,8 +42,6 @@ Simple Reposioty is composed following components.
 
     `git clone https://github.com/yitakura/SimpleRepository.git`
 
-### Repository
-
 1. Move current directory to repository
 
     `cd sr-repository`
