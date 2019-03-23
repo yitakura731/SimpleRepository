@@ -1,0 +1,7 @@
+{
+    "appLabel" : "SimpleRepository",
+    "dbServerURL" : "mongodb://localhost:27017",
+    "dbName" : "SimpleRepository",
+    "contentsStorage" : "storage\\contents",
+    "spaceStorage" : "storage\\spaces"
+}

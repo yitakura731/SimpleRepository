@@ -1,0 +1,19 @@
+{
+    "navbar": "Simple Repository",
+    "successPostSpace" : "スペースの登録に成功しました",
+    "successPostTag" : "タグの登録に成功しました",
+    "successPostDocument" : "文書の登録に成功しました",
+    "postSpaceDialogTitle" : "スペース登録",
+    "postDocDialogTitle" : "文書登録",
+    "postTagDialogTitle" : "タグ登録",
+    "roadingTitle" : "読み込み中",
+    "labelName" : "名前",
+    "labelImage" : "画像",
+    "labelSpace" : "スペース",
+    "labelTag" : "タグ",
+    "labelFile" : "ファイル",
+    "labelColor" : "色",
+    "labelRegist" : "登録",
+    "pageNotFound" : "指定されたページが見つかりませんでした",
+    "errorOccured" : "エラーが発生しました"
+}
