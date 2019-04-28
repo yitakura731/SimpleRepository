@@ -1,13 +1,17 @@
 <template>
   <div>
-    <div v-b-toggle="'collapse-' + index" class="pl-2 tagClass my-0 py-2" @click="isOpen = !isOpen">
+    <div
+      v-b-toggle="'collapse-' + index"
+      class="pl-2 tagClass my-0 py-2"
+      @click="isOpen = !isOpen"
+    >
       <h6 class="my-0">
         <font-awesome-icon :icon="icon" class="ml-1 mr-2" />
         {{ tag.name }}
         <font-awesome-icon icon="tag" :style="style" class="tagColor ml-2" />
       </h6>
     </div>
-    <hr class="m-0">
+    <hr class="m-0" />
     <b-collapse :id="'collapse-' + index" visible>
       <div v-for="document in docs" :key="document.id">
         <list-doc-item :document="document" />

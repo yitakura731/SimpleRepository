@@ -6,7 +6,7 @@
         {{ document.docName }}
       </h6>
     </div>
-    <hr class="m-0">
+    <hr class="m-0" />
   </div>
 </template>
 
@@ -24,7 +24,7 @@ export default {
   computed: {
     docClass() {
       let retVal = null;
-      const current = this.$store.getters.selectedDocument;
+      const current = this.$store.state.repository.selectedDocument;
       if (current != null && current.docId === this.document.docId) {
         retVal = 'selectedDocClass';
       } else {
@@ -35,7 +35,7 @@ export default {
   },
   methods: {
     click() {
-      this.$store.commit('selectedDocument', this.document);
+      this.$store.commit('repository/selectedDocument', this.document);
     }
   }
 };

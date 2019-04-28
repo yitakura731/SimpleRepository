@@ -8,10 +8,12 @@ const router = express.Router();
 const storage = multer.memoryStorage();
 const upload = multer({ storage });
 
-const Repository = require('./../model/repository');
+const Repository = require('../model/repository');
 
 const contentsStorage = config.get('contentsStorage');
 const spaceStorage = config.get('spaceStorage');
+
+const passport = require('passport');
 
 const repository = new Repository(contentsStorage, spaceStorage);
 
@@ -28,7 +30,7 @@ const repository = new Repository(contentsStorage, spaceStorage);
 
 /**
  * @swagger
- * /documents:
+ * /rep/documents:
  *   post:
  *     summary: Regist document
  *     tags:
@@ -38,9 +40,14 @@ const repository = new Repository(contentsStorage, spaceStorage);
  *       200:
  *         description: Regist document successfully
  */
-router.post('/documents', cors(), upload.single('docFile'), (req, res, next) => {
+router.post('/documents', cors(),
+  passport.authenticate('jwt', { session: false }),
+  upload.single('docFile'),
+  (req, res, next) => {
   repository
-    .postDocumet(req.body.spaceId, req.body.tagId, req.body.docName, req.file)
+    .postDocumet(
+      req.user, req.body.spaceId, req.body.tagId,
+      req.body.docName, req.file)
     .then(document => {
       res
         .status(200)
@@ -52,7 +59,7 @@ router.post('/documents', cors(), upload.single('docFile'), (req, res, next) => 
 
 /**
  * @swagger
- * /spaces:
+ * /rep/spaces:
  *   post:
  *     summary: Regist space
  *     tags:
@@ -62,9 +69,12 @@ router.post('/documents', cors(), upload.single('docFile'), (req, res, next) => 
  *       200:
  *         description: Regist space successfully
  */
-router.post('/spaces', cors(), upload.single('spaceImage'), (req, res, next) => {
+router.post('/spaces', cors(),
+  passport.authenticate('jwt', { session: false }),
+  upload.single('spaceImage'),
+  (req, res, next) => {
   repository
-    .postSpace(req.body.name, req.file)
+    .postSpace(req.user, req.body.name, req.file)
     .then(space => {
       res
         .status(200)
@@ -76,7 +86,7 @@ router.post('/spaces', cors(), upload.single('spaceImage'), (req, res, next) => 
 
 /**
  * @swagger
- * /tags:
+ * /rep/tags:
  *   post:
  *     summary: Regist tag
  *     tags:
@@ -86,9 +96,11 @@ router.post('/spaces', cors(), upload.single('spaceImage'), (req, res, next) => 
  *       200:
  *         description: Regist tag successfully
  */
-router.post('/tags', cors(), (req, res, next) => {
+router.post('/tags', cors(),
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
   repository
-    .postTag(req.body.name, req.body.color)
+    .postTag(req.user, req.body.name, req.body.color)
     .then(tag => {
       res
         .status(200)
@@ -100,7 +112,7 @@ router.post('/tags', cors(), (req, res, next) => {
 
 /**
  * @swagger
- * /documents:
+ * /rep/documents:
  *   get:
  *     summary: Get document list
  *     tags:
@@ -116,10 +128,12 @@ router.post('/tags', cors(), (req, res, next) => {
  *       200:
  *         description: Get document list successfully
  */
-router.get('/documents', cors(), (req, res, next) => {
+router.get('/documents', cors(),
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
   const { spaceId } = req.query;
   repository
-    .getDocuments(spaceId)
+    .getDocuments(req.user, spaceId)
     .then(docs => {
       res
         .status(200)
@@ -131,7 +145,7 @@ router.get('/documents', cors(), (req, res, next) => {
 
 /**
  * @swagger
- * /documents/{id}/contents:
+ * /rep/documents/{id}/contents:
  *   get:
  *     summary: Get content of the document
  *     tags:
@@ -141,7 +155,9 @@ router.get('/documents', cors(), (req, res, next) => {
  *       200:
  *         description: Get content successfully
  */
-router.get('/documents/:id/contents', cors(), (req, res, next) => {
+router.get('/documents/:id/contents', cors(),
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
   repository
     .getContent(req.params.id)
     .then(content => {
@@ -155,7 +171,7 @@ router.get('/documents/:id/contents', cors(), (req, res, next) => {
 
 /**
  * @swagger
- * /tags:
+ * /rep/tags:
  *   get:
  *     summary: Get tag list
  *     tags:
@@ -165,9 +181,11 @@ router.get('/documents/:id/contents', cors(), (req, res, next) => {
  *       200:
  *         description: Get tag successfully
  */
-router.get('/tags', cors(), (req, res, next) => {
+router.get('/tags', cors(),
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
   repository
-    .getTags()
+    .getTags(req.user)
     .then(tags => {
       res
         .status(200)
@@ -179,7 +197,7 @@ router.get('/tags', cors(), (req, res, next) => {
 
 /**
  * @swagger
- * /spaces:
+ * /rep/spaces:
  *   get:
  *     summary: Get space list
  *     description: Get space list from repository
@@ -189,13 +207,15 @@ router.get('/tags', cors(), (req, res, next) => {
  *       200:
  *         description: Get tag successfully
  */
-router.get('/spaces', cors(), (req, res, next) => {
+router.get('/spaces', cors(),
+  passport.authenticate('jwt', { session: false }),
+  (req, res, next) => {
   let q = null;
   if (req.query.q != null) {
     q = decodeURIComponent(req.query.q);
   }
   repository
-    .getSpaces(q)
+    .getSpaces(req.user, q)
     .then(spaces => {
       res
         .status(200)

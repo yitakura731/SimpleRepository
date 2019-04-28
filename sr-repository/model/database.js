@@ -2,33 +2,50 @@ const mongoose = require('mongoose');
 const config = require('config');
 
 /* eslint prefer-destructuring: "off" */
-module.exports = class Database {
+class Database {
   constructor() {
     const Schema = mongoose.Schema;
+    /** User */
+    const UserSchema = new Schema({
+      _id: Schema.Types.ObjectId,
+      strategy: String,
+      localId: String,
+      githubId: String,
+      facebookId: String,
+      username: String,
+      password: String
+    });
+    /** Space */
     const SpaceSchema = new Schema({
       _id: Schema.Types.ObjectId,
+      userId: Schema.Types.ObjectId,
       spaceName: String,
       createDate: Date,
       fileName: String
     });
+    /** Tag */
     const TagSchema = new Schema({
       _id: Schema.Types.ObjectId,
+      userId: Schema.Types.ObjectId,
       name: String,
       createDate: Date,
       color: String
     });
+    /** Document */
     const DocumentSchema = new Schema({
       _id: Schema.Types.ObjectId,
       name: String,
-      tag: { type: Schema.Types.ObjectId, ref: 'tags' },
+      userId: Schema.Types.ObjectId,
+      tagId: Schema.Types.ObjectId,
       createDate: Date,
-      space: { type: Schema.Types.ObjectId, ref: 'spaces' },
+      spaceId: Schema.Types.ObjectId,
       filename: String,
       mimetype: String
     });
     mongoose.model('spaces', SpaceSchema, 'spaces');
     mongoose.model('documents', DocumentSchema, 'documents');
     mongoose.model('tags', TagSchema, 'tags');
+    mongoose.model('users', UserSchema, 'users');
   }
 
   connect() {
@@ -46,4 +63,6 @@ module.exports = class Database {
       throw new TypeError(`${message}:${target}`);
     }
   }
-};
+}
+
+module.exports = new Database();

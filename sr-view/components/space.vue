@@ -20,7 +20,12 @@
         />
       </div>
       <div v-show="!hasSpaces" class="imgParent w-100 h-100">
-        <img src="~/static/no-file.png" class="mx-auto" width="200" height="200">
+        <img
+          src="~/static/no-file.png"
+          class="mx-auto"
+          width="200"
+          height="200"
+        />
       </div>
     </div>
     <post-space-dialog ref="PostSpaceDialog" />
@@ -43,7 +48,7 @@ export default {
   },
   computed: {
     spaces() {
-      return this.$store.getters.spaces;
+      return this.$store.state.repository.spaces;
     },
     hasSpaces() {
       let retVal = false;
@@ -58,9 +63,11 @@ export default {
       this.$refs.PostSpaceDialog.start();
     },
     search() {
-      this.$store.dispatch('fetchSpace', { query: this.input }).catch(error => {
-        this.$nuxt.$emit('showError', error);
-      });
+      this.$store
+        .dispatch('repository/fetchSpace', { query: this.input })
+        .catch(error => {
+          this.$nuxt.$emit('showError', error);
+        });
     }
   }
 };

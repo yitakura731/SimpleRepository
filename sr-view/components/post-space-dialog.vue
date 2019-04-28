@@ -32,7 +32,7 @@
             />
           </b-col>
         </b-row>
-        <hr>
+        <hr />
         <div class="mt-3 w-100">
           <b-button class="w-100" variant="outline-secondary" @click="post">
             {{ $t('labelRegist') }}
@@ -69,7 +69,7 @@ export default {
       fData.append('name', this.spaceName);
       fData.append('spaceImage', this.spaceImage);
       this.$store
-        .dispatch('postSpace', { data: fData })
+        .dispatch('repository/postSpace', { data: fData })
         .then(() => {
           this.$refs.postSpaceDialog.hide();
           this.$nuxt.$emit('showSuccess', this.$t('successPostSpace'));
@@ -82,5 +82,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

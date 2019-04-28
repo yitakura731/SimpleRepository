@@ -24,7 +24,8 @@
   "successPostSpace": "スペースの登録に成功しました",
   "successPostTag": "タグの登録に成功しました",
   "loading-title" : "読み込み中",
-
+  "incorrectUser" : "IDまたはパスワードが異なります",
+  "nullUser" : "ユーザーが未認証です",
   "nullSpaceId" : "スペースIDがNULLまたは空です",
   "nullTagId" : "タグIDがNULLまたは空です",
   "nullDocumentId" : "文書IDがNULLまたは空です",

@@ -1,7 +1,12 @@
 <template>
   <div class="overlay">
     <div class="panel">
-      <img src="~/static/loading.gif" class="loading-image" width="70" height="70">
+      <img
+        src="~/static/loading.gif"
+        class="loading-image"
+        width="70"
+        height="70"
+      />
       <span class="ml-3 text">{{ $t('roadingTitle') }}</span>
     </div>
   </div>

@@ -16,16 +16,21 @@
     <div class="border list-item-parent mt-1 h-100">
       <div v-show="hasDocuments">
         <div v-for="(docGroup, index) in documents" :key="docGroup.tagId">
-          <list-tag-item 
-            :key="docGroup.tagId" 
-            :tag="getTag(docGroup.tagId)" 
+          <list-tag-item
+            :key="docGroup.tagId"
+            :tag="getTag(docGroup.tagId)"
             :docs="docGroup.docs"
             :index="index"
           />
         </div>
       </div>
       <div v-show="!hasDocuments" class="img-parent w-100 h-100">
-        <img src="~/static/no-file.png" class="mx-auto" width="200" height="200">
+        <img
+          src="~/static/no-file.png"
+          class="mx-auto"
+          width="200"
+          height="200"
+        />
       </div>
     </div>
 
@@ -52,7 +57,7 @@ export default {
   },
   computed: {
     documents() {
-      return this.$store.getters.documents;
+      return this.$store.state.repository.documents;
     },
     hasDocuments() {
       let retVal = false;
@@ -70,16 +75,16 @@ export default {
       this.$refs.PostTagDialog.start();
     },
     getTag(tagId) {
-      const retVal = this.$store.getters.tags.find(tag => {
+      const retVal = this.$store.state.repository.tags.find(tag => {
         return tag.id === tagId;
       });
       return retVal;
     },
     search() {
-      const space = this.$store.getters.selectedSpace;
+      const space = this.$store.state.repository.selectedSpace;
       if (space != null) {
         this.$store
-          .dispatch('fetchDocument', {
+          .dispatch('repository/fetchDocument', {
             spaceId: space.id,
             query: this.input
           })

@@ -13,11 +13,7 @@
             {{ $t('labelName') }}
           </b-col>
           <b-col>
-            <b-form-input 
-              v-model="name" 
-              type="text" 
-              :state="nameState"
-            />
+            <b-form-input v-model="name" type="text" :state="nameState" />
           </b-col>
         </b-row>
         <b-row class="mb-1">
@@ -28,7 +24,7 @@
             <compact-picker v-model="color" class="w-100" />
           </b-col>
         </b-row>
-        <hr>
+        <hr />
         <div class="mt-3 w-100">
           <b-button class="w-100" variant="outline-secondary" @click="post">
             {{ $t('labelRegist') }}
@@ -67,7 +63,7 @@ export default {
         color: this.color.hex
       };
       this.$store
-        .dispatch('postTag', { data: postData })
+        .dispatch('repository/postTag', { data: postData })
         .then(() => {
           this.$refs.postTagDialog.hide();
           this.$nuxt.$emit('showSuccess', this.$t('successPostTag'));
@@ -80,5 +76,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

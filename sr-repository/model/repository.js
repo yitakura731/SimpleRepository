@@ -4,10 +4,8 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const Puid = require('puid');
 const i18next = require('i18next');
-const Database = require('./database');
+const database = require('./database');
 const util = require('../helper/util');
-
-const database = new Database();
 
 const Space = mongoose.model('spaces');
 const Document = mongoose.model('documents');
@@ -19,17 +17,10 @@ module.exports = class Repository {
     util.checkEmpty(spaceFileRoot, i18next.t('nullSpaceStorage'));
     this.docFileRoot = docFileRoot;
     this.spaceFileRoot = spaceFileRoot;
-    database
-      .connect()
-      .then(() => {
-        console.log('Connected to mongodb successfully');
-      })
-      .catch(err => {
-        console.log(err);
-      });
   }
 
-  async postDocumet(spaceId, tagId, name, file) {
+  async postDocumet(user, spaceId, tagId, name, file) {
+    util.checkEmpty(user, i18next.t('nullUser'));
     util.checkEmpty(spaceId, i18next.t('nullSpaceId'));
     util.checkEmpty(tagId, i18next.t('nullTagId'));
     util.checkEmpty(name, i18next.t('nullName'));
@@ -38,21 +29,25 @@ module.exports = class Repository {
     database.checkId(tagId, i18next.t('invalidTagId'));
     const puid = new Puid(false);
     const storeFileName = puid.generate();
-    return fse.writeFile(path.join(this.docFileRoot, storeFileName), file.buffer).then(() => {
+    return fse.writeFile(
+      path.join(this.docFileRoot, storeFileName),
+      file.buffer).then(() => {
       const document = new Document({
         _id: new mongoose.Types.ObjectId(),
         name,
-        tag: tagId,
-        filename: storeFileName,
-        mimetype: file.mimetype,
+        userId: user._id,
+        tagId,
         createDate: new Date(),
-        space: spaceId
+        spaceId,
+        filename: storeFileName,
+        mimetype: file.mimetype
       });
       return document.save();
     });
   }
 
-  async postSpace(name, file) {
+  async postSpace(user, name, file) {
+    util.checkEmpty(user, i18next.t('nullUser'));
     util.checkEmpty(name, i18next.t('nullName'));
     if (file != null) {
       const puid = new Puid(false);
@@ -60,6 +55,7 @@ module.exports = class Repository {
       return fse.writeFile(path.join(this.spaceFileRoot, storeFileName), file.buffer).then(() => {
         const space = new Space({
           _id: new mongoose.Types.ObjectId(),
+          userId: user._id,
           spaceName: name,
           createDate: new Date(),
           fileName: storeFileName
@@ -69,6 +65,7 @@ module.exports = class Repository {
     }
     const space = new Space({
       _id: new mongoose.Types.ObjectId(),
+      userId: user._id,
       spaceName: name,
       createDate: new Date(),
       fileName: ''
@@ -76,11 +73,13 @@ module.exports = class Repository {
     return space.save();
   }
 
-  async postTag(name, color) {
+  async postTag(user, name, color) {
+    util.checkEmpty(user, i18next.t('nullUser'));
     util.checkEmpty(name, i18next.t('nullName'));
     util.checkEmpty(color, i18next.t('nullColor'));
     const tag = new Tag({
       _id: new mongoose.Types.ObjectId(),
+      userId: user._id,
       name,
       createDate: new Date(),
       color
@@ -88,24 +87,22 @@ module.exports = class Repository {
     return tag.save();
   }
 
-  async getDocuments(id) {
+  async getDocuments(user, spaceId) {
+    util.checkEmpty(user, i18next.t('nullUser'));
     let query = null;
-    if (id != null) {
-      database.checkId(id, i18next.t('invalidSpaceId'));
-      query = Document.find({ space: id });
+    if (spaceId != null) {
+      database.checkId(spaceId, i18next.t('invalidSpaceId'));
+      query = Document.find({ spaceId: spaceId, userId: user._id });
     } else {
-      query = Document.find({});
+      query = Document.find({ userId: user._id });
     }
-    const result = await query
-      .populate('tag')
-      .sort({ createDate: -1 })
-      .exec();
+    const result = await query.sort({ createDate: -1 }).exec();
     const documents = [];
     result.forEach(doc => {
       documents.push({
         docId: doc._id,
         docName: doc.name,
-        tagId: doc.tag._id
+        tagId: doc.tagId
       });
     });
     return documents;
@@ -121,8 +118,9 @@ module.exports = class Repository {
     });
   }
 
-  async getTags() {
-    const result = await Tag.find().exec();
+  async getTags(user) {
+    util.checkEmpty(user, i18next.t('nullUser'));
+    const result = await Tag.find({ userId: user._id }).exec();
     const retVal = [];
     result.forEach(e => {
       retVal.push({
@@ -134,12 +132,14 @@ module.exports = class Repository {
     return retVal;
   }
 
-  async getSpaces(q) {
+  async getSpaces(user, q) {
+    util.checkEmpty(user, i18next.t('nullUser'));
     let query = null;
     if (q !== null) {
-      query = Space.find({ spaceName: new RegExp(`.*${q}.*`) });
+      query = Space.find({
+        userId: user._id, spaceName: new RegExp(`.*${q}.*`) });
     } else {
-      query = Space.find({});
+      query = Space.find({ userId: user._id });
     }
     const result = await query.sort({ createDate: -1 }).exec();
     const retVal = [];

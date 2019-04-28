@@ -10,7 +10,8 @@ module.exports = {
   extends: [
     '@nuxtjs',
     "plugin:vue/recommended",
-    'plugin:prettier/recommended'
+    'plugin:prettier/recommended',
+    'prettier'
   ],
   plugins: [
     'prettier'
@@ -18,6 +19,11 @@ module.exports = {
   // add your custom rules here
   rules: {
     "linebreak-style": ["error", "windows"],
-    "semi": ["error", "always"]
+    "semi": ["error", "always"],
+    "vue/html-self-closing": ["error", {
+        "html": {
+          "void": "always",
+        }
+    }]
   }
 }

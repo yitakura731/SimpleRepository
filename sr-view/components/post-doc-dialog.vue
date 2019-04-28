@@ -23,10 +23,7 @@
             {{ $t('labelTag') }}
           </b-col>
           <b-col>
-            <b-form-select
-              v-model="docTag"
-              :options="getTags()"
-            />
+            <b-form-select v-model="docTag" :options="getTags()" />
           </b-col>
         </b-row>
         <b-row class="mb-3">
@@ -34,11 +31,7 @@
             {{ $t('labelName') }}
           </b-col>
           <b-col>
-            <b-form-input 
-              v-model="docName" 
-              type="text" 
-              :state="docNameState"
-            />
+            <b-form-input v-model="docName" type="text" :state="docNameState" />
           </b-col>
         </b-row>
         <b-row>
@@ -52,7 +45,7 @@
             />
           </b-col>
         </b-row>
-        <hr>
+        <hr />
         <div class="mt-3 w-100">
           <b-button class="w-100" variant="outline-secondary" @click="post">
             {{ $t('labelRegist') }}
@@ -75,8 +68,8 @@ export default {
   computed: {
     docSpaceName() {
       let retVal = null;
-      if (this.$store.getters.selectedSpace != null) {
-        retVal = this.$store.getters.selectedSpace.name;
+      if (this.$store.state.repository.selectedSpace != null) {
+        retVal = this.$store.state.repository.selectedSpace.name;
       } else {
         retVal = '';
       }
@@ -87,7 +80,7 @@ export default {
     }
   },
   mounted() {
-    this.$store.dispatch('fetchTag').catch(error => {
+    this.$store.dispatch('repository/fetchTag').catch(error => {
       this.$root.$refs.ErrorDialog.show(error);
     });
   },
@@ -97,8 +90,8 @@ export default {
     },
     getTags() {
       const retVal = [];
-      if (this.$store.getters.tags != null) {
-        this.$store.getters.tags.forEach(val => {
+      if (this.$store.state.repository.tags != null) {
+        this.$store.state.repository.tags.forEach(val => {
           retVal.push({
             text: val.name,
             value: val.id
@@ -115,12 +108,12 @@ export default {
     },
     post() {
       const fData = new FormData();
-      fData.append('spaceId', this.$store.getters.selectedSpace.id);
+      fData.append('spaceId', this.$store.state.repository.selectedSpace.id);
       fData.append('docName', this.docName);
       fData.append('tagId', this.docTag);
       fData.append('docFile', this.docFile);
       this.$store
-        .dispatch('postDocument', { data: fData })
+        .dispatch('repository/postDocument', { data: fData })
         .then(() => {
           this.$refs.postDocDialog.hide();
           this.$nuxt.$emit('showSuccess', this.$t('successPostDocument'));
@@ -133,5 +126,4 @@ export default {
 };
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

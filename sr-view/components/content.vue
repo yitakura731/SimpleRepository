@@ -33,11 +33,16 @@
       </b-form>
 
       <div ref="contentsArea" class="border mt-1 h-100">
-        <div v-show="hasContent" ref="canvasParent" class="canvas-parent" :style="styles()">
+        <div
+          v-show="hasContent"
+          ref="canvasParent"
+          class="canvas-parent"
+          :style="styles()"
+        >
           <canvas ref="contentsCanvas" />
         </div>
         <div v-show="!hasContent" class="h-100 img-parent">
-          <img src="~/static/no-file.png" class="mx-auto">
+          <img src="~/static/no-file.png" class="mx-auto" />
         </div>
       </div>
     </b-card>
@@ -65,7 +70,7 @@ export default {
   },
   computed: {
     contentId() {
-      const document = this.$store.getters.selectedDocument;
+      const document = this.$store.state.repository.selectedDocument;
       if (document != null) {
         return document.docId;
       } else {
@@ -78,6 +83,13 @@ export default {
         retVal = true;
       }
       return retVal;
+    }
+  },
+  mounted() {
+    if (this.contentId != null) {
+      this.scale = 100;
+      this.page = 1;
+      this.renderPDF();
     }
   },
   watch: {
@@ -117,7 +129,7 @@ export default {
       let numPages = 0;
       this.loading = true;
       this.$store
-        .dispatch('fetchContent', {
+        .dispatch('repository/fetchContent', {
           contentId: this.contentId
         })
         .then(pdf => {

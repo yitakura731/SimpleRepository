@@ -2,15 +2,18 @@ const pkg = require('./package');
 
 const repHost = 'localhost';
 const repPort = '3000';
-
 const repAppLabel = '/SimpleRepository/api';
 
 module.exports = {
   mode: 'spa',
 
+  router: {
+    base: '/SimpleRepository/'
+  },
+
   /*
-  ** Headers of the page
-  */
+   ** Headers of the page
+   */
   head: {
     title: pkg.name,
     meta: [
@@ -21,74 +24,78 @@ module.exports = {
     link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
   },
 
-  router: {
-    base: '/SimpleRepository',
-    middleware: 'initialize'
-  },
-
   /*
-  ** Customize the progress-bar color
-  */
+   ** Customize the progress-bar color
+   */
   loading: { color: '#fff' },
 
   /*
-  ** Global CSS
-  */
+   ** Global CSS
+   */
   css: [],
 
   /*
-  ** Plugins to load before mounting the App
-  */
+   ** Plugins to load before mounting the App
+   */
   plugins: [
     '~/plugins/vue-i18n.js',
-    '~/plugins/bootstrap-vue',
+    '~/plugins/axios.js',
+    '~/plugins/bootstrap-vue.js',
     '~/plugins/pdf.js'
   ],
 
   /*
-  ** fontawesome
-  */
+   ** fontawesome
+   */
   fontawesome: {
     imports: [
       {
         set: '@fortawesome/free-solid-svg-icons',
         icons: ['fas']
+      },
+      {
+        set: '@fortawesome/free-regular-svg-icons',
+        icons: ['far']
+      },
+      {
+        set: '@fortawesome/free-brands-svg-icons',
+        icons: ['fab']
       }
     ]
   },
 
   /*
-  ** Nuxt.js modules
-  */
+   ** Nuxt.js modules
+   */
   modules: [
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
     'bootstrap-vue/nuxt',
     'nuxt-fontawesome',
     '@nuxtjs/pwa'
   ],
 
   /*
-  ** Axios module configuration
-  */
+   ** Axios module configuration
+   */
   axios: {
     host: repHost,
     port: repPort,
-    prefix: repAppLabel
+    prefix: repAppLabel,
+    baseURL: 'http://' + repHost + ':' + repPort + repAppLabel,
+    browserBaseURL: 'http://' + repHost + ':' + repPort + repAppLabel
   },
 
   env: {
     baseUrl: 'http://' + repHost + ':' + repPort + repAppLabel
   },
 
-  /*
-  ** Build configuration
-  */
+  proxy: {
+    '/api/auth/login': 'http://localhost:3000/SimpleRepository'
+  },
+
   build: {
-    /*
-    ** You can extend webpack config here
-    */
     extend(config, ctx) {
-      // Run ESLint on save
       if (ctx.isDev && ctx.isClient) {
         config.devtool = 'eval-source-map';
         config.module.rules.push({

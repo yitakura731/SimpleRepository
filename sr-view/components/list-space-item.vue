@@ -2,12 +2,12 @@
   <div>
     <div :class="spaceClass" @click="click()">
       <p class="my-1">
-        <img 
-          class="m-1" 
+        <img
+          class="m-1"
           :src="'data:image/png;base64, ' + space.image"
           width="40"
           height="40"
-        >
+        />
         {{ space.name }}
       </p>
     </div>
@@ -27,7 +27,7 @@ export default {
   computed: {
     spaceClass() {
       let retVal = null;
-      const current = this.$store.getters.selectedSpace;
+      const current = this.$store.state.repository.selectedSpace;
       if (current != null && current === this.space.id) {
         retVal = 'selectedSpace';
       } else {
@@ -38,9 +38,11 @@ export default {
   },
   methods: {
     click() {
-      this.$store.dispatch('setSpace', { space: this.space }).catch(error => {
-        this.$nuxt.$emit('showError', error);
-      });
+      this.$store
+        .dispatch('repository/setSpace', { space: this.space })
+        .catch(error => {
+          this.$nuxt.$emit('showError', error);
+        });
     }
   }
 };

@@ -1,8 +1,8 @@
 export default async function({ store, error }) {
-  await store.dispatch('fetchTag').catch(e => {
+  await store.dispatch('repository/fetchTag').catch(e => {
     error(e);
   });
-  await store.dispatch('fetchSpace').catch(e => {
+  await store.dispatch('repository/fetchSpace').catch(e => {
     error(e);
   });
 }

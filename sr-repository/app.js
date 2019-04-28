@@ -2,6 +2,7 @@ const express = require('express');
 const ejs = require('ejs');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 const logger = require('morgan');
 const i18next = require('i18next');
 const config = require('config');
@@ -10,22 +11,28 @@ const fsBackend = require('i18next-node-fs-backend');
 const boom = require('boom');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
+const passport = require('passport');
 
-const apiController = require('./controller/api');
+const database = require('./model/database');
+const repController = require('./controller/repController');
+const authController = require('./controller/authController');
 
 const app = express();
 
 app.set('views', 'public');
 app.set('view engine', 'ejs');
-
 app.use(logger('dev'));
+app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static('public'));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.options('*', cors());
 
+// Multi National
 i18next
   .use(middleware)
   .use(fsBackend)
@@ -38,30 +45,34 @@ i18next
   });
 app.use(middleware.handle(i18next));
 
+// Documentation
 const swaggerSpec = swaggerJSDoc({
   swaggerDefinition: {
     swagger: '2.0',
     info: {
       title: 'Simple Repository API',
-      version: '0.0.2',
+      version: '1.2.0',
       description: 'Simple Repository API'
     },
     basePath: `/${config.get('appLabel')}/api`,
     consumes: ['application/json'],
     produces: ['application/json']
   },
-  apis: ['./controller/api.js']
+  apis: ['./controller/repController.js', './controller/authController.js']
 });
+app.use(`/${config.get('appLabel')}/api/docs`, swaggerUi.serve);
+app.get(`/${config.get('appLabel')}/api/docs`, swaggerUi.setup(swaggerSpec));
 
-app.use(`/${config.get('appLabel')}/api-docs`, swaggerUi.serve);
-app.get(`/${config.get('appLabel')}/api-docs`, swaggerUi.setup(swaggerSpec));
+// API
+app.use(`/${config.get('appLabel')}/api/rep`, repController);
 
-app.use(`/${config.get('appLabel')}/api`, apiController);
+// Auth
+app.use(`/${config.get('appLabel')}/api/auth`, authController);
 
+// Error
 app.use((req, res, next) => {
   next(boom.notFound(i18next.t('errorNotFound')));
 });
-
 app.use((err, req, res, next) => {
   if (boom.isBoom(err)) {
     res.status(err.output.statusCode).json(err.output.payload);
@@ -79,5 +90,15 @@ app.use((err, req, res, next) => {
     });
   }
 });
+
+// conntect dataase
+database
+  .connect()
+  .then(() => {
+    console.log('Connected to mongodb successfully');
+  })
+  .catch(err => {
+    console.log(err);
+  });
 
 module.exports = app;
