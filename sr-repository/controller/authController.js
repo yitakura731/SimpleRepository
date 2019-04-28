@@ -36,12 +36,10 @@ const auth = new Authenticate();
 router.post('/login/local', cors(), (req, res, next) => {
     passport.authenticate('local', {session: false}, (err, user, info) => {
       if (err || !user) {
-        res.cookie('sr.auth.local.login.error', info.message);
-        return res.redirect(301, config.get('appHomeURL'))  
+        return res.status(400).json({ info });
       }
       const token = auth.createToken(user);
-      res.cookie('sr.auth.token', 'Bearer ' + token);
-      return res.redirect(301, config.get('appHomeURL'))  
+      return res.status(200).json({ accessToken: 'Bearer ' + token });
     })(req, res, next);
   }
 );

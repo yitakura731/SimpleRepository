@@ -63,7 +63,13 @@ export default {
         color: this.color.hex
       };
       this.$store
-        .dispatch('repository/postTag', { data: postData })
+        .dispatch(
+          'repository/postTag',
+          { data: postData },
+          {
+            withCredentials: true
+          }
+        )
         .then(() => {
           this.$refs.postTagDialog.hide();
           this.$nuxt.$emit('showSuccess', this.$t('successPostTag'));

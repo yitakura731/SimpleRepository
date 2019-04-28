@@ -24,6 +24,14 @@ export const getters = {
 };
 
 export const actions = {
+  async localLogin({ commit, dispatch }, args) {
+    const response = await this.$axios.$post('auth/login/local', args, {
+      withCredentials: false
+    });
+    Cookies.set('sr.auth.token', response.accessToken);
+    this.$router.push('/home');
+  },
+
   me({ commit, dispatch }, args) {
     return this.$axios.$get('auth/me', args);
   },

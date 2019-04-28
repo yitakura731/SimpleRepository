@@ -85,13 +85,6 @@ export default {
       return retVal;
     }
   },
-  mounted() {
-    if (this.contentId != null) {
-      this.scale = 100;
-      this.page = 1;
-      this.renderPDF();
-    }
-  },
   watch: {
     contentId(newVal, oldVal) {
       if (newVal !== null) {
@@ -109,6 +102,13 @@ export default {
           this.showContent = false;
         }
       }
+    }
+  },
+  mounted() {
+    if (this.contentId != null) {
+      this.scale = 100;
+      this.page = 1;
+      this.renderPDF();
     }
   },
   methods: {

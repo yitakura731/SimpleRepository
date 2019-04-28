@@ -3,22 +3,20 @@
     <b-row align-h="center" align-v="center" class="mt-5">
       <b-col md="5">
         <b-card bg-variant="light">
-          <form name="localLoging" method="post" action="/api/auth/login/local">
-            <b-form-group :label="$t('localId')">
-              <b-input name="localId" placeholder="" />
-            </b-form-group>
-            <b-form-group :label="$t('password')">
-              <b-input name="password" type="password" placeholder="" />
-            </b-form-group>
-            <div class="text-center">
-              <b-btn variant="primary" type="submit" block>
-                {{ $t('login') }}
-              </b-btn>
-            </div>
-          </form>
+          <b-form-group :label="$t('localId')">
+            <b-input v-model="localId" placeholder="" />
+          </b-form-group>
+          <b-form-group :label="$t('password')">
+            <b-input v-model="password" type="password" placeholder="" />
+          </b-form-group>
+          <div class="text-center">
+            <b-btn variant="primary" block @click="localLogin">
+              {{ $t('login') }}
+            </b-btn>
+          </div>
         </b-card>
-        <b-alert v-if="localLoginError" show variant="danger" class="mt-2">
-          {{ localLoginError }}
+        <b-alert v-if="error" show variant="danger" class="mt-2 text-center">
+          {{ error.message }}
         </b-alert>
       </b-col>
       <b-col md="5" class="text-center pt-4">
@@ -54,7 +52,9 @@ export default {
   middleware: 'auth',
   data() {
     return {
-      localLoginError: null
+      localId: null,
+      password: null,
+      error: null
     };
   },
   computed: {
@@ -77,6 +77,17 @@ export default {
       ];
     }
   },
-  mounted() {}
+  methods: {
+    async localLogin() {
+      this.error = null;
+      const fd = {
+        localId: this.localId,
+        password: this.password
+      };
+      await this.$store.dispatch('auth/localLogin', fd).catch(e => {
+        this.error = e.response.data.info;
+      });
+    }
+  }
 };
 </script>
