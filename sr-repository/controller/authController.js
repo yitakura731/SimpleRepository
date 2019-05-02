@@ -21,7 +21,7 @@ const auth = new Authenticate();
  *          schema: 
  *            type: object
  *            properties:
- *              loginId:
+ *              localId:
  *                type: "string"
  *                example: admin
  *              password:

@@ -73,6 +73,7 @@ app.use(`/${config.get('appLabel')}/api/auth`, authController);
 app.use((req, res, next) => {
   next(boom.notFound(i18next.t('errorNotFound')));
 });
+
 app.use((err, req, res, next) => {
   if (boom.isBoom(err)) {
     res.status(err.output.statusCode).json(err.output.payload);

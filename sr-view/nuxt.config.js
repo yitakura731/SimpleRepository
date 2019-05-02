@@ -79,19 +79,11 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    host: repHost,
-    port: repPort,
-    prefix: repAppLabel,
-    baseURL: 'http://' + repHost + ':' + repPort + repAppLabel,
-    browserBaseURL: 'http://' + repHost + ':' + repPort + repAppLabel
+    baseURL: 'https://' + repHost + ':' + repPort + repAppLabel
   },
 
   env: {
-    baseUrl: 'http://' + repHost + ':' + repPort + repAppLabel
-  },
-
-  proxy: {
-    '/api/auth/login': 'http://localhost:3000/SimpleRepository'
+    baseUrl: 'https://' + repHost + ':' + repPort + repAppLabel
   },
 
   build: {

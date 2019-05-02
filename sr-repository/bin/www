@@ -5,7 +5,8 @@
  */
 
 const debug = require('debug')('reversal01:server');
-const http = require('http');
+const https = require('https');
+const fs = require('fs');
 const app = require('../app');
 
 /**
@@ -15,11 +16,17 @@ const app = require('../app');
 const port = normalizePort(process.env.PORT || '3000');
 app.set('port', port);
 
+// SSL
+const sslOptions = {
+  key: fs.readFileSync('keys/rep-server.key'),
+  cert: fs.readFileSync('keys/rep-server.crt')
+};
+
 /**
  * Create HTTP server.
  */
 
-const server = http.createServer(app);
+const server = https.createServer(sslOptions, app);
 
 /**
  * Listen on provided port, on all network interfaces.
