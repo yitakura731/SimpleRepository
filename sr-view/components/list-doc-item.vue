@@ -1,10 +1,10 @@
 <template>
   <div :class="docClass">
     <div class="ml-5 py-2" @click="click()">
-      <h6 class="my-0">
-        <font-awesome-icon icon="file" />
+      <h5 class="my-0">
+        <font-awesome-icon :icon="getIcon()" />
         {{ document.docName }}
-      </h6>
+      </h5>
     </div>
     <hr class="m-0" />
   </div>
@@ -17,7 +17,11 @@ export default {
       type: Object,
       required: true,
       validator(obj) {
-        return typeof obj.docId === 'string' && typeof obj.docName === 'string';
+        return (
+          typeof obj.docId === 'string' &&
+          typeof obj.docName === 'string' &&
+          typeof obj.mimetype === 'string'
+        );
       }
     }
   },
@@ -34,6 +38,15 @@ export default {
     }
   },
   methods: {
+    getIcon() {
+      if (this.document.mimetype === 'application/pdf') {
+        return 'file-pdf';
+      } else if (this.document.mimetype === 'image/jpeg') {
+        return 'image';
+      } else {
+        return 'file';
+      }
+    },
     click() {
       this.$store.commit('repository/selectedDocument', this.document);
     }

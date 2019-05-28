@@ -21,6 +21,10 @@
     "labelFile" : "ファイル",
     "labelColor" : "色",
     "labelRegist" : "登録",
+    "fileRequired" : "ファイルは必ず指定してください",
+    "nameRequired" : "名前は必ず指定してください",
+    "tagRequired" : "タグは必ず指定してください",
+    "notPDForJPEG" : "PDFまたはJPEG形式のファイルを指定してください",
     "pageNotFound" : "指定されたページが見つかりませんでした",
     "errorOccured" : "エラーが発生しました"
 }

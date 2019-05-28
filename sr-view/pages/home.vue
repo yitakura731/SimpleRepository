@@ -2,13 +2,11 @@
   <div>
     <b-container fluid :style="styleContents" class="contentsArea">
       <b-row no-gutters class="mx-4 h-100">
-        <b-col lg="2" class="pl-2 pr-2">
+        <b-col lg="3" class="pl-2 pr-2 h-100">
           <space />
-        </b-col>
-        <b-col lg="2" class="pl-2 pr-2">
           <document />
         </b-col>
-        <b-col lg="8" class="pl-2 pr-2">
+        <b-col lg="9" class="pl-2 pr-2 h-100">
           <myContent />
         </b-col>
       </b-row>

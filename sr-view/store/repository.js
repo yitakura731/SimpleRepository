@@ -91,14 +91,16 @@ export const actions = {
             docs: [
               {
                 docId: doc.docId,
-                docName: doc.docName
+                docName: doc.docName,
+                mimetype: doc.mimetype
               }
             ]
           });
         } else {
           target.docs.push({
             docId: doc.docId,
-            docName: doc.docName
+            docName: doc.docName,
+            mimetype: doc.mimetype
           });
         }
       });
@@ -130,11 +132,17 @@ export const actions = {
     await dispatch('fetchDocument', { spaceId: args.data.get('spaceId') });
   },
 
-  fetchContent({ dispatch }, args) {
+  fetchPDF({ dispatch }, args) {
     const loadingTask = pdfjsLib.getDocument({
       url: `${process.env.baseUrl}/rep/documents/${args.contentId}/contents`,
       httpHeaders: { Authorization: Cookies.get('sr.auth.token') }
     });
     return loadingTask.promise;
+  },
+
+  fetchImage({ dispatch }, args) {
+    return this.$axios.$get(`rep/documents/${args.contentId}/contents`, {
+      headers: { 'Content-type': 'image/jpeg' }
+    });
   }
 };

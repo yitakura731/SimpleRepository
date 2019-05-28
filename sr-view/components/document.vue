@@ -1,5 +1,5 @@
 <template>
-  <b-card no-header no-body class="h-100 py-1 border-0">
+  <b-card no-header no-body class="h-50 py-1 border-0">
     <b-input-group class="m-0">
       <b-form-input v-model="input" type="text" class="p-0 m-0" />
       <b-button type="button" class="mx-0" @click="search()">

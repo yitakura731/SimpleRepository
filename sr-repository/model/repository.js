@@ -102,7 +102,8 @@ module.exports = class Repository {
       documents.push({
         docId: doc._id,
         docName: doc.name,
-        tagId: doc.tagId
+        tagId: doc.tagId,
+        mimetype: doc.mimetype
       });
     });
     return documents;
@@ -114,7 +115,7 @@ module.exports = class Repository {
     return Document.findById(id).then(doc => {
       const filePath = path.join(this.docFileRoot, doc.filename);
       const data = fs.readFileSync(filePath);
-      return data;
+      return { mimetype : doc.mimetype, file : data };
     });
   }
 

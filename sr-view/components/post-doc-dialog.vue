@@ -23,7 +23,16 @@
             {{ $t('labelTag') }}
           </b-col>
           <b-col>
-            <b-form-select v-model="docTag" :options="getTags()" />
+            <b-form-select
+              v-model="docTag"
+              :options="getTags()"
+              :state="tagState"
+            />
+            <div v-show="!tagState">
+              <p class="text-danger">
+                {{ $t('tagRequired') }}
+              </p>
+            </div>
           </b-col>
         </b-row>
         <b-row class="mb-3">
@@ -31,7 +40,12 @@
             {{ $t('labelName') }}
           </b-col>
           <b-col>
-            <b-form-input v-model="docName" type="text" :state="docNameState" />
+            <b-form-input v-model="docName" type="text" :state="nameState" />
+            <div v-show="!nameState">
+              <p class="text-danger">
+                {{ $t('nameRequired') }}
+              </p>
+            </div>
           </b-col>
         </b-row>
         <b-row>
@@ -41,8 +55,19 @@
           <b-col>
             <b-form-file
               placeholder="Choose a file..."
+              :state="fileState"
               @change="getSelectedFile"
             />
+            <div v-show="!fileState">
+              <p class="text-danger">
+                {{ $t('fileRequired') }}
+              </p>
+            </div>
+            <div v-show="!extState">
+              <p class="text-danger">
+                {{ $t('notPDForJPEG') }}
+              </p>
+            </div>
           </b-col>
         </b-row>
         <hr />
@@ -62,6 +87,7 @@ export default {
     return {
       docName: '',
       docFile: null,
+      docExt: null,
       docTag: null
     };
   },
@@ -75,8 +101,28 @@ export default {
       }
       return retVal;
     },
-    docNameState() {
+    nameState() {
       return this.docName.length > 0;
+    },
+    tagState() {
+      return this.docTag != null;
+    },
+    fileState() {
+      return this.docFile != null;
+    },
+    extState() {
+      if (this.docExt == null) {
+        return true;
+      }
+      if (
+        this.docExt === 'pdf' ||
+        this.docExt === 'jpg' ||
+        this.docExt === 'jpeg'
+      ) {
+        return true;
+      } else {
+        return false;
+      }
     }
   },
   mounted() {
@@ -105,6 +151,10 @@ export default {
       this.docFile = e.target.files[0];
       const fullName = e.target.files[0].name;
       this.docName = fullName.substring(0, fullName.lastIndexOf('.'));
+      this.docExt = fullName.substring(
+        fullName.lastIndexOf('.') + 1,
+        fullName.length
+      );
     },
     post() {
       const fData = new FormData();

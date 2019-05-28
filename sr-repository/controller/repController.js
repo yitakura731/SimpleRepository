@@ -161,10 +161,19 @@ router.get('/documents/:id/contents', cors(),
   repository
     .getContent(req.params.id)
     .then(content => {
-      res
-        .status(200)
-        .contentType('application/pdf')
-        .send(content);
+      if (content.mimetype == 'application/pdf') {
+        res
+          .status(200)
+          .contentType('application/pdf')
+          .send(content.file);
+      } else if (content.mimetype == 'image/jpeg') {
+        const base64Image =
+          new Buffer(content.file, 'binary').toString('base64');
+        res
+          .status(200)
+          .contentType('image/jpeg')
+          .send(base64Image);
+      }
     })
     .catch(err => next(err));
 });

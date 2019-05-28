@@ -28,7 +28,7 @@ export default {
     spaceClass() {
       let retVal = null;
       const current = this.$store.state.repository.selectedSpace;
-      if (current != null && current === this.space.id) {
+      if (current != null && current.id === this.space.id) {
         retVal = 'selectedSpace';
       } else {
         retVal = 'space';
