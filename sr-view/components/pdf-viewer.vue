@@ -156,6 +156,7 @@ export default {
 }
 .canvas-parent {
   overflow: scroll;
+  background-color: lightgray;
 }
 .fade-enter-active,
 .fade-leave-active {

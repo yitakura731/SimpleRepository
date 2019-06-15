@@ -132,6 +132,7 @@ export default {
 }
 .img-parent {
   overflow: scroll;
+  background-color: lightgray;
 }
 .fade-enter-active,
 .fade-leave-active {
