@@ -71,8 +71,7 @@ module.exports = {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
     'bootstrap-vue/nuxt',
-    'nuxt-fontawesome',
-    '@nuxtjs/pwa'
+    'nuxt-fontawesome'
   ],
 
   /*
