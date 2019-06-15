@@ -1,10 +1,10 @@
 <template>
   <b-card no-body no-header class="h-100 border-0">
     <b-form inline>
-      <b-button type="button" @click="setScale(10)">
+      <b-button type="button" size="lg" @click="setScale(10)">
         <font-awesome-icon icon="plus" />
       </b-button>
-      <b-button type="button" class="ml-1" @click="setScale(-10)">
+      <b-button type="button" size="lg" class="ml-1" @click="setScale(-10)">
         <font-awesome-icon icon="minus" />
       </b-button>
       <div class="contents-number ml-1">
@@ -14,10 +14,10 @@
         %
       </div>
 
-      <b-button type="button" class="ml-5" @click="setPage(-1)">
+      <b-button type="button" size="lg" class="ml-5" @click="setPage(-1)">
         <font-awesome-icon icon="caret-left" />
       </b-button>
-      <b-button type="button" class="ml-1" @click="setPage(1)">
+      <b-button type="button" size="lg" class="ml-1" @click="setPage(1)">
         <font-awesome-icon icon="caret-right" />
       </b-button>
       <div class="contents-number ml-1">
@@ -145,14 +145,14 @@ export default {
 
 <style scoped>
 .contents-number {
-  font-size: 25px;
+  font-size: 32px;
   text-align: center;
   border: thin solid gray;
   width: 60px;
   border-radius: 5px;
 }
 .contents-label {
-  font-size: 24px;
+  font-size: 32px;
 }
 .canvas-parent {
   overflow: scroll;
