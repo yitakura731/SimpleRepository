@@ -13,7 +13,7 @@ export default function({ store, redirect, route, error }) {
         }
       })
       .catch(e => {
-        error(e);
+        Cookies.remove('sr.auth.token');
       });
   } else {
     store.commit('auth/strategy', null);

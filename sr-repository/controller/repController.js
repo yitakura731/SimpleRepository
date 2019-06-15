@@ -131,9 +131,9 @@ router.post('/tags', cors(),
 router.get('/documents', cors(),
   passport.authenticate('jwt', { session: false }),
   (req, res, next) => {
-  const { spaceId } = req.query;
+  const { spaceId, q } = req.query;
   repository
-    .getDocuments(req.user, spaceId)
+    .getDocuments(req.user, spaceId, q)
     .then(docs => {
       res
         .status(200)

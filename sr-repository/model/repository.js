@@ -87,14 +87,22 @@ module.exports = class Repository {
     return tag.save();
   }
 
-  async getDocuments(user, spaceId) {
+  async getDocuments(user, spaceId, q) {
     util.checkEmpty(user, i18next.t('nullUser'));
     let query = null;
     if (spaceId != null) {
       database.checkId(spaceId, i18next.t('invalidSpaceId'));
-      query = Document.find({ spaceId: spaceId, userId: user._id });
+      if (q != null) {
+        query = Document.find({ spaceId: spaceId, userId: user._id, name : new RegExp(`.*${q}.*`)});
+      } else {
+        query = Document.find({ spaceId: spaceId, userId: user._id });
+      }
     } else {
-      query = Document.find({ userId: user._id });
+      if (q != null) {
+        query = Document.find({ userId: user._id, name : new RegExp(`.*${q}.*`) });
+      } else {
+        query = Document.find({ userId: user._id });
+      }
     }
     const result = await query.sort({ createDate: -1 }).exec();
     const documents = [];

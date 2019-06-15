@@ -16,8 +16,10 @@
     </b-form>
 
     <div ref="contentsArea" class="border mt-1 h-100">
-      <div ref="canvasParent" class="canvas-parent" :style="styles()">
-        <b-img ref="contentsCanvas" :src="imageData" fluid-grow />
+      <div ref="imgParent" class="img-parent" :style="imgParentStyles()">
+        <div ref="imgWrapper" :style="imageWidth()">
+          <b-img ref="contentsImg" :src="imageData" fluid-grow />
+        </div>
       </div>
     </div>
 
@@ -50,6 +52,7 @@ export default {
   data() {
     return {
       imageData: null,
+      internalImageWidth: 0,
       scale: 100,
       loading: false
     };
@@ -66,9 +69,11 @@ export default {
     this.render();
   },
   methods: {
-    setScale(input) {
-      this.scale += input;
-      this.render(this.currPage);
+    setScale(diff) {
+      const newScale = this.scale + diff;
+      this.internalImageWidth =
+        this.internalImageWidth * (newScale / this.scale);
+      this.scale = newScale;
     },
     render() {
       this.loading = true;
@@ -85,13 +90,28 @@ export default {
           this.loading = false;
         });
     },
-    styles() {
+    imageWidth() {
+      const contentsArea = this.$refs.contentsArea;
+      let localWidth = 0;
+      if (contentsArea != null) {
+        if (this.internalImageWidth !== 0) {
+          localWidth = this.internalImageWidth;
+        } else {
+          localWidth = contentsArea.clientWidth;
+        }
+        this.internalImageWidth = localWidth;
+      } else {
+        localWidth = 600;
+      }
+      return { width: this.internalImageWidth + 'px' };
+    },
+    imgParentStyles() {
       const contentsArea = this.$refs.contentsArea;
       let retVal = null;
       if (contentsArea != null) {
         retVal = { height: contentsArea.clientHeight + 'px' };
       } else {
-        retVal = { height: 150 + 'px' };
+        retVal = { height: 450 + 'px' };
       }
       return retVal;
     }
@@ -110,7 +130,7 @@ export default {
 .contents-label {
   font-size: 24px;
 }
-.canvas-parent {
+.img-parent {
   overflow: scroll;
 }
 .fade-enter-active,

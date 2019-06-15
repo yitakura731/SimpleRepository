@@ -74,7 +74,7 @@ export const actions = {
   async fetchDocument({ commit, dispatch, state }, arg) {
     let url = null;
     if (arg.query != null) {
-      url = `rep/documents?spaceId=${arg.spaceId}&sq=${arg.query}`;
+      url = `rep/documents?spaceId=${arg.spaceId}&q=${arg.query}`;
     } else {
       url = `rep/documents?spaceId=${arg.spaceId}`;
     }
