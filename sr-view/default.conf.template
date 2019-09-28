@@ -1,0 +1,24 @@
+server {
+    listen       ${WEB_SERVER_PORT};
+    server_name  ${APP_NAME};
+    
+    location / {
+        root   /usr/share/nginx/html;
+        index  index.html index.htm;
+    }
+
+    error_page   500 502 503 504  /50x.html;
+
+    location = /50x.html {
+        root   /usr/share/nginx/html;
+    }
+
+    location /api {
+       proxy_pass ${REPOSITORY_HTTP_PROTOCOL}://${REPOSITORY_HOST}:${REPOSITORY_PORT}/${APP_NAME}/api;
+    }
+
+    location /SimpleReposiotry/ {
+        root   /usr/share/nginx/html/${APP_NAME};
+        index  index.html index.htm;
+    }
+}

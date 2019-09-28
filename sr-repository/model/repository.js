@@ -15,7 +15,14 @@ module.exports = class Repository {
   constructor(docFileRoot, spaceFileRoot) {
     util.checkEmpty(docFileRoot, i18next.t('nullContentsStorage'));
     util.checkEmpty(spaceFileRoot, i18next.t('nullSpaceStorage'));
+    if (!fs.existsSync(docFileRoot)) {
+      fse.mkdirSync(docFileRoot);
+    }
     this.docFileRoot = docFileRoot;
+
+    if (!fs.existsSync(spaceFileRoot)) {
+      fse.mkdirSync(spaceFileRoot);
+    }
     this.spaceFileRoot = spaceFileRoot;
   }
 
@@ -29,9 +36,7 @@ module.exports = class Repository {
     database.checkId(tagId, i18next.t('invalidTagId'));
     const puid = new Puid(false);
     const storeFileName = puid.generate();
-    return fse.writeFile(
-      path.join(this.docFileRoot, storeFileName),
-      file.buffer).then(() => {
+    return fse.writeFile(path.join(this.docFileRoot, storeFileName), file.buffer).then(() => {
       const document = new Document({
         _id: new mongoose.Types.ObjectId(),
         name,
@@ -93,16 +98,14 @@ module.exports = class Repository {
     if (spaceId != null) {
       database.checkId(spaceId, i18next.t('invalidSpaceId'));
       if (q != null) {
-        query = Document.find({ spaceId: spaceId, userId: user._id, name : new RegExp(`.*${q}.*`)});
+        query = Document.find({ spaceId, userId: user._id, name: new RegExp(`.*${q}.*`) });
       } else {
-        query = Document.find({ spaceId: spaceId, userId: user._id });
+        query = Document.find({ spaceId, userId: user._id });
       }
+    } else if (q != null) {
+      query = Document.find({ userId: user._id, name: new RegExp(`.*${q}.*`) });
     } else {
-      if (q != null) {
-        query = Document.find({ userId: user._id, name : new RegExp(`.*${q}.*`) });
-      } else {
-        query = Document.find({ userId: user._id });
-      }
+      query = Document.find({ userId: user._id });
     }
     const result = await query.sort({ createDate: -1 }).exec();
     const documents = [];
@@ -123,7 +126,7 @@ module.exports = class Repository {
     return Document.findById(id).then(doc => {
       const filePath = path.join(this.docFileRoot, doc.filename);
       const data = fs.readFileSync(filePath);
-      return { mimetype : doc.mimetype, file : data };
+      return { mimetype: doc.mimetype, file: data };
     });
   }
 
@@ -146,7 +149,9 @@ module.exports = class Repository {
     let query = null;
     if (q !== null) {
       query = Space.find({
-        userId: user._id, spaceName: new RegExp(`.*${q}.*`) });
+        userId: user._id,
+        spaceName: new RegExp(`.*${q}.*`)
+      });
     } else {
       query = Space.find({ userId: user._id });
     }
@@ -157,7 +162,7 @@ module.exports = class Repository {
       if (e.fileName !== null && e.fileName !== '') {
         filePath = path.join(this.spaceFileRoot, e.fileName);
       } else {
-        filePath = path.join(this.spaceFileRoot, 'default.png');
+        filePath = 'assets/default.png';
       }
       const data = fs.readFileSync(filePath, 'Base64');
       retVal.push({

@@ -5,7 +5,6 @@ const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const logger = require('morgan');
 const i18next = require('i18next');
-const config = require('config');
 const middleware = require('i18next-express-middleware');
 const fsBackend = require('i18next-node-fs-backend');
 const boom = require('boom');
@@ -54,20 +53,20 @@ const swaggerSpec = swaggerJSDoc({
       version: '1.2.0',
       description: 'Simple Repository API'
     },
-    basePath: `/${config.get('appLabel')}/api`,
+    basePath: `/${process.env.APP_NAME}/api`,
     consumes: ['application/json'],
     produces: ['application/json']
   },
   apis: ['./controller/repController.js', './controller/authController.js']
 });
-app.use(`/${config.get('appLabel')}/api/docs`, swaggerUi.serve);
-app.get(`/${config.get('appLabel')}/api/docs`, swaggerUi.setup(swaggerSpec));
+app.use(`/${process.env.APP_NAME}/api/docs`, swaggerUi.serve);
+app.get(`/${process.env.APP_NAME}/api/docs`, swaggerUi.setup(swaggerSpec));
 
-// API
-app.use(`/${config.get('appLabel')}/api/rep`, repController);
+// Authorization api
+app.use(`/${process.env.APP_NAME}/api/auth`, authController);
 
-// Auth
-app.use(`/${config.get('appLabel')}/api/auth`, authController);
+// Repository api
+app.use(`/${process.env.APP_NAME}/api/rep`, repController);
 
 // Error
 app.use((req, res, next) => {

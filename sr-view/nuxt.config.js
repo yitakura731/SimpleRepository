@@ -1,14 +1,13 @@
 const pkg = require('./package');
+require('dotenv').config({ path: '../.env' });
 
-const repHost = 'localhost';
-const repPort = '3000';
-const repAppLabel = '/SimpleRepository/api';
+const repositoryURL = `${process.env.REPOSITORY_HTTP_PROTOCOL}://${process.env.REPOSITORY_HOST}:${process.env.REPOSITORY_PORT}/${process.env.APP_NAME}`;
 
 module.exports = {
   mode: 'spa',
 
   router: {
-    base: '/SimpleRepository/'
+    base: `/${process.env.APP_NAME}/`
   },
 
   /*
@@ -70,6 +69,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
+    ['@nuxtjs/dotenv', { path: '../' }],
     'bootstrap-vue/nuxt',
     'nuxt-fontawesome'
   ],
@@ -78,11 +78,14 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    baseURL: 'https://' + repHost + ':' + repPort + repAppLabel
+    proxy: true
   },
 
-  env: {
-    baseUrl: 'https://' + repHost + ':' + repPort + repAppLabel
+  proxy: {
+    '/api': {
+      target: repositoryURL,
+      secure: false
+    }
   },
 
   build: {

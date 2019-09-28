@@ -54,7 +54,7 @@ export const actions = {
   },
 
   async fetchSpace({ commit, dispatch }, args) {
-    let url = `rep/spaces`;
+    let url = `/api/rep/spaces`;
     if (args != null && args.query != null) {
       url += `?q=${encodeURIComponent(args.query)}`;
     }
@@ -74,9 +74,9 @@ export const actions = {
   async fetchDocument({ commit, dispatch, state }, arg) {
     let url = null;
     if (arg.query != null) {
-      url = `rep/documents?spaceId=${arg.spaceId}&q=${arg.query}`;
+      url = `/api/rep/documents?spaceId=${arg.spaceId}&q=${arg.query}`;
     } else {
-      url = `rep/documents?spaceId=${arg.spaceId}`;
+      url = `/api/rep/documents?spaceId=${arg.spaceId}`;
     }
     const response = await this.$axios.$get(url);
     if (response.length > 0) {
@@ -113,35 +113,35 @@ export const actions = {
   },
 
   async fetchTag({ commit }, args) {
-    const response = await this.$axios.$get('rep/tags');
+    const response = await this.$axios.$get('/api/rep/tags');
     commit('tags', response);
   },
 
   async postTag({ dispatch }, args) {
-    await this.$axios.$post('rep/tags', args.data);
+    await this.$axios.$post('/api/rep/tags', args.data);
     await dispatch('fetchTag');
   },
 
   async postSpace({ dispatch }, args) {
-    await this.$axios.$post('rep/spaces', args.data);
+    await this.$axios.$post('/api/rep/spaces', args.data);
     await dispatch('fetchSpace');
   },
 
   async postDocument({ dispatch }, args) {
-    await this.$axios.$post('rep/documents', args.data);
+    await this.$axios.$post('/api/rep/documents', args.data);
     await dispatch('fetchDocument', { spaceId: args.data.get('spaceId') });
   },
 
   fetchPDF({ dispatch }, args) {
     const loadingTask = pdfjsLib.getDocument({
-      url: `${process.env.baseUrl}/rep/documents/${args.contentId}/contents`,
+      url: `/api/rep/documents/${args.contentId}/contents`,
       httpHeaders: { Authorization: Cookies.get('sr.auth.token') }
     });
     return loadingTask.promise;
   },
 
   fetchImage({ dispatch }, args) {
-    return this.$axios.$get(`rep/documents/${args.contentId}/contents`, {
+    return this.$axios.$get(`/api/rep/documents/${args.contentId}/contents`, {
       headers: { 'Content-type': 'image/jpeg' }
     });
   }

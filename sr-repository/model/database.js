@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const config = require('config');
+require('dotenv').config({ path: '../.env' });
 
 /* eslint prefer-destructuring: "off" */
 class Database {
@@ -50,7 +50,7 @@ class Database {
 
   connect() {
     mongoose.Promise = global.Promise;
-    const url = `${config.get('dbServerURL')}/${config.get('dbName')}`;
+    const url = `mongodb://${process.env.DB_APP_USER_NAME}:${process.env.DB_APP_USER_PASSWD}@${process.env.DB_HOST}:${process.env.DB_PORT}/${process.env.DB_NAME}`;
     return mongoose.connect(url, { useNewUrlParser: true });
   }
 
