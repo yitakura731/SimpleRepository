@@ -1,9 +1,5 @@
 FROM node
 
-ARG REPOSITORY_DATA_PATH
-
-RUN echo ${REPOSITORY_DATA_PATH}
-
 COPY . /src/
 
 WORKDIR /src/
