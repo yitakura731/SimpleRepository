@@ -1,15 +1,12 @@
 <template>
   <b-card no-header no-body class="h-50 py-1 border-0">
     <b-input-group class="p-0 m-0">
-      <b-form-input v-model="input" size="lg" type="text" class="p-0 m-0" />
-      <b-button type="button" size="lg" class="mx-0" @click="search()">
+      <b-form-input v-model="input" size="sm" type="text" class="p-0 m-0" />
+      <b-button type="button" size="sm" class="mx-0" @click="search()">
         <font-awesome-icon icon="search" />
       </b-button>
-      <b-button type="button" size="lg" class="ml-1" @click="post()">
-        <font-awesome-icon icon="folder" />
-      </b-button>
     </b-input-group>
-    <div class="border listItemParent mt-1 h-100">
+    <div class="border listItemParent mt-0 h-100">
       <div v-show="hasSpaces">
         <space-list-item
           v-for="space in spaces"
@@ -28,18 +25,15 @@
         />
       </div>
     </div>
-    <post-space-dialog ref="PostSpaceDialog" />
   </b-card>
 </template>
 
 <script>
-import PostSpaceDialog from './post-space-dialog';
 import SpaceListItem from './list-space-item';
 
 export default {
   components: {
-    'space-list-item': SpaceListItem,
-    'post-space-dialog': PostSpaceDialog
+    'space-list-item': SpaceListItem
   },
   data() {
     return {
@@ -59,9 +53,6 @@ export default {
     }
   },
   methods: {
-    post() {
-      this.$refs.PostSpaceDialog.start();
-    },
     search() {
       this.$store
         .dispatch('repository/fetchSpace', { query: this.input })
@@ -80,6 +71,6 @@ export default {
   background-color: lightgrey;
 }
 .listItemParent {
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>

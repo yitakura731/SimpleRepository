@@ -1,10 +1,10 @@
 <template>
-  <b-card no-body no-header class="h-100 border-0">
-    <b-form inline>
-      <b-button type="button" size="lg" @click="setScale(10)">
+  <b-card no-body no-header class="h-100 border-0 top-area">
+    <b-form inline class="operation-area">
+      <b-button type="button" size="sm" @click="setScale(10)">
         <font-awesome-icon icon="plus" />
       </b-button>
-      <b-button type="button" size="lg" class="ml-1" @click="setScale(-10)">
+      <b-button type="button" size="sm" class="ml-1" @click="setScale(-10)">
         <font-awesome-icon icon="minus" />
       </b-button>
       <div class="contents-number ml-1">
@@ -14,10 +14,10 @@
         %
       </div>
 
-      <b-button type="button" size="lg" class="ml-5" @click="setPage(-1)">
+      <b-button type="button" size="sm" class="ml-5" @click="setPage(-1)">
         <font-awesome-icon icon="caret-left" />
       </b-button>
-      <b-button type="button" size="lg" class="ml-1" @click="setPage(1)">
+      <b-button type="button" size="sm" class="ml-1" @click="setPage(1)">
         <font-awesome-icon icon="caret-right" />
       </b-button>
       <div class="contents-number ml-1">
@@ -31,7 +31,7 @@
       </div>
     </b-form>
 
-    <div ref="contentsArea" class="border mt-1 h-100">
+    <div ref="contentsArea" class="border mt-1 h-100 view-area">
       <div ref="canvasParent" class="canvas-parent" :style="styles()">
         <canvas ref="contentsCanvas" />
       </div>
@@ -144,15 +144,32 @@ export default {
 </script>
 
 <style scoped>
+.top-area {
+  position: relative;
+  width: 100%;
+}
+.operation-area {
+  position: absolute;
+  z-index: 1;
+  background-color: rgba(240, 240, 240, 0.7);
+  border-radius: 5px;
+  padding: 6px;
+  margin-left: 6px;
+  margin-top: 6px;
+}
+.view-area {
+  position: absolute;
+  width: 100%;
+}
 .contents-number {
-  font-size: 32px;
+  font-size: 20px;
   text-align: center;
   border: thin solid gray;
   width: 60px;
   border-radius: 5px;
 }
 .contents-label {
-  font-size: 32px;
+  font-size: 20px;
 }
 .canvas-parent {
   overflow: scroll;

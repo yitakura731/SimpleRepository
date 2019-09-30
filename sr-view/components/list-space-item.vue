@@ -5,8 +5,8 @@
         <img
           class="m-1"
           :src="'data:image/png;base64, ' + space.image"
-          width="40"
-          height="40"
+          width="30"
+          height="30"
         />
         {{ space.name }}
       </p>

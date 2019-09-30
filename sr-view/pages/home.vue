@@ -1,15 +1,13 @@
 <template>
   <div>
     <b-container fluid :style="styleContents" class="contentsArea">
-      <b-row no-gutters class="mx-4 h-100">
-        <b-col lg="3" class="pl-2 pr-2 h-100">
-          <space />
-          <document />
-        </b-col>
-        <b-col lg="9" class="pl-2 pr-2 h-100">
-          <myContent />
-        </b-col>
-      </b-row>
+      <b-collapse id="menu-clsp" v-model="showLeftMenu" class="leftArea">
+        <space :style="styleLeft" class="pb-4" />
+        <document />
+      </b-collapse>
+      <div :style="styleRight" class="rightArea pl-2">
+        <myContent />
+      </div>
     </b-container>
     <error-dialog />
     <success-dialog />
@@ -25,7 +23,7 @@ import SuccessDialog from '@@/components/success-dialog.vue';
 
 export default {
   middleware: ['auth', 'initialize'],
-  layout: 'default',
+  layout: 'main',
   components: {
     space: Space,
     document: Document,
@@ -33,10 +31,37 @@ export default {
     'error-dialog': ErrorDialog,
     'success-dialog': SuccessDialog
   },
+  data() {
+    return {
+      showLeftMenu: true
+    };
+  },
   computed: {
     styleContents() {
       return {
-        '--contentsHeight': window.innerHeight - 54 + 'px'
+        '--contentsHeight': window.innerHeight - 45 + 'px'
+      };
+    },
+    styleLeft() {
+      let val = 0;
+      if (this.showLeftMenu) {
+        val = 20;
+      } else {
+        val = 0;
+      }
+      return {
+        '--leftWidth': val + '%'
+      };
+    },
+    styleRight() {
+      let val = 0;
+      if (this.showLeftMenu) {
+        val = 80;
+      } else {
+        val = 100;
+      }
+      return {
+        '--rightWidth': val + '%'
       };
     }
   }
@@ -47,5 +72,20 @@ export default {
 .contentsArea {
   --contentsHeight: 0px;
   height: var(--contentsHeight);
+  display: flex;
+  width: 100%;
+  align-items: stretch;
+}
+
+.leftArea {
+  --leftWidth: 20%;
+  width: var(--leftWidth);
+  height: 100%;
+}
+
+.rightArea {
+  --rightWidth: 80%;
+  width: var(--rightWidth);
+  height: 100%;
 }
 </style>

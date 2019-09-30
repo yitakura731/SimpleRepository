@@ -1,19 +1,13 @@
 <template>
   <b-card no-header no-body class="h-50 py-1 border-0">
     <b-input-group class="m-0">
-      <b-form-input v-model="input" size="lg" type="text" class="p-0 m-0" />
-      <b-button type="button" size="lg" class="ml-1-" @click="search()">
+      <b-form-input v-model="input" size="sm" type="text" class="p-0 m-0" />
+      <b-button type="button" size="sm" class="ml-1-" @click="search()">
         <font-awesome-icon icon="search" />
-      </b-button>
-      <b-button type="button" size="lg" class="ml-1" @click="postTag()">
-        <font-awesome-icon icon="tag" />
-      </b-button>
-      <b-button type="button" size="lg" class="ml-1" @click="postDocument()">
-        <font-awesome-icon icon="file" />
       </b-button>
     </b-input-group>
 
-    <div class="border list-item-parent mt-1 h-100">
+    <div class="border list-item-parent mt-0 h-100">
       <div v-show="hasDocuments">
         <div v-for="(docGroup, index) in documents" :key="docGroup.tagId">
           <list-tag-item
@@ -33,21 +27,14 @@
         />
       </div>
     </div>
-
-    <post-doc-dialog ref="PostDocDialog" />
-    <post-tag-dialog ref="PostTagDialog" />
   </b-card>
 </template>
 
 <script>
-import PostDocDialog from './post-doc-dialog.vue';
-import PostTagDialog from './post-tag-dialog.vue';
 import ListTagItem from './list-tag-item.vue';
 
 export default {
   components: {
-    'post-doc-dialog': PostDocDialog,
-    'post-tag-dialog': PostTagDialog,
     'list-tag-item': ListTagItem
   },
   data() {
@@ -68,12 +55,6 @@ export default {
     }
   },
   methods: {
-    postDocument() {
-      this.$refs.PostDocDialog.start();
-    },
-    postTag() {
-      this.$refs.PostTagDialog.start();
-    },
     getTag(tagId) {
       const retVal = this.$store.state.repository.tags.find(tag => {
         return tag.id === tagId;
@@ -104,6 +85,6 @@ export default {
   background-color: lightgrey;
 }
 .list-item-parent {
-  overflow: scroll;
+  overflow-y: scroll;
 }
 </style>

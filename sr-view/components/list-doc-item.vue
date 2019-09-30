@@ -1,10 +1,10 @@
 <template>
   <div :class="docClass">
-    <div class="ml-5 py-2" @click="click()">
-      <h5 class="my-0">
+    <div class="ml-5 py-1" @click="click()">
+      <p class="my-0">
         <font-awesome-icon :icon="getIcon()" />
         {{ document.docName }}
-      </h5>
+      </p>
     </div>
     <hr class="m-0" />
   </div>

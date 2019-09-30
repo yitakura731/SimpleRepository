@@ -17,6 +17,6 @@ export default {
 
 <style scoped>
 .headerArea {
-  height: 54px;
+  height: 45px;
 }
 </style>
