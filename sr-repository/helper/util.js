@@ -14,10 +14,10 @@ module.exports = class Util {
   }
 
   static getWebAppURL() {
-    return `${process.env.WEB_SERVER_HTTP_PROTOCOL}://${process.env.WEB_SERVER_HOST}:${process.env.WEB_SERVER_PORT}/${process.env.APP_NAME}`;
+    return `${process.env.WEB_SERVER_HTTP_PROTOCOL}://${process.env.PUBLIC_IP}:${process.env.WEB_SERVER_PORT}/${process.env.APP_NAME}`;
   }
 
   static getRepositoryURL() {
-    return `${process.env.REPOSITORY_HTTP_PROTOCOL}://${process.env.REPOSITORY_HOST}:${process.env.REPOSITORY_PORT}/${process.env.APP_NAME}`;
+    return `${process.env.REPOSITORY_HTTP_PROTOCOL}://${process.env.PUBLIC_IP}:${process.env.REPOSITORY_PORT}/${process.env.APP_NAME}`;
   }
 };

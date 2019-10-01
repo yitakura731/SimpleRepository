@@ -57,12 +57,12 @@
         />
       </template>
       <b-dropdown-item>
-        <font-awesome-icon :icon="strategy.icon" style="font-size: 12px;" />
+        <font-awesome-icon :icon="strategy.icon" style="font-size: 16px;" />
         {{ strategy.username }}
       </b-dropdown-item>
       <hr class="my-1" />
       <b-dropdown-item @click="logout()">
-        <font-awesome-icon icon="sign-out-alt" style="font-size: 12px;" />
+        <font-awesome-icon icon="sign-out-alt" style="font-size: 16px;" />
         {{ $t('logout') }}
       </b-dropdown-item>
     </b-nav-item-dropdown>
