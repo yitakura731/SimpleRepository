@@ -16,10 +16,18 @@
     </b-form>
 
     <div ref="contentsArea" class="border h-100 view-area">
-      <div ref="imgParent" class="img-parent" :style="imgParentStyles()">
-        <div ref="imgWrapper" :style="imageStyle()">
-          <b-img ref="contentsImg" :src="imageData" fluid-grow />
-        </div>
+      <div
+        ref="imgParent"
+        class="img-parent d-flex align-items-center"
+        :style="imgParentStyles()"
+      >
+        <img
+          ref="contentsImg"
+          class="image-area"
+          :src="imageData !== null ? imageData.src : null"
+          :height="imageData !== null ? imageData.height : 100"
+          :width="imageData !== null ? imageData.width : 100"
+        />
       </div>
     </div>
 
@@ -52,7 +60,6 @@ export default {
   data() {
     return {
       imageData: null,
-      internalimageWidth: 0,
       scale: 100,
       loading: false
     };
@@ -71,8 +78,8 @@ export default {
   methods: {
     setScale(diff) {
       const newScale = this.scale + diff;
-      this.internalimageWidth =
-        this.internalimageWidth * (newScale / this.scale);
+      this.imageData.height = this.imageData.height * (newScale / this.scale);
+      this.imageData.width = this.imageData.width * (newScale / this.scale);
       this.scale = newScale;
     },
     render() {
@@ -82,28 +89,26 @@ export default {
           contentId: this.content.docId
         })
         .then(response => {
-          this.imageData = `data:image/jpeg;base64,${response}`;
+          return new Promise((resolve, reject) => {
+            const image = new Image();
+            image.src = `data:image/jpeg;base64,${response}`;
+            image.onload = () => {
+              return resolve(image);
+            };
+          });
+        })
+        .then(image => {
+          const contentsArea = this.$refs.imgParent;
+          const contentHeight = contentsArea.clientHeight;
+          image.width = image.width * (contentHeight / image.height);
+          image.height = contentHeight;
+          this.imageData = image;
           this.loading = false;
         })
         .catch(error => {
           this.$nuxt.$emit('showError', error);
           this.loading = false;
         });
-    },
-    imageStyle() {
-      const contentsArea = this.$refs.contentsArea;
-      let localWidth = 0;
-      if (contentsArea != null) {
-        if (this.internalimageWidth !== 0) {
-          localWidth = this.internalimageWidth;
-        } else {
-          localWidth = contentsArea.clientWidth;
-        }
-        this.internalimageWidth = localWidth;
-      } else {
-        localWidth = 600;
-      }
-      return { width: this.internalimageWidth + 'px' };
     },
     imgParentStyles() {
       const contentsArea = this.$refs.contentsArea;
@@ -136,6 +141,10 @@ export default {
 .view-area {
   position: absolute;
   width: 100%;
+}
+.image-area {
+  display: block;
+  margin: 0 auto;
 }
 .contents-number {
   font-size: 20px;

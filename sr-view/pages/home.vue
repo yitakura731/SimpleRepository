@@ -1,8 +1,13 @@
 <template>
   <div>
     <b-container fluid :style="styleContents" class="contentsArea">
-      <b-collapse id="menu-clsp" v-model="showLeftMenu" class="leftArea">
-        <space :style="styleLeft" class="pb-4" />
+      <b-collapse
+        id="menu-clsp"
+        v-model="showLeftMenu"
+        :style="styleLeft"
+        class="leftArea"
+      >
+        <space class="pb-4" />
         <document />
       </b-collapse>
       <div :style="styleRight" class="rightArea pl-2">

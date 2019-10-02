@@ -167,6 +167,7 @@ export default {
   border: thin solid gray;
   width: 60px;
   border-radius: 5px;
+  background-color: white;
 }
 .contents-label {
   font-size: 20px;
