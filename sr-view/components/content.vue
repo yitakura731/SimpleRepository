@@ -1,17 +1,15 @@
 <template>
-  <div class="h-100">
-    <div class="p-1 h-100">
-      <div v-if="content != null" class="h-100">
-        <div v-if="content.mimetype === 'application/pdf'" class="h-100">
-          <pdf-viewer :content="content" />
-        </div>
-        <div v-else class="h-100">
-          <image-viewer :content="content" />
-        </div>
+  <div class="p-1 h-100">
+    <div v-if="content != null" class="h-100">
+      <div v-if="content.mimetype === 'application/pdf'" class="h-100">
+        <pdf-viewer :content="content" />
       </div>
-      <div v-else class="h-100 img-parent">
-        <img src="~/static/no-file.png" class="mx-auto" />
+      <div v-else class="h-100">
+        <image-viewer :content="content" />
       </div>
+    </div>
+    <div v-else class="h-100 img-parent">
+      <img src="~/static/no-file.png" class="mx-auto" />
     </div>
   </div>
 </template>

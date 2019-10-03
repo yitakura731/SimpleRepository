@@ -37,19 +37,6 @@
         </b-row>
         <b-row class="mb-3">
           <b-col class="mt-2" cols="3">
-            {{ $t('labelName') }}
-          </b-col>
-          <b-col>
-            <b-form-input v-model="docName" type="text" :state="nameState" />
-            <div v-show="!nameState">
-              <p class="text-danger">
-                {{ $t('nameRequired') }}
-              </p>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col class="mt-2" cols="3">
             {{ $t('labelFile') }}
           </b-col>
           <b-col>
@@ -66,6 +53,19 @@
             <div v-show="!extState">
               <p class="text-danger">
                 {{ $t('notPDForJPEG') }}
+              </p>
+            </div>
+          </b-col>
+        </b-row>
+        <b-row class="mb-3">
+          <b-col class="mt-2" cols="3">
+            {{ $t('labelName') }}
+          </b-col>
+          <b-col>
+            <b-form-input v-model="docName" type="text" :state="nameState" />
+            <div v-show="!nameState">
+              <p class="text-danger">
+                {{ $t('nameRequired') }}
               </p>
             </div>
           </b-col>

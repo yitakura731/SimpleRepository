@@ -10,7 +10,19 @@
         <space class="pb-4" />
         <document />
       </b-collapse>
-      <div :style="styleRight" class="rightArea pl-2">
+      <b-collapse id="menu-clsp" v-model="showLeftMenu">
+        <div
+          class="borderArea"
+          @mousedown="mouseDown($event)"
+          @mouseup="mouseUp($event)"
+          @mouseleave="mouseUp($event)"
+          @mousemove="mouseMove($event)"
+        >
+          <div class="borderSubLeftArea" />
+          <div class="borderSubRightArea" />
+        </div>
+      </b-collapse>
+      <div :style="styleRight" class="rightArea">
         <myContent />
       </div>
     </b-container>
@@ -38,7 +50,9 @@ export default {
   },
   data() {
     return {
-      showLeftMenu: true
+      showLeftMenu: true,
+      borderRatio: 20,
+      isMouseDown: false
     };
   },
   computed: {
@@ -50,7 +64,7 @@ export default {
     styleLeft() {
       let val = 0;
       if (this.showLeftMenu) {
-        val = 20;
+        val = this.borderRatio;
       } else {
         val = 0;
       }
@@ -61,13 +75,26 @@ export default {
     styleRight() {
       let val = 0;
       if (this.showLeftMenu) {
-        val = 80;
+        val = 100 - this.borderRatio;
       } else {
         val = 100;
       }
       return {
         '--rightWidth': val + '%'
       };
+    }
+  },
+  methods: {
+    mouseDown(event) {
+      this.isMouseDown = true;
+    },
+    mouseUp(event) {
+      this.isMouseDown = false;
+    },
+    mouseMove(event) {
+      if (this.isMouseDown) {
+        this.borderRatio += 100 * (event.movementX / window.innerWidth);
+      }
     }
   }
 };
@@ -77,8 +104,8 @@ export default {
 .contentsArea {
   --contentsHeight: 0px;
   height: var(--contentsHeight);
-  display: flex;
   width: 100%;
+  display: flex;
   align-items: stretch;
 }
 
@@ -88,9 +115,55 @@ export default {
   height: 100%;
 }
 
+.borderArea {
+  height: 100%;
+  display: flex;
+}
+
+.borderSubLeftArea {
+  height: 100%;
+  width: 5px;
+  display: flex;
+  cursor: ew-resize;
+  margin-left: 8px;
+}
+
+.borderSubRightArea {
+  height: 100%;
+  width: 5px;
+  display: flex;
+  cursor: ew-resize;
+  margin-right: 8px;
+  border-left: double lightgray 4px;
+}
+
 .rightArea {
   --rightWidth: 80%;
   width: var(--rightWidth);
+  padding-right: 0em;
   height: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .contentsArea {
+    height: var(500px);
+    width: 100%;
+    display: initial;
+    align-items: initial;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .leftArea {
+    width: 100%;
+    padding-left: 0.3em;
+    padding-right: 0.3em;
+    border-right: none;
+    display: initial;
+  }
+  .rightArea {
+    width: 100%;
+    padding-left: 0;
+  }
 }
 </style>
