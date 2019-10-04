@@ -1,6 +1,12 @@
 <template>
   <div>
-    <b-container fluid :style="styleContents" class="contentsArea">
+    <b-container
+      fluid
+      :style="styleContents"
+      class="contentsArea"
+      @mouseup="mouseUp($event)"
+      @mousemove="mouseMove($event)"
+    >
       <b-collapse
         id="menu-clsp"
         v-model="showLeftMenu"
@@ -11,13 +17,7 @@
         <document />
       </b-collapse>
       <b-collapse id="menu-clsp" v-model="showLeftMenu">
-        <div
-          class="borderArea"
-          @mousedown="mouseDown($event)"
-          @mouseup="mouseUp($event)"
-          @mouseleave="mouseUp($event)"
-          @mousemove="mouseMove($event)"
-        >
+        <div class="borderArea" @mousedown="mouseDown($event)">
           <div class="borderSubLeftArea" />
           <div class="borderSubRightArea" />
         </div>
