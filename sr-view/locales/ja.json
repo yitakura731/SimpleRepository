@@ -1,7 +1,8 @@
 {
     "navbar": "Simple Repository",
     "welcome": "Welcom to Simple Repository",
-    "registration": "Upload",
+    "subtitle": "このサイトはYitakura731の学習用のサイトです",
+    "registration": "登録",
     "successPostSpace" : "スペースの登録に成功しました",
     "successPostTag" : "タグの登録に成功しました",
     "successPostDocument" : "文書の登録に成功しました",

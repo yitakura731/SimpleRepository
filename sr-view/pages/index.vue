@@ -3,9 +3,12 @@
     <p class="welcomeArea pt-3">
       {{ $t('welcome') }}
     </p>
-    <b-row align-h="center" align-v="center" class="pt-5">
+    <p class="subtitleArea">
+      {{ $t('subtitle') }}
+    </p>
+    <b-row align-h="center" align-v="center" class="pt-3">
       <b-col md="4">
-        <b-card class="cardArea">
+        <b-card class="cardArea mb-5">
           <b-form-group :label="$t('localId')" label-size="sm">
             <b-input v-model="localId" size="sm" placeholder="" />
           </b-form-group>
@@ -35,7 +38,7 @@
               <b-btn
                 type="submit"
                 block
-                size="sm"
+                size="md"
                 :style="{ background: s.color }"
                 class="login-button"
               >
@@ -117,6 +120,13 @@ export default {
 
 .welcomeArea {
   font-size: 40px;
+  color: white;
+  text-align: center;
+  font-family: Tahoma;
+}
+
+.subtitleArea {
+  font-size: 20px;
   color: white;
   text-align: center;
   font-family: Tahoma;
