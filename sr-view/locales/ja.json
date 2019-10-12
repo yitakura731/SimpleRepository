@@ -1,7 +1,7 @@
 {
     "navbar": "Simple Repository",
-    "welcome": "Welcom to Simple Repository",
-    "subtitle": "このサイトはYitakura731の学習用のサイトです",
+    "welcome": "Simple Repositoryへようこそ",
+    "subtitle": "このWebアプリはプログラム学習用のデモサイトです",
     "registration": "登録",
     "successPostSpace" : "スペースの登録に成功しました",
     "successPostTag" : "タグの登録に成功しました",
