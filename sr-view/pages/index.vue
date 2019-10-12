@@ -77,14 +77,14 @@ export default {
           name: 'Git Hub',
           color: '#333',
           icon: ['fab', 'github'],
-          action: '/api/auth/login/github'
+          action: `api/auth/login/github`
         },
         {
           key: 'facebook',
           name: 'facebook',
           color: '#3C5A99',
           icon: ['fab', 'facebook'],
-          action: '/api/auth/login/facebook'
+          action: `api/auth/login/facebook`
         }
       ];
     },

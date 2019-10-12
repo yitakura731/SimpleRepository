@@ -1,7 +1,7 @@
 const pkg = require('./package');
 require('dotenv').config({ path: '../.env' });
 
-const repositoryURL = `${process.env.REPOSITORY_HTTP_PROTOCOL}://${process.env.REPOSITORY_HOST}:${process.env.REPOSITORY_PORT}/${process.env.APP_NAME}`;
+const repositoryURL = `${process.env.REPOSITORY_HTTP_PROTOCOL}://${process.env.REPOSITORY_HOST}:${process.env.REPOSITORY_PORT}`;
 
 module.exports = {
   mode: 'spa',
@@ -78,14 +78,19 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
+    prefix: `/${process.env.APP_NAME}`,
     proxy: true
   },
 
   proxy: {
-    '/api': {
+    '/SimpleRepository/api': {
       target: repositoryURL,
       secure: false
     }
+  },
+
+  env: {
+    APP_NAME: process.env.APP_NAME
   },
 
   build: {

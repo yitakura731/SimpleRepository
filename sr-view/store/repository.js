@@ -134,7 +134,7 @@ export const actions = {
 
   fetchPDF({ dispatch }, args) {
     const loadingTask = pdfjsLib.getDocument({
-      url: `/api/rep/documents/${args.contentId}/contents`,
+      url: `/${process.env.APP_NAME}/api/rep/documents/${args.contentId}/contents`,
       httpHeaders: { Authorization: Cookies.get('sr.auth.token') }
     });
     return loadingTask.promise;

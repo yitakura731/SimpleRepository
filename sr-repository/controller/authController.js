@@ -67,7 +67,7 @@ router.get(
   (req, res, next) => {
     const token = auth.createToken(req.user);
     res.cookie('sr.auth.token', `Bearer ${token}`);
-    return res.redirect(301, `${util.getWebAppURL()}/home`);
+    return res.redirect(301, `/${process.env.APP_NAME}/home`);
   }
 );
 
@@ -85,7 +85,7 @@ router.get(
   (req, res, next) => {
     const token = auth.createToken(req.user);
     res.cookie('sr.auth.token', `Bearer ${token}`);
-    return res.redirect(301, `${util.getWebAppURL()}/home`);
+    return res.redirect(301, `/${process.env.APP_NAME}/home`);
   }
 );
 

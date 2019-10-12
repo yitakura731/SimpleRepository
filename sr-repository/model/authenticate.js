@@ -44,7 +44,7 @@ passport.use(
     {
       clientID: process.env.FACEBOOK_CLIENT_ID,
       clientSecret: process.env.FACEBOOK_CLIENT_SECREAT,
-      callbackURL: `${util.getRepositoryURL()}${process.env.FACEBOOK_CALLBACK_URL}`
+      callbackURL: `${util.getWebAppURL()}/api/auth/login/facebook/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
       User.findOne({ facebookId: profile.id }, (err, user) => {
@@ -75,7 +75,7 @@ passport.use(
     {
       clientID: process.env.GITHUB_CLIENT_ID,
       clientSecret: process.env.GITHUB_CLIENT_SECREAT,
-      callbackURL: `${util.getRepositoryURL()}${process.env.GITHUB_CALLBACK_URL}`
+      callbackURL: `${util.getWebAppURL()}/api/auth/login/github/callback`
     },
     (accessToken, refreshToken, profile, cb) => {
       User.findOne({ githubId: profile.id }, (err, user) => {

@@ -14,7 +14,7 @@ module.exports = class Util {
   }
 
   static getWebAppURL() {
-    return `${process.env.WEB_SERVER_HTTP_PROTOCOL}://${process.env.PUBLIC_IP}:${process.env.WEB_SERVER_PORT}/${process.env.APP_NAME}`;
+    return `${process.env.WEB_SERVER_HTTP_PROTOCOL}://${process.env.PUBLIC_IP}/${process.env.APP_NAME}`;
   }
 
   static getRepositoryURL() {

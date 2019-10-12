@@ -1,6 +1,5 @@
 server {
-    listen       ${WEB_SERVER_PORT};
-    ssl on;
+    listen  ${WEB_SERVER_PORT}  ssl;
     server_name  ${APP_NAME};
     ssl_certificate /etc/pki/tls/certs/view-server.crt;
     ssl_certificate_key /etc/pki/tls/private/view-server.key;
@@ -16,12 +15,12 @@ server {
         root   /usr/share/nginx/html;
     }
 
-    location /api {
-       proxy_pass ${REPOSITORY_HTTP_PROTOCOL}://${REPOSITORY_HOST}:${REPOSITORY_PORT}/${APP_NAME}/api;
+    location /${APP_NAME}/api {
+       proxy_pass ${REPOSITORY_HTTP_PROTOCOL}://${REPOSITORY_HOST}:${REPOSITORY_PORT};
     }
 
-    location /SimpleReposiotry/ {
-        root   /usr/share/nginx/html/${APP_NAME};
+    location /${APP_NAME}/ {
+        root   /usr/share/nginx/html;
         index  index.html index.htm;
     }
 }

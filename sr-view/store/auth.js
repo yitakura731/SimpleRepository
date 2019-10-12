@@ -28,8 +28,11 @@ export const actions = {
     const response = await this.$axios.$post('/api/auth/login/local', args, {
       withCredentials: false
     });
-    Cookies.set('sr.auth.token', response.accessToken);
-    this.$router.push('/home');
+    if (response.accessToken != null) {
+      Cookies.set('sr.auth.token', response.accessToken);
+      this.$router.push('/home');
+    } else {
+    }
   },
 
   me({ commit, dispatch }, args) {
