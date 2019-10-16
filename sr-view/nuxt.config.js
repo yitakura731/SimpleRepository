@@ -1,7 +1,7 @@
 const pkg = require('./package');
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: './app.env' });
 
-const repositoryURL = `${process.env.REPOSITORY_HTTP_PROTOCOL}://${process.env.REPOSITORY_HOST}:${process.env.REPOSITORY_PORT}`;
+const repositoryURL = `${process.env.REPOSITORY_URL}`;
 
 module.exports = {
   mode: 'spa',
@@ -69,7 +69,7 @@ module.exports = {
   modules: [
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    ['@nuxtjs/dotenv', { path: '../' }],
+    ['@nuxtjs/dotenv', { filename: './app.env' }],
     'bootstrap-vue/nuxt',
     'nuxt-fontawesome'
   ],

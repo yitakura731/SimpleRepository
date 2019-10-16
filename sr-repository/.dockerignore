@@ -2,5 +2,6 @@ node_modules
 .vscode
 Dockerfile
 .dockerignore
-.eslinetrc.js
+rep.env
+.eslinetrc.json
 .prettierrc

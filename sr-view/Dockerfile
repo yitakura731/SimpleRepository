@@ -1,10 +1,20 @@
-# ベースイメージを指定
-FROM nginx
+# ビルド環境
+FROM node:lts-alpine as build-stage
+
+COPY . /src/
+
+WORKDIR /src/
+
+RUN npm install && \
+    npm run generate 
+
+# 本番環境
+FROM nginx as production-stage
 
 ARG APP_NAME
 
 # HTMLファイル
-COPY ./dist/ /usr/share/nginx/html/${APP_NAME}
+COPY  --from=build-stage ./src/dist/ /usr/share/nginx/html/${APP_NAME}
 
 # サーバー証明書
 COPY ./keys/view-server.crt /etc/pki/tls/certs/view-server.crt
@@ -14,3 +24,6 @@ COPY ./keys/view-server.key /etc/pki/tls/private/view-server.key
 
 # NGINX設定ファイル
 COPY ./default.conf.template /etc/nginx/conf.d/default.conf.template
+
+# 起動
+CMD ["/bin/bash", "-c", "envsubst '$$APP_NAME$$REPOSITORY_URL$$WEB_SERVER_PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]

@@ -7,7 +7,7 @@ const FacebookStrategy = require('passport-facebook').Strategy;
 const GitHubStrategy = require('passport-github').Strategy;
 const jwt = require('jsonwebtoken');
 
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: '/rep.env' });
 const util = require('../helper/util');
 
 const ExtractJWT = passportJWT.ExtractJwt;

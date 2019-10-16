@@ -1,32 +1,19 @@
 version: '3'
 services:
-  # Database?ｿｽT?ｿｽ[?ｿｽo?ｿｽ[
-  # voluems?ｿｽﾌ抵ｿｽ?ｿｽ?ｿｽ 
-  #?ｿｽ@1. ?ｿｽ\?ｿｽ?ｿｽ?ｿｽﾍ??ｿｽ?ｿｽz?ｿｽX?ｿｽg?ｿｽﾌデ?ｿｽB?ｿｽ?ｿｽ?ｿｽN?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ:?ｿｽ?ｿｽ?ｿｽR?ｿｽ?ｿｽ?ｿｽe?ｿｽi?ｿｽﾌデ?ｿｽB?ｿｽ?ｿｽ?ｿｽN?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ 
-  #?ｿｽ@2. ?ｿｽ?ｿｽ?ｿｽz?ｿｽX?ｿｽg?ｿｽﾌデ?ｿｽB?ｿｽ?ｿｽ?ｿｽN?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾌホ?ｿｽX?ｿｽg?ｿｽﾆは、docker-machine?ｿｽﾌゑｿｽ?ｿｽ?ｿｽ
-  #?ｿｽ@3. ?ｿｽ?ｿｽ?ｿｽz?ｿｽX?ｿｽg?ｿｽﾌデ?ｿｽB?ｿｽ?ｿｽ?ｿｽN?ｿｽg?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽVirtual-Box?ｿｽﾌ具ｿｽ?ｿｽL?ｿｽt?ｿｽH?ｿｽ?ｿｽ?ｿｽ_?ｿｽ?ｿｽ?ｿｽw?ｿｽ閧ｷ?ｿｽ?ｿｽﾆ、
-  #?ｿｽ@?ｿｽ@?ｿｽ@mongodb?ｿｽN?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽﾉエ?ｿｽ?ｿｽ?ｿｽ[?ｿｽﾉなゑｿｽB?ｿｽT?ｿｽ|?ｿｽ[?ｿｽg?ｿｽO
-  #?ｿｽ@4. ?ｿｽz?ｿｽX?ｿｽg?ｿｽ?ｿｽVolume?ｿｽﾉ前?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽmongodb?ｿｽ?ｿｽdbfile?ｿｽ?ｿｽ?ｿｽc?ｿｽ?ｿｽ?ｿｽﾄゑｿｽ?ｿｽ?ｿｽﾆ、
-  #?ｿｽ@?ｿｽ@ docker-entrypoint-initdb.d?ｿｽﾉ配?ｿｽu?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽN?ｿｽ?ｿｽ?ｿｽX?ｿｽN?ｿｽ?ｿｽ?ｿｽv?ｿｽg(setup.js)?ｿｽ?ｿｽ
-  #?ｿｽ@?ｿｽ@ ?ｿｽ?ｿｽ?ｿｽs?ｿｽ?ｿｽ?ｿｽ黷ｸ?ｿｽA?ｿｽ?ｿｽ?ｿｽ[?ｿｽU?ｿｽ[?ｿｽ?ｿｽR?ｿｽ?ｿｽ?ｿｽN?ｿｽV?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?ｿｽ?成?ｿｽ?ｿｽ?ｿｽ?ｿｽﾈゑｿｽ
+
   db:
     image: yitakura731/simple-repository-db
     restart: always
     build:
       context: ./sr-db/
       dockerfile: Dockerfile
-    container_name: ${DB_CONTAINER_NAME}
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: ${DB_ADMIN_USER_NAME}
-      MONGO_INITDB_ROOT_PASSWORD: ${DB_ADMIN_USER_PASSWD}
-      MONGO_INITDB_DATABASE: ${DB_NAME}
-      DB_APP_USERNAME: ${DB_APP_USER_NAME}
-      DB_APP_PASSWORD: ${DB_APP_USER_PASSWD}
+    container_name: sr-db
+    env_file:
+      - ./sr-db/db.env
     volumes:
       - '${DB_DATA_PATH}:/data/db'
     ports:
       - "${DB_PORT}:${DB_PORT}"
-    command: ["mongod", "--auth"]
 
 
   rep:
@@ -34,32 +21,13 @@ services:
     build:
       context: ./sr-repository/
       dockerfile: Dockerfile
-    container_name: ${REPOSITORY_CONTAINER_NAME}
-    environment:
-      NODE_ENV: ${NODE_ENV}
-      APP_NAME: ${APP_NAME}
-      DB_HOST: ${DB_HOST}
-      DB_PORT: ${DB_PORT}
-      DB_NAME: ${DB_NAME}
-      PUBLIC_IP: ${PUBLIC_IP}
-      DB_APP_USER_NAME: ${DB_APP_USER_NAME}
-      DB_APP_USER_PASSWD: ${DB_APP_USER_PASSWD}
-      REPOSITORY_HTTP_PROTOCOL: ${REPOSITORY_HTTP_PROTOCOL}
-      REPOSITORY_HOST: ${REPOSITORY_HOST}
-      REPOSITORY_PORT: ${REPOSITORY_PORT}
-      REPOSITORY_DATA_PATH: ${REPOSITORY_DATA_PATH}
-      FACEBOOK_CLIENT_ID: ${FACEBOOK_CLIENT_ID}
-      FACEBOOK_CLIENT_SECREAT: ${FACEBOOK_CLIENT_SECREAT}
-      GITHUB_CLIENT_ID: ${GITHUB_CLIENT_ID}
-      GITHUB_CLIENT_SECREAT: ${GITHUB_CLIENT_SECREAT}
-      WEB_SERVER_HTTP_PROTOCOL: ${WEB_SERVER_HTTP_PROTOCOL}
-      WEB_SERVER_HOST: ${WEB_SERVER_HOST}
-      WEB_SERVER_PORT: ${WEB_SERVER_PORT}
+    container_name: sr-rep
+    env_file:
+      - ./sr-repository/rep.env
     volumes:
       - "${REPOSITORY_DATA_PATH}:${REPOSITORY_DATA_PATH}"
     ports:
       - "${REPOSITORY_PORT}:${REPOSITORY_PORT}"
-    command: [sh, -c, npm start]
 
 
   web:
@@ -69,13 +37,9 @@ services:
       dockerfile: Dockerfile
       args: 
         APP_NAME: ${APP_NAME}
-    container_name: ${WEB_SERVER_CONTAINER_NAME}
+    container_name: sr-web
+    env_file:
+      - ./sr-view/app.env
     ports:
       - "${WEB_SERVER_PORT}:${WEB_SERVER_PORT}"
-    environment:
-      APP_NAME: ${APP_NAME}
-      REPOSITORY_HTTP_PROTOCOL: ${REPOSITORY_HTTP_PROTOCOL}
-      REPOSITORY_HOST: ${REPOSITORY_HOST}
-      REPOSITORY_PORT: ${REPOSITORY_PORT}
-      WEB_SERVER_PORT: ${WEB_SERVER_PORT}
-    command: /bin/bash -c "envsubst '$$APP_NAME$$REPOSITORY_HTTP_PROTOCOL$$REPOSITORY_HOST$$REPOSITORY_PORT$$WEB_SERVER_PORT' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"
+    

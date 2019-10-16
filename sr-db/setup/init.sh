@@ -2,8 +2,8 @@ mongo <<EOF
 use $MONGO_INITDB_DATABASE
 
 db.createUser({
-  user: '$DB_APP_USERNAME',
-  pwd: '$DB_APP_PASSWORD',
+  user: '$DB_APP_USER_NAME',
+  pwd: '$DB_APP_USER_PASSWD',
   roles: [{
     role: 'dbOwner',
     db: '$MONGO_INITDB_DATABASE'

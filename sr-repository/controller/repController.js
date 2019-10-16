@@ -3,7 +3,7 @@ const cors = require('cors');
 const multer = require('multer');
 
 const router = express.Router();
-require('dotenv').config({ path: '../.env' });
+require('dotenv').config({ path: './rep.env' });
 
 const storage = multer.memoryStorage();
 const upload = multer({ storage });

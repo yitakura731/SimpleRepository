@@ -16,7 +16,7 @@ server {
     }
 
     location /${APP_NAME}/api {
-       proxy_pass ${REPOSITORY_HTTP_PROTOCOL}://${REPOSITORY_HOST}:${REPOSITORY_PORT};
+       proxy_pass ${REPOSITORY_URL};
     }
 
     location /${APP_NAME}/ {
