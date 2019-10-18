@@ -1,7 +1,7 @@
 {
     "navbar": "Simple Repository",
     "welcome": "Simple Repositoryへようこそ",
-    "subtitle": "このWebアプリはプログラム学習用のデモサイトです",
+    "subtitle": "このWebアプリはyitakura731のプログラム学習用のデモサイトです",
     "registration": "登録",
     "successPostSpace" : "スペースの登録に成功しました",
     "successPostTag" : "タグの登録に成功しました",
@@ -29,5 +29,7 @@
     "tagRequired" : "タグは必ず指定してください",
     "notPDForJPEG" : "PDFまたはJPEG形式のファイルを指定してください",
     "pageNotFound" : "指定されたページが見つかりませんでした",
-    "errorOccured" : "エラーが発生しました"
+    "errorOccured" : "エラーが発生しました",
+    "label_ja" : "日本語",
+    "label_en" : "英語"
 }

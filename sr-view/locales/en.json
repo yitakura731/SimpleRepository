@@ -29,5 +29,7 @@
     "tagRequired" : "Tag must be specified",
     "notPDForJPEG" : "Please specify a file in PDF or JPEG",
     "pageNotFound" : "Specified page does not found",
-    "errorOccured" : "Error occured"
+    "errorOccured" : "Error occured",
+    "label_ja" : "JA",
+    "label_en" : "EN"
 }

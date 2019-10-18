@@ -43,6 +43,23 @@
       </b-dropdown-item>
     </b-nav-item-dropdown>
 
+    <b-button-group right>
+      <b-button
+        data-toggle="button"
+        class="languageButton"
+        @click="setLocale('ja')"
+      >
+        {{ $t('label_ja') }}
+      </b-button>
+      <b-button
+        data-toggle="button"
+        class="languageButton"
+        @click="setLocale('en')"
+      >
+        {{ $t('label_en') }}
+      </b-button>
+    </b-button-group>
+
     <b-nav-item-dropdown
       v-if="loggedIn"
       show
@@ -104,6 +121,9 @@ export default {
     }
   },
   methods: {
+    setLocale(newLocale) {
+      this.$i18n.locale = newLocale;
+    },
     logout() {
       this.$store.dispatch('auth/logout').catch(error => {
         this.$nuxt.$emit('showError', error);
@@ -128,6 +148,14 @@ export default {
   font-size: 20px;
   font-family: Tahoma;
   vertical-align: middle;
+}
+
+.languageButton {
+  padding: 3px 6px;
+  font-size: 16px;
+  background-color: rgba(0, 0, 0, 0.1);
+  border: solid 1px white;
+  border-radius: 5px;
 }
 
 .uploadButton {
