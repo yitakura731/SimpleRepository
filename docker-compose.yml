@@ -26,6 +26,7 @@ services:
       - ./sr-repository/rep.env
     volumes:
       - "${REPOSITORY_DATA_PATH}:${REPOSITORY_DATA_PATH}"
+      - "${REPOSITORY_CERT_STORE}:/src/cert"
     ports:
       - "${REPOSITORY_PORT}:${REPOSITORY_PORT}"
 
@@ -40,6 +41,8 @@ services:
     container_name: sr-web
     env_file:
       - ./sr-view/app.env
+    volumes:
+      - "${WEB_SERVER_CERT_STORE}:/etc/pki/tls/certs"
     ports:
       - "${WEB_SERVER_PORT}:${WEB_SERVER_PORT}"
     
