@@ -16,12 +16,12 @@ module.exports = class Repository {
     util.checkEmpty(docFileRoot, i18next.t('nullContentsStorage'));
     util.checkEmpty(spaceFileRoot, i18next.t('nullSpaceStorage'));
     if (!fs.existsSync(docFileRoot)) {
-      fse.mkdirSync(docFileRoot);
+      fse.mkdirsSync(docFileRoot);
     }
     this.docFileRoot = docFileRoot;
 
     if (!fs.existsSync(spaceFileRoot)) {
-      fse.mkdirSync(spaceFileRoot);
+      fse.mkdirsSync(spaceFileRoot);
     }
     this.spaceFileRoot = spaceFileRoot;
   }
