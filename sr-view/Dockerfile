@@ -13,6 +13,8 @@ RUN npm install && \
 # 本番環境
 FROM nginx as production-stage
 
+ARG APP_NAME
+
 # HTMLファイル
 COPY  --from=build-stage ./src/dist/ /usr/share/nginx/html/${APP_NAME}
 
