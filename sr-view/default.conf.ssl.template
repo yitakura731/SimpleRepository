@@ -1,6 +1,8 @@
 server {
-    listen  ${WEB_SERVER_PORT};
+    listen  ${WEB_SERVER_PORT}  ssl;
     server_name  ${APP_NAME};
+    ssl_certificate /etc/pki/tls/certs/view-server.crt;
+    ssl_certificate_key /etc/pki/tls/certs/view-server.key;
 
     location / {
         root   /usr/share/nginx/html;
