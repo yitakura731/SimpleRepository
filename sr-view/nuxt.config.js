@@ -3,6 +3,9 @@ require('dotenv').config({ path: './app.env' });
 
 const repositoryURL = `${process.env.REPOSITORY_URL}`;
 
+console.log(`REPOSITORY_URL = ${process.env.REPOSITORY_URL}`);
+console.log(`APP_NAME = ${process.env.APP_NAME}`);
+
 module.exports = {
   mode: 'spa',
 
