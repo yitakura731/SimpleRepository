@@ -1,9 +1,8 @@
 <template>
-  <div>
+  <div class="h-100">
     <b-container
       fluid
-      :style="styleContents"
-      class="contentsArea"
+      class="contentsArea h-100 w-100"
       @mouseup="mouseUp($event)"
       @mousemove="mouseMove($event)"
     >
@@ -56,11 +55,6 @@ export default {
     };
   },
   computed: {
-    styleContents() {
-      return {
-        '--contentsHeight': window.innerHeight - 45 + 'px'
-      };
-    },
     styleLeft() {
       let val = 0;
       if (this.showLeftMenu) {
@@ -102,9 +96,6 @@ export default {
 
 <style scoped>
 .contentsArea {
-  --contentsHeight: 0px;
-  height: var(--contentsHeight);
-  width: 100%;
   display: flex;
   align-items: stretch;
 }

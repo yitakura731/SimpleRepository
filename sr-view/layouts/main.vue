@@ -1,7 +1,9 @@
 <template>
   <div>
-    <myheader class="headerArea" />
-    <nuxt />
+    <myheader />
+    <div :style="styleViewArea" class="viewArea">
+      <nuxt />
+    </div>
   </div>
 </template>
 
@@ -11,12 +13,20 @@ import Header from '../components/header.vue';
 export default {
   components: {
     myheader: Header
+  },
+  computed: {
+    styleViewArea() {
+      return {
+        '--viewHeight': window.innerHeight - 48 + 'px'
+      };
+    }
   }
 };
 </script>
 
 <style scoped>
-.headerArea {
-  height: 45px;
+.viewArea {
+  --viewHeight: 0px;
+  height: var(--viewHeight);
 }
 </style>

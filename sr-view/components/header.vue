@@ -1,92 +1,102 @@
 <template>
-  <b-navbar class="py-1" type="dark">
-    <b-navbar-brand class="headerArea h-100 d-flex align-items-center">
+  <b-navbar class="headerArea py-0" toggleable="md" type="dark">
+    <b-navbar-brand class="h-100 d-flex align-items-center">
       <img src="~/static/icon.png" class="mr-2" width="30" height="30" />
       <div class="headerText">
         {{ $t('navbar') }}
       </div>
     </b-navbar-brand>
 
-    <b-button
-      v-if="loggedIn"
-      v-b-toggle.menu-clsp
-      variant="outline-light"
-      class="d-flex align-items-center ml-5"
-    >
-      <font-awesome-icon icon="align-justify" />
-    </b-button>
+    <b-navbar-toggle target="nav-collapse" />
 
-    <b-nav-item-dropdown
-      v-if="loggedIn"
-      no-caret
-      class="headerText d-flex align-items-center ml-1"
-    >
-      <template slot="button-content">
-        <div class="uploadButton">
-          <font-awesome-icon icon="cloud-upload-alt" />
-          {{ $t('registration') }}
-        </div>
-      </template>
-      <b-dropdown-item @click="postSpace()">
-        <font-awesome-icon icon="folder-plus" />
-        {{ $t('postSpaceDialogTitle') }}
-      </b-dropdown-item>
-      <hr class="my-1" />
-      <b-dropdown-item @click="postTag()">
-        <font-awesome-icon icon="tag" />
-        {{ $t('postTagDialogTitle') }}
-      </b-dropdown-item>
-      <hr class="my-1" />
-      <b-dropdown-item @click="postDocument()">
-        <font-awesome-icon icon="file-medical" />
-        {{ $t('postDocDialogTitle') }}
-      </b-dropdown-item>
-    </b-nav-item-dropdown>
+    <b-collapse id="nav-collapse" is-nav>
+      <b-nav-form>
+        <b-button
+          v-if="loggedIn"
+          v-b-toggle.menu-clsp
+          variant="outline-light"
+          class="d-flex align-items-center ml-5"
+        >
+          <font-awesome-icon icon="align-justify" />
+        </b-button>
+      </b-nav-form>
 
-    <b-button-group right>
-      <b-button
-        data-toggle="button"
-        class="languageButton"
-        @click="setLocale('ja')"
+      <b-nav-form>
+        <b-nav-item-dropdown
+          v-if="loggedIn"
+          no-caret
+          class="headerText d-flex align-items-center ml-1"
+        >
+          <template slot="button-content">
+            <div class="uploadButton">
+              <font-awesome-icon icon="cloud-upload-alt" />
+              {{ $t('registration') }}
+            </div>
+          </template>
+          <b-dropdown-item @click="postSpace()">
+            <font-awesome-icon icon="folder-plus" />
+            {{ $t('postSpaceDialogTitle') }}
+          </b-dropdown-item>
+          <hr class="my-1" />
+          <b-dropdown-item @click="postTag()">
+            <font-awesome-icon icon="tag" />
+            {{ $t('postTagDialogTitle') }}
+          </b-dropdown-item>
+          <hr class="my-1" />
+          <b-dropdown-item @click="postDocument()">
+            <font-awesome-icon icon="file-medical" />
+            {{ $t('postDocDialogTitle') }}
+          </b-dropdown-item>
+        </b-nav-item-dropdown>
+      </b-nav-form>
+
+      <b-nav-form>
+        <b-button-group right>
+          <b-button
+            data-toggle="button"
+            class="languageButton"
+            @click="setLocale('ja')"
+          >
+            {{ $t('label_ja') }}
+          </b-button>
+          <b-button
+            data-toggle="button"
+            class="languageButton"
+            @click="setLocale('en')"
+          >
+            {{ $t('label_en') }}
+          </b-button>
+        </b-button-group>
+      </b-nav-form>
+
+      <b-nav-item-dropdown
+        v-if="loggedIn"
+        show
+        right
+        no-caret
+        class="d-flex align-items-center ml-auto"
       >
-        {{ $t('label_ja') }}
-      </b-button>
-      <b-button
-        data-toggle="button"
-        class="languageButton"
-        @click="setLocale('en')"
-      >
-        {{ $t('label_en') }}
-      </b-button>
-    </b-button-group>
+        <template slot="button-content">
+          <font-awesome-icon
+            :icon="['fa', 'user-circle']"
+            style="font-size: 28px; color: white;"
+          />
+        </template>
+        <b-dropdown-item>
+          <font-awesome-icon :icon="strategy.icon" style="font-size: 16px;" />
+          {{ strategy.username }}
+        </b-dropdown-item>
+        <hr class="my-1" />
+        <b-dropdown-item @click="logout()">
+          <font-awesome-icon icon="sign-out-alt" style="font-size: 16px;" />
+          {{ $t('logout') }}
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
 
-    <b-nav-item-dropdown
-      v-if="loggedIn"
-      show
-      right
-      no-caret
-      class="d-flex align-items-center ml-auto"
-    >
-      <template slot="button-content">
-        <font-awesome-icon
-          :icon="['fa', 'user-circle']"
-          style="font-size: 28px; color: white;"
-        />
-      </template>
-      <b-dropdown-item>
-        <font-awesome-icon :icon="strategy.icon" style="font-size: 16px;" />
-        {{ strategy.username }}
-      </b-dropdown-item>
-      <hr class="my-1" />
-      <b-dropdown-item @click="logout()">
-        <font-awesome-icon icon="sign-out-alt" style="font-size: 16px;" />
-        {{ $t('logout') }}
-      </b-dropdown-item>
-    </b-nav-item-dropdown>
-
-    <post-space-dialog ref="PostSpaceDialog" />
-    <post-doc-dialog ref="PostDocDialog" />
-    <post-tag-dialog ref="PostTagDialog" />
+      <post-space-dialog ref="PostSpaceDialog" />
+      <post-doc-dialog ref="PostDocDialog" />
+      <post-tag-dialog ref="PostTagDialog" />
+    </b-collapse>
   </b-navbar>
 </template>
 
