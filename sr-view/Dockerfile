@@ -8,7 +8,7 @@ COPY . /src/
 WORKDIR /src/
 
 RUN npm install && \
-    APP_NAME=${APP_NAME} REPOSITORY_URL=http://sr-rep:3000 npm run generate 
+    APP_NAME=${APP_NAME} REPOSITORY_URL=${REPOSITORY_URL} npm run generate 
 
 # 本番環境
 FROM nginx as production-stage

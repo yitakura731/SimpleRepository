@@ -1,40 +1,37 @@
 const pkg = require('./package');
 require('dotenv').config({ path: './app.env' });
 
-const repositoryURL = `${process.env.REPOSITORY_URL}`;
+const repositoryURL = process.env.REPOSITORY_URL;
+const appName = process.env.APP_NAME;
+const webServerPort = process.env.WEB_SERVER_PORT;
+const proxyURL = `/${process.env.APP_NAME}/api`;
 
-console.log(`REPOSITORY_URL = ${process.env.REPOSITORY_URL}`);
-console.log(`APP_NAME = ${process.env.APP_NAME}`);
+/* eslint no-console: "off" */
+console.log(`repositoryURL = ${repositoryURL}`);
+console.log(`appName = ${appName}`);
+console.log(`webServerPort = ${webServerPort}`);
+console.log(`proxyURL = ${proxyURL}`);
 
 module.exports = {
   mode: 'spa',
 
   router: {
-    base: `/${process.env.APP_NAME}/`
+    linkActiveClass: 'active',
+    base: `/${appName}/`
   },
 
   /*
    ** Headers of the page
    */
   head: {
-    title: pkg.name,
+    title: appName,
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
       { hid: 'description', name: 'description', content: pkg.description }
     ],
-    link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }]
+    link: [{ rel: 'icon', type: 'image/x-icon', href: 'favicon.ico' }]
   },
-
-  /*
-   ** Customize the progress-bar color
-   */
-  loading: { color: '#fff' },
-
-  /*
-   ** Global CSS
-   */
-  css: [],
 
   /*
    ** Plugins to load before mounting the App
@@ -81,7 +78,7 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    prefix: `/${process.env.APP_NAME}`,
+    prefix: `/${appName}`,
     proxy: true
   },
 
