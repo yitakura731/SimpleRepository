@@ -2,6 +2,7 @@
 FROM node:lts-alpine as build-stage
 
 ARG APP_NAME
+ARG REPOSITORY_URL
 
 COPY . /src/
 
