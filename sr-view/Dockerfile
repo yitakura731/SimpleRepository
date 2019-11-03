@@ -23,4 +23,4 @@ COPY  --from=build-stage ./src/dist/ /usr/share/nginx/html/${APP_NAME}
 COPY ./default.conf.ssl.template /etc/nginx/conf.d/default.conf.template
 
 # 起動
-CMD ["/bin/bash", "-c", "envsubst '$$APP_NAME$$REPOSITORY_URL$$SSL_CERT_PATH$$SSL_KEY_PATH' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+CMD ["/bin/bash", "-c", "envsubst '$$APP_NAME$$REPOSITORY_URL$$WEB_SERVER_PORT$$SSL_CERT_PATH$$SSL_KEY_PATH' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
