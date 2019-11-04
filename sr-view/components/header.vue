@@ -135,9 +135,7 @@ export default {
       this.$i18n.locale = newLocale;
     },
     logout() {
-      this.$store.dispatch('auth/logout').catch(error => {
-        this.$nuxt.$emit('showError', error);
-      });
+      this.$store.dispatch('auth/logout');
     },
     postDocument() {
       this.$refs.PostDocDialog.start();

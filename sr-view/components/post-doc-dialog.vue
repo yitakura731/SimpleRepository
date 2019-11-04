@@ -125,11 +125,6 @@ export default {
       }
     }
   },
-  mounted() {
-    this.$store.dispatch('repository/fetchTag').catch(error => {
-      this.$root.$refs.ErrorDialog.show(error);
-    });
-  },
   methods: {
     start() {
       this.$refs.postDocDialog.show();

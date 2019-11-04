@@ -67,7 +67,7 @@
 
 <script>
 export default {
-  middleware: 'auth',
+  middleware: 'initialize',
   data() {
     return {
       localId: null,

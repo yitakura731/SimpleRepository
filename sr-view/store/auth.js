@@ -31,7 +31,6 @@ export const actions = {
     if (response.accessToken != null) {
       Cookies.set('sr.auth.token', response.accessToken);
       this.$router.push('/home');
-    } else {
     }
   },
 
@@ -40,10 +39,14 @@ export const actions = {
   },
 
   async logout({ commit, dispatch }, args) {
-    await this.$axios.$post('/api/auth/logout', args);
-    Cookies.remove('sr.auth.token');
-    commit('username', null);
-    commit('strategy', null);
-    this.$router.push('/');
+    try {
+      await this.$axios.$post('/api/auth/logout', args);
+    } catch {
+    } finally {
+      Cookies.remove('sr.auth.token');
+      commit('username', null);
+      commit('strategy', null);
+      this.$router.push('/');
+    }
   }
 };

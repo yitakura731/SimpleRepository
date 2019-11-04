@@ -38,7 +38,7 @@ import ErrorDialog from '@@/components/error-dialog.vue';
 import SuccessDialog from '@@/components/success-dialog.vue';
 
 export default {
-  middleware: ['auth', 'initialize'],
+  middleware: ['initialize'],
   layout: 'main',
   components: {
     space: Space,
