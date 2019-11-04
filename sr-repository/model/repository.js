@@ -34,6 +34,9 @@ module.exports = class Repository {
     util.checkNull(name, i18next.t('nullFile'));
     database.checkId(spaceId, i18next.t('invalidSpaceId'));
     database.checkId(tagId, i18next.t('invalidTagId'));
+    if (file.size >= 512 * 1024) {
+      throw new Error(i18next.t('exceedLimitUploadFileSize'));
+    }
     const puid = new Puid(false);
     const storeFileName = puid.generate();
     return fse.writeFile(path.join(this.docFileRoot, storeFileName), file.buffer).then(() => {

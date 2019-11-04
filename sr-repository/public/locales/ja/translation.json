@@ -39,6 +39,6 @@
   "nullFile" : "ファイルがNULLまたは空です",
   "nullContentsStorage" : "コンテントファイル格納先がNULLです",
   "nullSpaceStorage" : "スペースファイル格納先がNULLです",
-
+  "exceedLimitUploadFileSize" : "登録可能なファイルサイズの上限を超えています",
   "errorNotFound": "指定されたページは見つかりません"
 } 
