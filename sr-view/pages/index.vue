@@ -8,9 +8,14 @@
     </p>
     <b-row align-h="center" align-v="center" class="pt-3">
       <b-col md="4">
-        <b-card class="cardArea mb-5">
+        <b-card class="cardArea">
           <b-form-group :label="$t('localId')" label-size="sm">
-            <b-input v-model="localId" size="sm" placeholder="" />
+            <b-input
+              v-model="localId"
+              size="sm"
+              placeholder=""
+              @keydown.enter="localLogin"
+            />
           </b-form-group>
           <b-form-group :label="$t('password')" label-size="sm">
             <b-input
@@ -18,6 +23,7 @@
               size="sm"
               type="password"
               placeholder=""
+              @keydown.enter="localLogin"
             />
           </b-form-group>
           <div class="text-center">
@@ -27,7 +33,7 @@
           </div>
         </b-card>
         <b-alert v-if="error" show variant="danger" class="mt-1 text-center">
-          {{ error.message }}
+          {{ error }}
         </b-alert>
       </b-col>
       <b-col md="1" />
@@ -84,7 +90,8 @@ export default {
           name: 'facebook',
           color: '#3C5A99',
           icon: ['fab', 'facebook'],
-          action: `api/auth/login/facebook`
+          action: `
+          api/auth/login/facebook`
         }
       ];
     },
@@ -95,15 +102,20 @@ export default {
     }
   },
   methods: {
-    async localLogin() {
+    async localLogin(event) {
       this.error = null;
-      const fd = {
-        localId: this.localId,
-        password: this.password
-      };
-      await this.$store.dispatch('auth/localLogin', fd).catch(e => {
-        this.error = e.response.data.info;
-      });
+      if (this.localId == null || this.password == null) {
+        this.error = this.$t('emptyUserIdOrPassword');
+        return;
+      }
+      await this.$store
+        .dispatch('auth/localLogin', {
+          localId: this.localId,
+          password: this.password
+        })
+        .catch(e => {
+          this.error = e.response.data.info.message;
+        });
     }
   }
 };

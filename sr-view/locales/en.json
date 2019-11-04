@@ -10,7 +10,7 @@
     "socialLogin" : "Socail login",
     "loginWith" : " login",
     "login" : "Sign in",
-    "localId" : "ID",
+    "localId" : "User ID",
     "password" : "Password",
     "logout" : "Sign out",
     "postSpaceDialogTitle" : "Space registration",
@@ -30,6 +30,7 @@
     "notPDForJPEG" : "Please specify a file in PDF or JPEG",
     "pageNotFound" : "Specified page does not found",
     "errorOccured" : "Error occured",
+    "emptyUserIdOrPassword" : "UserId or Password is Empty",
     "label_ja" : "JA",
     "label_en" : "EN"
 }
