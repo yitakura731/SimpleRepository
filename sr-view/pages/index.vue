@@ -8,7 +8,7 @@
     </p>
     <b-row align-h="center" align-v="center" class="pt-3">
       <b-col md="4">
-        <b-card class="cardArea">
+        <b-card class="cardArea m-2">
           <b-form-group :label="$t('localId')" label-size="sm">
             <b-input
               v-model="localId"
@@ -38,7 +38,7 @@
       </b-col>
       <b-col md="1" />
       <b-col md="4" class="text-center">
-        <b-card class="cardArea">
+        <b-card class="cardArea m-2">
           <div v-for="s in strategies" :key="s.key" class="mb-2">
             <form name="socialLogin" method="post" :action="s.action">
               <b-btn
