@@ -161,11 +161,28 @@ export default {
   position: absolute;
   width: 100%;
 }
+@media screen and (max-width: 600px) {
+  .top-area {
+    position: initial;
+    background-color: rgba(240, 240, 240, 0.7);
+    width: 100%;
+  }
+  .operation-area {
+    position: initial;
+    background-color: rgba(240, 240, 240, 0.7);
+    border-radius: 5px;
+    padding: 1px;
+  }
+  .view-area {
+    position: initial;
+    width: 100%;
+  }
+}
 .contents-number {
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
   border: thin solid gray;
-  width: 60px;
+  width: 40px;
   border-radius: 5px;
   background-color: white;
 }

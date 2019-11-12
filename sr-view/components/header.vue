@@ -8,6 +8,17 @@
     </b-navbar-brand>
 
     <b-nav-form>
+      <b-button
+        v-if="loggedIn"
+        v-b-toggle.menu-clsp
+        variant="outline-light"
+        class="d-flex align-items-center "
+      >
+        <font-awesome-icon icon="align-justify" />
+      </b-button>
+    </b-nav-form>
+
+    <b-nav-form>
       <b-nav-item-dropdown
         v-if="loggedIn"
         no-caret
