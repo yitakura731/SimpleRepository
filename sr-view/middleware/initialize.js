@@ -27,7 +27,7 @@ export default function({ store, redirect, route, error }) {
   } else {
     store.commit('auth/strategy', null);
     store.commit('auth/username', null);
-    if (route.fullPath === '/home') {
+    if (route.fullPath === '/home' || route.fullPath === '/home/') {
       redirect('/');
     }
   }
