@@ -80,32 +80,8 @@ export const actions = {
     }
     const response = await this.$axios.$get(url);
     if (response.length > 0) {
-      const documents = [];
-      response.forEach(doc => {
-        const target = documents.find(item => {
-          return item.tagId === doc.tagId;
-        });
-        if (target == null) {
-          documents.push({
-            tagId: doc.tagId,
-            docs: [
-              {
-                docId: doc.docId,
-                docName: doc.docName,
-                mimetype: doc.mimetype
-              }
-            ]
-          });
-        } else {
-          target.docs.push({
-            docId: doc.docId,
-            docName: doc.docName,
-            mimetype: doc.mimetype
-          });
-        }
-      });
-      commit('documents', documents);
-      commit('selectedDocument', documents[0].docs[0]);
+      commit('documents', response);
+      commit('selectedDocument', response[0]);
     } else {
       commit('documents', null);
       commit('selectedDocument', null);

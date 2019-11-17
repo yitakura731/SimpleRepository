@@ -9,13 +9,8 @@
 
     <div class="border list-item-parent mt-0 h-100">
       <div v-show="hasDocuments">
-        <div v-for="(docGroup, index) in documents" :key="docGroup.tagId">
-          <list-tag-item
-            :key="docGroup.tagId"
-            :tag="getTag(docGroup.tagId)"
-            :docs="docGroup.docs"
-            :index="index"
-          />
+        <div v-for="(doc, index) in documents" :key="doc.docId">
+          <list-doc-item :document="doc" :index="index" />
         </div>
       </div>
       <div v-show="!hasDocuments" class="img-parent w-100 h-100">
@@ -31,11 +26,11 @@
 </template>
 
 <script>
-import ListTagItem from './list-tag-item.vue';
+import ListDocItem from './list-doc-item.vue';
 
 export default {
   components: {
-    'list-tag-item': ListTagItem
+    'list-doc-item': ListDocItem
   },
   data() {
     return {

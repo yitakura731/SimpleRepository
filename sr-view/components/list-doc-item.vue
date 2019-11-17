@@ -1,9 +1,10 @@
 <template>
   <div :class="docClass">
-    <div class="ml-5 py-1" @click="click()">
+    <div class="ml-3 py-2" @click="click()">
       <p class="my-0">
         <font-awesome-icon :icon="getIcon()" />
         {{ document.docName }}
+        <font-awesome-icon icon="tag" :style="style" class="tagColor ml-2" />
       </p>
     </div>
     <hr class="m-0" />
@@ -20,6 +21,7 @@ export default {
         return (
           typeof obj.docId === 'string' &&
           typeof obj.docName === 'string' &&
+          typeof obj.tagId === 'string' &&
           typeof obj.mimetype === 'string'
         );
       }
@@ -35,9 +37,19 @@ export default {
         retVal = 'docClass';
       }
       return retVal;
+    },
+    style() {
+      const tag = this.getTag(this.document.tagId);
+      return { '--tagColor': tag.color };
     }
   },
   methods: {
+    getTag(tagId) {
+      const retVal = this.$store.state.repository.tags.find(tag => {
+        return tag.id === tagId;
+      });
+      return retVal;
+    },
     getIcon() {
       if (this.document.mimetype === 'application/pdf') {
         return 'file-pdf';
@@ -55,6 +67,11 @@ export default {
 </script>
 
 <style scoped>
+.tagColor {
+  --tagColor: black;
+  color: var(--tagColor);
+}
+
 .docClass {
   background-color: white;
   transition: 0.5s;
