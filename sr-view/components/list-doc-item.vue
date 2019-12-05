@@ -1,5 +1,5 @@
 <template>
-  <div :class="docClass" class="border-0 py-1 m-2" @click="click()">
+  <div :class="docClass" class="border-0 py-1 ml-2 my-2" @click="click()">
     <b-img
       :src="'data:image/jpeg;base64, ' + document.thumbnail"
       class="px-1"
