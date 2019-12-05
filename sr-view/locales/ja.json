@@ -31,6 +31,8 @@
     "pageNotFound" : "指定されたページが見つかりませんでした",
     "errorOccured" : "エラーが発生しました",
     "emptyUserIdOrPassword" : "ユーザーIDまたはパスワードが空です",
+    "selectSpaceDialog" : "スペース一覧",
+    "language" : "言語",
     "label_ja" : "日本語",
     "label_en" : "英語"
 }

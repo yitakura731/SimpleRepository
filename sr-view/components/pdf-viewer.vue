@@ -31,7 +31,7 @@
       </div>
     </b-form>
 
-    <div ref="contentsArea" class="border mt-1 h-100 view-area">
+    <div ref="contentsArea" class="border h-100 view-area">
       <div ref="canvasParent" class="canvas-parent" :style="styles()">
         <canvas ref="contentsCanvas" />
       </div>

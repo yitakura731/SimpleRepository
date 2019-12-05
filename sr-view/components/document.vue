@@ -1,35 +1,60 @@
 <template>
-  <b-card no-header no-body class="h-50 py-1 border-0">
-    <b-input-group class="m-0">
-      <b-form-input v-model="input" size="sm" type="text" class="p-0 m-0" />
-      <b-button type="button" size="sm" class="ml-1-" @click="search()">
-        <font-awesome-icon icon="search" />
-      </b-button>
-    </b-input-group>
+  <div class="h-100 py-1">
+    <b-card no-header no-body class="h-100">
+      <form class="form-inline w-100 p-1">
+        <div class="border rounded d-flex w-50">
+          <img
+            :src="'data:image/png;base64,' + selectedSpace.image"
+            class="ml-2"
+            width="30"
+            height="30"
+          />
+          <span class="ml-2">
+            {{ selectedSpace.name }}
+          </span>
+          <b-button v-b-modal.select-space-modal size="sm" class="ml-auto">
+            <font-awesome-icon icon="exchange-alt" />
+          </b-button>
+        </div>
 
-    <div class="border list-item-parent mt-0 h-100">
-      <div v-show="hasDocuments">
-        <div v-for="(doc, index) in documents" :key="doc.docId">
-          <list-doc-item :document="doc" :index="index" />
+        <b-input-group class="w-50 pl-1 ml-auto">
+          <b-form-input v-model="input" size="sm" type="text" class="p-0 m-0" />
+          <b-button type="button" size="sm" @click="search()">
+            <font-awesome-icon icon="search" />
+          </b-button>
+        </b-input-group>
+      </form>
+
+      <div class="list-item-parent mt-0 h-100">
+        <div
+          v-show="hasDocuments"
+          class="h-100 d-flex justify-content-start flex-wrap align-content-start"
+        >
+          <div v-for="(doc, index) in documents" :key="doc.docId">
+            <list-doc-item :document="doc" :index="index" />
+          </div>
+        </div>
+        <div v-show="!hasDocuments" class="img-parent w-100 h-100">
+          <img
+            src="~/static/no-file.png"
+            class="mx-auto"
+            width="200"
+            height="200"
+          />
         </div>
       </div>
-      <div v-show="!hasDocuments" class="img-parent w-100 h-100">
-        <img
-          src="~/static/no-file.png"
-          class="mx-auto"
-          width="200"
-          height="200"
-        />
-      </div>
-    </div>
-  </b-card>
+    </b-card>
+    <space />
+  </div>
 </template>
 
 <script>
 import ListDocItem from './list-doc-item.vue';
+import Space from './space.vue';
 
 export default {
   components: {
+    space: Space,
     'list-doc-item': ListDocItem
   },
   data() {
@@ -47,15 +72,18 @@ export default {
         retVal = true;
       }
       return retVal;
+    },
+    selectedSpace() {
+      let retVal = this.$store.state.repository.selectedSpace;
+      if (retVal == null) {
+        retVal = {};
+        retVal.image = '';
+        retVal.name = '';
+      }
+      return retVal;
     }
   },
   methods: {
-    getTag(tagId) {
-      const retVal = this.$store.state.repository.tags.find(tag => {
-        return tag.id === tagId;
-      });
-      return retVal;
-    },
     search() {
       const space = this.$store.state.repository.selectedSpace;
       if (space != null) {
@@ -77,9 +105,18 @@ export default {
 .img-parent {
   display: flex;
   align-items: center;
-  background-color: lightgrey;
+  background-color: lightgray;
 }
 .list-item-parent {
+  background-color: gainsboro;
   overflow-y: scroll;
+}
+.card-columns {
+  column-count: 5;
+}
+@media screen and (max-width: 576px) {
+  .card-columns {
+    column-count: 3;
+  }
 }
 </style>

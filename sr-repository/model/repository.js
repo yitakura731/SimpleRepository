@@ -4,6 +4,7 @@ const fs = require('fs');
 const fse = require('fs-extra');
 const Puid = require('puid');
 const i18next = require('i18next');
+const Jimp = require('jimp');
 const database = require('./database');
 const util = require('../helper/util');
 
@@ -34,24 +35,34 @@ module.exports = class Repository {
     util.checkNull(name, i18next.t('nullFile'));
     database.checkId(spaceId, i18next.t('invalidSpaceId'));
     database.checkId(tagId, i18next.t('invalidTagId'));
-    if (file.size >= 512 * 1024) {
-      throw new Error(i18next.t('exceedLimitUploadFileSize'));
-    }
+    util.checkFileSize(file.size);
+    util.checkSupportedFormat(file.mimetype);
+    const ext = util.getExtent(file.mimetype);
     const puid = new Puid(false);
-    const storeFileName = puid.generate();
-    return fse.writeFile(path.join(this.docFileRoot, storeFileName), file.buffer).then(() => {
-      const document = new Document({
-        _id: new mongoose.Types.ObjectId(),
-        name,
-        userId: user._id,
-        tagId,
-        createDate: new Date(),
-        spaceId,
-        filename: storeFileName,
-        mimetype: file.mimetype
-      });
-      return document.save();
+    const filename = `${puid.generate()}.${ext}`;
+    await fse.writeFile(path.join(this.docFileRoot, filename), file.buffer);
+    let thumbnailName = null;
+    if (file.mimetype === 'image/jpeg') {
+      thumbnailName = `${puid.generate()}.jpg`;
+      const thumbnai = await Jimp.read(path.join(this.docFileRoot, filename));
+      await thumbnai.resize(100, 100);
+      await thumbnai.write(path.join(this.docFileRoot, thumbnailName));
+    } else {
+      thumbnailName = 'pdfNail.png';
+    }
+    const document = new Document({
+      _id: new mongoose.Types.ObjectId(),
+      name,
+      userId: user._id,
+      tagId,
+      createDate: new Date(),
+      spaceId,
+      filename,
+      thumbnailName,
+      mimetype: file.mimetype
     });
+    await document.save();
+    return document;
   }
 
   async postSpace(user, name, file) {
@@ -113,11 +124,19 @@ module.exports = class Repository {
     const result = await query.sort({ createDate: -1 }).exec();
     const documents = [];
     result.forEach(doc => {
+      let nailPath = null;
+      if (doc.mimetype === 'image/jpeg') {
+        nailPath = path.join(this.docFileRoot, doc.thumbnailName);
+      } else {
+        nailPath = `assets/${doc.thumbnailName}`;
+      }
+      const thumbnail = fs.readFileSync(nailPath, 'Base64');
       documents.push({
         docId: doc._id,
         docName: doc.name,
         tagId: doc.tagId,
-        mimetype: doc.mimetype
+        mimetype: doc.mimetype,
+        thumbnail
       });
     });
     return documents;

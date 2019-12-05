@@ -1,13 +1,15 @@
 <template>
-  <div :class="docClass">
-    <div class="ml-3 py-2" @click="click()">
-      <p class="my-0">
-        <font-awesome-icon :icon="getIcon()" />
-        {{ document.docName }}
-        <font-awesome-icon icon="tag" :style="style" class="tagColor ml-2" />
-      </p>
-    </div>
-    <hr class="m-0" />
+  <div :class="docClass" class="border-0 py-1 m-2" @click="click()">
+    <b-img
+      :src="'data:image/jpeg;base64, ' + document.thumbnail"
+      class="px-1"
+    />
+    <p class="m-0 text-center">
+      {{ getDocName() }}
+    </p>
+    <p class="m-0 ml-2">
+      <font-awesome-icon icon="tag" :style="style" class="tagColor" />
+    </p>
   </div>
 </template>
 
@@ -22,7 +24,8 @@ export default {
           typeof obj.docId === 'string' &&
           typeof obj.docName === 'string' &&
           typeof obj.tagId === 'string' &&
-          typeof obj.mimetype === 'string'
+          typeof obj.mimetype === 'string' &&
+          typeof obj.thumbnail === 'string'
         );
       }
     }
@@ -44,6 +47,13 @@ export default {
     }
   },
   methods: {
+    getDocName() {
+      if (this.document.docName.length > 8) {
+        return `${this.document.docName.substr(0, 8)}'...`;
+      } else {
+        return this.document.docName;
+      }
+    },
     getTag(tagId) {
       const retVal = this.$store.state.repository.tags.find(tag => {
         return tag.id === tagId;
@@ -67,23 +77,27 @@ export default {
 </script>
 
 <style scoped>
-.tagColor {
-  --tagColor: black;
-  color: var(--tagColor);
-}
-
 .docClass {
   background-color: white;
-  transition: 0.5s;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
 .docClass:hover {
   background-color: blanchedalmond;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
 .selectedDocClass {
-  background-color: gold;
+  background-color: navajowhite;
+  border-radius: 5px;
+  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
 .documentColor {
   --tagColor: gray;
+  color: var(--tagColor);
+}
+.tagColor {
+  --tagColor: black;
   color: var(--tagColor);
 }
 </style>

@@ -31,6 +31,8 @@
     "pageNotFound" : "Specified page does not found",
     "errorOccured" : "Error occured",
     "emptyUserIdOrPassword" : "UserId or Password is Empty",
-    "label_ja" : "JA",
-    "label_en" : "EN"
+    "selectSpaceDialog" : "Space list",
+    "language" : "Lang",
+    "label_ja" : "Japanese",
+    "label_en" : "English"
 }

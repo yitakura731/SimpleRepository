@@ -22,7 +22,7 @@
       <b-nav-item-dropdown
         v-if="loggedIn"
         no-caret
-        class="headerText d-flex align-items-center ml-1"
+        class="headerText d-flex align-items-center ml-3"
       >
         <template slot="button-content">
           <div class="uploadButton">
@@ -48,22 +48,24 @@
     </b-nav-form>
 
     <b-nav-form>
-      <b-button-group right>
-        <b-button
-          data-toggle="button"
-          class="languageButton"
-          @click="setLocale('ja')"
-        >
+      <b-nav-item-dropdown
+        v-if="loggedIn"
+        no-caret
+        class="headerText d-flex align-items-center"
+      >
+        <template slot="button-content">
+          <div class="uploadButton">
+            <font-awesome-icon icon="angle-down" />
+            {{ $t('language') }}
+          </div>
+        </template>
+        <b-dropdown-item @click="setLocale('ja')">
           {{ $t('label_ja') }}
-        </b-button>
-        <b-button
-          data-toggle="button"
-          class="languageButton"
-          @click="setLocale('en')"
-        >
+        </b-dropdown-item>
+        <b-dropdown-item @click="setLocale('en')">
           {{ $t('label_en') }}
-        </b-button>
-      </b-button-group>
+        </b-dropdown-item>
+      </b-nav-item-dropdown>
     </b-nav-form>
 
     <b-nav-item-dropdown

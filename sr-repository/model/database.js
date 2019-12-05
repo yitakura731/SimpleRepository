@@ -40,6 +40,7 @@ class Database {
       createDate: Date,
       spaceId: Schema.Types.ObjectId,
       filename: String,
+      thumbnailName: String,
       mimetype: String
     });
     mongoose.model('spaces', SpaceSchema, 'spaces');

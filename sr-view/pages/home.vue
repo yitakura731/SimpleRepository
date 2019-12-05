@@ -12,15 +12,16 @@
         :style="styleLeft"
         class="leftArea"
       >
-        <space class="pb-4" />
         <document />
       </b-collapse>
+
       <b-collapse id="menu-clsp" v-model="showLeftMenu">
         <div class="borderArea" @mousedown="mouseDown($event)">
           <div class="borderSubLeftArea" />
           <div class="borderSubRightArea" />
         </div>
       </b-collapse>
+
       <div :style="styleRight" class="rightArea">
         <myContent />
       </div>
@@ -31,7 +32,6 @@
 </template>
 
 <script>
-import Space from '@@/components/space.vue';
 import Document from '@@/components/document.vue';
 import Content from '@@/components/content.vue';
 import ErrorDialog from '@@/components/error-dialog.vue';
@@ -41,7 +41,6 @@ export default {
   middleware: ['initialize'],
   layout: 'main',
   components: {
-    space: Space,
     document: Document,
     myContent: Content,
     'error-dialog': ErrorDialog,
@@ -50,7 +49,7 @@ export default {
   data() {
     return {
       showLeftMenu: true,
-      borderRatio: 20,
+      borderRatio: 40,
       isMouseDown: false
     };
   },
@@ -101,7 +100,7 @@ export default {
 }
 
 .leftArea {
-  --leftWidth: 20%;
+  --leftWidth: 40%;
   width: var(--leftWidth);
   height: 100%;
 }
@@ -129,7 +128,7 @@ export default {
 }
 
 .rightArea {
-  --rightWidth: 80%;
+  --rightWidth: 0%;
   width: var(--rightWidth);
   padding-right: 0em;
   height: 100%;
@@ -142,9 +141,6 @@ export default {
     display: initial;
     align-items: initial;
   }
-}
-
-@media screen and (max-width: 600px) {
   .leftArea {
     width: 100%;
     padding-left: 0.3em;
