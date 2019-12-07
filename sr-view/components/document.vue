@@ -1,7 +1,7 @@
 <template>
-  <div class="h-100 py-1">
-    <b-card no-header no-body class="h-100">
-      <form class="form-inline w-100 p-1">
+  <div class="h-100 pb-1">
+    <b-card no-header no-body class="h-100 border-0">
+      <form class="form-inline w-100 py-1">
         <div class="border rounded d-flex w-50">
           <img
             :src="'data:image/png;base64,' + selectedSpace.image"

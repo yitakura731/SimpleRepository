@@ -1,96 +1,84 @@
 <template>
-  <b-navbar class="headerArea py-0" toggleable="md" type="dark">
-    <b-navbar-brand class="h-100 brandArea d-flex align-items-center">
-      <img src="~/static/icon.png" class="mr-2" width="30" height="30" />
-      <div class="headerText">
-        {{ $t('navbar') }}
-      </div>
-    </b-navbar-brand>
-
-    <b-nav-form>
-      <b-button
-        v-if="loggedIn"
-        v-b-toggle.menu-clsp
-        variant="outline-light"
-        class="d-flex align-items-center "
-      >
-        <font-awesome-icon icon="align-justify" />
-      </b-button>
-    </b-nav-form>
-
-    <b-nav-form>
-      <b-nav-item-dropdown
-        v-if="loggedIn"
-        no-caret
-        class="headerText d-flex align-items-center ml-3"
-      >
-        <template slot="button-content">
-          <div class="uploadButton">
-            <font-awesome-icon icon="cloud-upload-alt" />
-            {{ $t('registration') }}
-          </div>
-        </template>
-        <b-dropdown-item @click="postSpace()">
-          <font-awesome-icon icon="folder-plus" />
-          {{ $t('postSpaceDialogTitle') }}
-        </b-dropdown-item>
-        <hr class="my-1" />
-        <b-dropdown-item @click="postTag()">
-          <font-awesome-icon icon="tag" />
-          {{ $t('postTagDialogTitle') }}
-        </b-dropdown-item>
-        <hr class="my-1" />
-        <b-dropdown-item @click="postDocument()">
-          <font-awesome-icon icon="file-medical" />
-          {{ $t('postDocDialogTitle') }}
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-nav-form>
-
-    <b-nav-form>
-      <b-nav-item-dropdown
-        v-if="loggedIn"
-        no-caret
-        class="headerText d-flex align-items-center"
-      >
-        <template slot="button-content">
-          <div class="uploadButton">
-            <font-awesome-icon icon="angle-down" />
-            {{ $t('language') }}
-          </div>
-        </template>
-        <b-dropdown-item @click="setLocale('ja')">
-          {{ $t('label_ja') }}
-        </b-dropdown-item>
-        <b-dropdown-item @click="setLocale('en')">
-          {{ $t('label_en') }}
-        </b-dropdown-item>
-      </b-nav-item-dropdown>
-    </b-nav-form>
-
-    <b-nav-item-dropdown
-      v-if="loggedIn"
-      show
-      right
-      no-caret
-      class="d-flex align-items-center ml-auto"
-    >
-      <template slot="button-content">
-        <font-awesome-icon
-          :icon="['fa', 'user-circle']"
-          style="font-size: 28px; color: white;"
+  <b-navbar class="p-0">
+    <div class="headerArea w-100 pl-2 d-sm-flex text-center">
+      <b-navbar-brand class="h-100 mt-1 text-white">
+        <img
+          src="~/static/icon.png"
+          class="d-inline-block align-top"
+          width="30"
+          height="30"
         />
-      </template>
-      <b-dropdown-item>
-        <font-awesome-icon :icon="strategy.icon" style="font-size: 16px;" />
-        {{ strategy.username }}
-      </b-dropdown-item>
-      <hr class="my-1" />
-      <b-dropdown-item @click="logout()">
-        <font-awesome-icon icon="sign-out-alt" style="font-size: 16px;" />
-        {{ $t('logout') }}
-      </b-dropdown-item>
-    </b-nav-item-dropdown>
+        {{ $t('navbar') }}
+      </b-navbar-brand>
+
+      <div class="d-flex flex-fill">
+        <b-navbar-nav>
+          <b-nav-item v-b-toggle.menu-clsp>
+            <div class="headerButton">
+              <font-awesome-icon icon="align-justify" />
+            </div>
+          </b-nav-item>
+
+          <b-nav-item-dropdown no-caret>
+            <template v-slot:button-content>
+              <div class="headerButton">
+                <font-awesome-icon icon="cloud-upload-alt" />
+                {{ $t('registration') }}
+              </div>
+            </template>
+            <b-dropdown-item @click="postSpace()">
+              <font-awesome-icon icon="folder-plus" />
+              {{ $t('postSpaceDialogTitle') }}
+            </b-dropdown-item>
+            <hr class="my-1" />
+            <b-dropdown-item @click="postTag()">
+              <font-awesome-icon icon="tag" />
+              {{ $t('postTagDialogTitle') }}
+            </b-dropdown-item>
+            <hr class="my-1" />
+            <b-dropdown-item @click="postDocument()">
+              <font-awesome-icon icon="file-medical" />
+              {{ $t('postDocDialogTitle') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+
+          <b-nav-item-dropdown no-caret>
+            <template v-slot:button-content>
+              <div class="headerButton">
+                <font-awesome-icon icon="angle-down" />
+                {{ $t('language') }}
+              </div>
+            </template>
+            <b-dropdown-item @click="setLocale('ja')">
+              {{ $t('label_ja') }}
+            </b-dropdown-item>
+            <b-dropdown-item @click="setLocale('en')">
+              {{ $t('label_en') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+
+        <b-navbar-nav class="ml-auto">
+          <b-nav-item-dropdown right no-caret>
+            <template v-slot:button-content>
+              <font-awesome-icon
+                :icon="['fa', 'user-circle']"
+                style="font-size: 28px; color: white;"
+              />
+            </template>
+            <b-dropdown-item>
+              <font-awesome-icon :icon="strategy.icon" />
+              {{ strategy.username }}
+            </b-dropdown-item>
+            <hr class="my-1" />
+            <b-dropdown-item @click="logout()">
+              <font-awesome-icon icon="sign-out-alt" />
+              {{ $t('logout') }}
+            </b-dropdown-item>
+          </b-nav-item-dropdown>
+        </b-navbar-nav>
+      </div>
+    </div>
 
     <post-space-dialog ref="PostSpaceDialog" />
     <post-doc-dialog ref="PostDocDialog" />
@@ -149,44 +137,19 @@ export default {
 </script>
 >
 <style scoped>
-@media screen and (max-width: 600px) {
-  .brandArea {
-    width: 100%;
-  }
-}
-
-.headerText {
-  color: white;
-}
-
 .headerArea {
+  color: white;
   background-color: #3b5998;
   font-size: 20px;
   font-family: Tahoma;
   vertical-align: middle;
 }
 
-.languageButton {
-  padding: 3px 6px;
-  font-size: 16px;
-  background-color: rgba(0, 0, 0, 0.1);
-  border: solid 1px white;
-  border-radius: 5px;
-}
-
-.uploadButton {
+.headerButton {
   color: white;
   padding: 3px 6px;
   font-size: 16px;
   border: solid 1px white;
   border-radius: 5px;
-}
-
-.uploadButton:hover {
-  color: white;
-  padding: 3px 6px;
-  font-size: 16px;
-  border: solid 1px white;
-  font-weight: bold;
 }
 </style>
