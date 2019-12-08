@@ -12,7 +12,7 @@
       {{ message }}
     </h5>
     <h6 class="my-3">
-      <div class="stackTraceArea">
+      <div class="stack-trace-area">
         {{ stack }}
       </div>
     </h6>
@@ -48,7 +48,7 @@ export default {
 </script>
 
 <style>
-.stackTraceArea {
+.stack-trace-area {
   border: solid 1px gray;
   overflow: scroll;
 }

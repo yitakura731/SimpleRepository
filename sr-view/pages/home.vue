@@ -1,31 +1,28 @@
 <template>
-  <div class="h-100">
-    <b-container
-      fluid
-      class="contents-area h-100 w-100"
-      @mouseup="mouseUp($event)"
-      @mousemove="mouseMove($event)"
+  <div
+    class="d-sm-flex h-100 w-100 px-1 px-sm-3"
+    @mouseup="mouseUp($event)"
+    @mousemove="mouseMove($event)"
+  >
+    <b-collapse
+      id="menu-clsp"
+      v-model="showLeftMenu"
+      :style="leftArea"
+      class="left-area p-0"
     >
-      <b-collapse
-        id="menu-clsp"
-        v-model="showLeftMenu"
-        :style="leftArea"
-        class="left-area"
-      >
-        <document />
-      </b-collapse>
+      <document />
+    </b-collapse>
 
-      <b-collapse id="menu-clsp" v-model="showLeftMenu">
-        <div class="border-area" @mousedown="mouseDown($event)">
-          <div class="border-sub-left-area" />
-          <div class="border-sub-right-area" />
-        </div>
-      </b-collapse>
-
-      <div :style="rightArea" class="right-area">
-        <myContent />
+    <b-collapse id="menu-clsp" v-model="showLeftMenu">
+      <div class="border-area" @mousedown="mouseDown($event)">
+        <div class="border-sub-left-area" />
+        <div class="border-sub-right-area" />
       </div>
-    </b-container>
+    </b-collapse>
+
+    <div :style="rightArea" class="right-area">
+      <myContent />
+    </div>
     <error-dialog />
     <success-dialog />
   </div>
@@ -94,11 +91,6 @@ export default {
 </script>
 
 <style scoped>
-.contents-area {
-  display: flex;
-  align-items: stretch;
-}
-
 .left-area {
   --leftWidth: 40%;
   width: var(--leftWidth);
@@ -135,18 +127,11 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-  .contents-area {
-    height: var(500px);
-    width: 100%;
-    display: initial;
-    align-items: initial;
-  }
   .left-area {
     width: 100%;
     padding-left: 0.3em;
     padding-right: 0.3em;
     border-right: none;
-    display: initial;
   }
   .right-area {
     width: 100%;

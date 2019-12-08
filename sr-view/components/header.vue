@@ -67,7 +67,7 @@
               />
             </template>
             <b-dropdown-item>
-              <font-awesome-icon :icon="strategy.icon" />
+              <font-awesome-icon icon="database" />
               {{ strategy.username }}
             </b-dropdown-item>
             <hr class="my-1" />

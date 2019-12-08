@@ -1,14 +1,12 @@
 <template>
-  <div :class="spaceItem" @click="click()">
-    <p class="my-1">
-      <img
-        class="m-1"
-        :src="'data:image/png;base64, ' + space.image"
-        width="30"
-        height="30"
-      />
-      {{ space.name }}
-    </p>
+  <div :class="spaceItem" class="m-1" @click="click()">
+    <img
+      class="m-1"
+      :src="'data:image/png;base64, ' + space.image"
+      width="30"
+      height="30"
+    />
+    {{ space.name }}
   </div>
 </template>
 
@@ -48,15 +46,23 @@ export default {
 
 <style scoped>
 .space-item {
-  background-color: whitesmoke;
-  transition: 0.5s;
+  width: 46%;
+  background-color: white;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .space-item:hover {
+  width: 46%;
   background-color: blanchedalmond;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .selected-space-item {
+  width: 46%;
   background-color: gold;
+  border-radius: 3px;
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 </style>

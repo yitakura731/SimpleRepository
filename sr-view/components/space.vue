@@ -6,25 +6,23 @@
     ok-variant="secondary"
     ok-only
   >
-    <b-card no-header no-body class="h-100 py-1 border-0">
-      <div class="border list-item-parent mt-0 h-100">
-        <div v-show="hasSpaces">
-          <space-list-item
-            v-for="space in spaces"
-            :key="space.id"
-            class="mx-2 my-1"
-            :space="space"
-            @click="click(space)"
-          />
-        </div>
-        <div v-show="!hasSpaces" class="img-parent w-100 h-100">
-          <img
-            src="~/static/no-file.png"
-            class="mx-auto"
-            width="200"
-            height="200"
-          />
-        </div>
+    <b-card no-header no-body class="border-0 list-space-parent overflow-auto">
+      <div
+        v-if="hasSpaces"
+        class="d-flex justify-content-start flex-wrap align-content-start p-1"
+      >
+        <space-list-item
+          v-for="space in spaces"
+          :key="space.id"
+          :space="space"
+          @click="click(space)"
+        />
+      </div>
+      <div
+        v-if="!hasSpaces"
+        class="d-flex justify-content-center align-items-center"
+      >
+        <img src="~/static/no-file.png" width="200" height="200" />
       </div>
     </b-card>
   </b-modal>
@@ -67,12 +65,7 @@ export default {
 </script>
 
 <style scoped>
-.img-parent {
-  display: flex;
-  align-items: center;
-  background-color: lightgrey;
-}
-.list-item-parent {
-  overflow-y: scroll;
+.list-space-parent {
+  background-color: gainsboro;
 }
 </style>

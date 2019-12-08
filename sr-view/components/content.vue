@@ -1,5 +1,5 @@
 <template>
-  <div class="p-1 h-100">
+  <div class="h-100 py-1">
     <div v-if="content != null" class="h-100">
       <div v-if="content.mimetype === 'application/pdf'" class="h-100">
         <pdf-viewer :content="content" />
@@ -8,8 +8,11 @@
         <image-viewer :content="content" />
       </div>
     </div>
-    <div v-else class="h-100 img-parent">
-      <img src="~/static/no-file.png" class="mx-auto" />
+    <div
+      v-else
+      class="h-100 img-parent d-flex justify-content-center align-items-center"
+    >
+      <img src="~/static/no-file.png" />
     </div>
   </div>
 </template>
@@ -32,30 +35,7 @@ export default {
 </script>
 
 <style scoped>
-.contents-number {
-  font-size: 25px;
-  text-align: center;
-  border: thin solid gray;
-  width: 60px;
-  border-radius: 5px;
-}
-.contents-label {
-  font-size: 24px;
-}
-.canvas-parent {
-  overflow: scroll;
-}
 .img-parent {
-  display: flex;
-  align-items: center;
-  background-color: lightgrey;
-}
-.fade-enter-active,
-.fade-leave-active {
-  transition: opacity 2s;
-}
-.fade-enter,
-.fade-leave-to {
-  opacity: 0;
+  background-color: gainsboro;
 }
 </style>

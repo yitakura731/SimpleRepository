@@ -25,22 +25,20 @@
         </b-input-group>
       </form>
 
-      <div class="list-item-parent mt-0 h-100">
+      <div class="list-doc-parent mt-0 h-100 overflow-auto">
         <div
-          v-show="hasDocuments"
-          class="h-100 d-flex justify-content-start flex-wrap align-content-start"
+          v-if="hasDocuments"
+          class="h-100 d-flex justify-content-around flex-wrap align-content-start"
         >
           <div v-for="(doc, index) in documents" :key="doc.docId">
             <list-doc-item :document="doc" :index="index" />
           </div>
         </div>
-        <div v-show="!hasDocuments" class="img-parent w-100 h-100">
-          <img
-            src="~/static/no-file.png"
-            class="mx-auto"
-            width="200"
-            height="200"
-          />
+        <div
+          v-if="!hasDocuments"
+          class="d-flex justify-content-center align-items-center h-100"
+        >
+          <img src="~/static/no-file.png" width="200" height="200" />
         </div>
       </div>
     </b-card>
@@ -102,21 +100,7 @@ export default {
 </script>
 
 <style scoped>
-.img-parent {
-  display: flex;
-  align-items: center;
-  background-color: lightgray;
-}
-.list-item-parent {
+.list-doc-parent {
   background-color: gainsboro;
-  overflow-y: scroll;
-}
-.card-columns {
-  column-count: 5;
-}
-@media screen and (max-width: 576px) {
-  .card-columns {
-    column-count: 3;
-  }
 }
 </style>

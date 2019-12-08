@@ -1,5 +1,5 @@
 <template>
-  <div :class="docCard" class="border-0 py-1 m-1" @click="click()">
+  <div :class="docItem" class="border-0 py-1 m-1" @click="click()">
     <b-img
       :src="'data:image/jpeg;base64, ' + document.thumbnail"
       class="px-1"
@@ -31,13 +31,13 @@ export default {
     }
   },
   computed: {
-    docCard() {
+    docItem() {
       let retVal = null;
       const current = this.$store.state.repository.selectedDocument;
       if (current != null && current.docId === this.document.docId) {
-        retVal = 'selected-doc-card';
+        retVal = 'selected-doc-item';
       } else {
-        retVal = 'doc-card';
+        retVal = 'doc-item';
       }
       return retVal;
     },
@@ -77,17 +77,17 @@ export default {
 </script>
 
 <style scoped>
-.doc-card {
+.doc-item {
   background-color: white;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
-.doc-card:hover {
+.doc-item:hover {
   background-color: blanchedalmond;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
-.selected-doc-card {
+.selected-doc-item {
   background-color: navajowhite;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
