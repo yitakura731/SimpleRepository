@@ -1,12 +1,19 @@
 <template>
-  <div :class="spaceItem" class="m-1" @click="click()">
-    <img
-      class="m-1"
-      :src="'data:image/png;base64, ' + space.image"
-      width="30"
-      height="30"
-    />
-    {{ space.name }}
+  <div class="space-item-wrapper my-1">
+    <div v-if="space.dispType === 'real'">
+      <div :class="spaceItem" @click="click()">
+        <img
+          class="m-1"
+          :src="'data:image/png;base64, ' + space.image"
+          width="30"
+          height="30"
+        />
+        {{ space.name }}
+      </div>
+    </div>
+    <div v-if="space.dispType === 'dummy'">
+      <div class="dummy-item" />
+    </div>
   </div>
 </template>
 
@@ -45,22 +52,27 @@ export default {
 </script>
 
 <style scoped>
+.dummy-item {
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.space-item-wrapper {
+  width: 48%;
+}
+
 .space-item {
-  width: 46%;
   background-color: white;
   border-radius: 3px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .space-item:hover {
-  width: 46%;
   background-color: blanchedalmond;
   border-radius: 3px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .selected-space-item {
-  width: 46%;
   background-color: gold;
   border-radius: 3px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);

@@ -1,15 +1,22 @@
 <template>
-  <div :class="docItem" class="border-0 py-1 m-1" @click="click()">
-    <b-img
-      :src="'data:image/jpeg;base64, ' + document.thumbnail"
-      class="px-1"
-    />
-    <p class="m-0 text-center">
-      {{ getDocName() }}
-    </p>
-    <p class="m-0 ml-2">
-      <font-awesome-icon icon="tag" :style="style" class="tag" />
-    </p>
+  <div>
+    <div v-if="document.dispType === 'real'">
+      <div :class="docItem" class="border-0 py-1 my-1" @click="click()">
+        <b-img
+          :src="'data:image/jpeg;base64, ' + document.thumbnail"
+          class="px-1"
+        />
+        <p class="m-0 text-center">
+          {{ getDocName() }}
+        </p>
+        <p class="m-0 ml-2">
+          <font-awesome-icon icon="tag" :style="tagStyle" class="tag" />
+        </p>
+      </div>
+    </div>
+    <div v-if="document.dispType === 'dummy'">
+      <div class="dummy-item" />
+    </div>
   </div>
 </template>
 
@@ -25,7 +32,8 @@ export default {
           typeof obj.docName === 'string' &&
           typeof obj.tagId === 'string' &&
           typeof obj.mimetype === 'string' &&
-          typeof obj.thumbnail === 'string'
+          typeof obj.thumbnail === 'string' &&
+          typeof obj.dispType === 'string'
         );
       }
     }
@@ -41,9 +49,13 @@ export default {
       }
       return retVal;
     },
-    style() {
+    tagStyle() {
       const tag = this.getTag(this.document.tagId);
-      return { '--tagColor': tag.color };
+      if (tag != null) {
+        return { '--tagColor': tag.color };
+      } else {
+        return {};
+      }
     }
   },
   methods: {
@@ -60,15 +72,6 @@ export default {
       });
       return retVal;
     },
-    getIcon() {
-      if (this.document.mimetype === 'application/pdf') {
-        return 'file-pdf';
-      } else if (this.document.mimetype === 'image/jpeg') {
-        return 'image';
-      } else {
-        return 'file';
-      }
-    },
     click() {
       this.$store.commit('repository/selectedDocument', this.document);
     }
@@ -77,20 +80,26 @@ export default {
 </script>
 
 <style scoped>
+.dummy-item {
+  background-color: rgba(0, 0, 0, 0);
+  margin: 0.3rem 0rem;
+  width: 108px;
+  height: 156px;
+}
 .doc-item {
   background-color: white;
   border-radius: 5px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 .doc-item:hover {
   background-color: blanchedalmond;
   border-radius: 5px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 .selected-doc-item {
   background-color: navajowhite;
   border-radius: 5px;
-  box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
+  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 .tag {
   --tagColor: black;

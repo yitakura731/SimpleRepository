@@ -6,10 +6,14 @@
     ok-variant="secondary"
     ok-only
   >
-    <b-card no-header no-body class="border-0 list-space-parent overflow-auto">
+    <b-card
+      ref="spaceArea"
+      no-header
+      no-body
+      class="border-0 list-space-parent overflow-auto"
+    >
       <div
-        v-if="hasSpaces"
-        class="d-flex justify-content-start flex-wrap align-content-start p-1"
+        class="d-flex justify-content-around flex-wrap align-content-start p-1"
       >
         <space-list-item
           v-for="space in spaces"
@@ -42,7 +46,23 @@ export default {
   },
   computed: {
     spaces() {
-      return this.$store.state.repository.spaces;
+      let retVal = [];
+      const spaceList = this.$store.state.repository.spaces;
+      if (spaceList == null || spaceList.length === 0) {
+        retVal = null;
+      } else {
+        spaceList.forEach((value, each) => {
+          retVal.push(Object.assign(value, { dispType: 'real' }));
+        });
+        if (spaceList.length % 2 === 1) {
+          retVal.push({
+            id: `dummy_0`,
+            name: 'dummy',
+            dispType: 'dummy'
+          });
+        }
+      }
+      return retVal;
     },
     hasSpaces() {
       let retVal = false;

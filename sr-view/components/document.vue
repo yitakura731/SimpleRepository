@@ -25,10 +25,11 @@
         </b-input-group>
       </form>
 
-      <div class="list-doc-parent mt-0 h-100 overflow-auto">
+      <div ref="documentArea" class="list-doc-parent mt-0 h-100 overflow-auto">
         <div
           v-if="hasDocuments"
-          class="h-100 d-flex justify-content-around flex-wrap align-content-start"
+          class="d-flex justify-content-around flex-wrap align-content-start h-100
+          "
         >
           <div v-for="(doc, index) in documents" :key="doc.docId">
             <list-doc-item :document="doc" :index="index" />
@@ -62,14 +63,36 @@ export default {
   },
   computed: {
     documents() {
-      return this.$store.state.repository.documents;
-    },
-    hasDocuments() {
-      let retVal = false;
-      if (this.documents != null && this.documents.length > 0) {
-        retVal = true;
+      let retVal = [];
+      const docList = this.$store.state.repository.documents;
+      if (docList == null || docList.length === 0) {
+        retVal = null;
+      } else {
+        docList.forEach((value, each) => {
+          retVal.push(Object.assign(value, { dispType: 'real' }));
+        });
+        const documentArea = this.$refs.documentArea;
+        if (documentArea != null) {
+          const rowCount = Math.floor(documentArea.offsetWidth / 108);
+          const bottomCount = docList.length % rowCount;
+          if (bottomCount > 0) {
+            for (let idx = 0; idx < rowCount - bottomCount; idx++) {
+              retVal.push({
+                docId: `dummy_${idx}`,
+                docName: 'dummy',
+                tagId: 'dummy',
+                mimetype: 'dummy',
+                thumbnail: 'dummy',
+                dispType: 'dummy'
+              });
+            }
+          }
+        }
       }
       return retVal;
+    },
+    hasDocuments() {
+      return this.documents != null;
     },
     selectedSpace() {
       let retVal = this.$store.state.repository.selectedSpace;
