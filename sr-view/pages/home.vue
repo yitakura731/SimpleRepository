@@ -2,27 +2,27 @@
   <div class="h-100">
     <b-container
       fluid
-      class="contentsArea h-100 w-100"
+      class="contents-area h-100 w-100"
       @mouseup="mouseUp($event)"
       @mousemove="mouseMove($event)"
     >
       <b-collapse
         id="menu-clsp"
         v-model="showLeftMenu"
-        :style="styleLeft"
-        class="leftArea"
+        :style="leftArea"
+        class="left-area"
       >
         <document />
       </b-collapse>
 
       <b-collapse id="menu-clsp" v-model="showLeftMenu">
-        <div class="borderArea" @mousedown="mouseDown($event)">
-          <div class="borderSubLeftArea" />
-          <div class="borderSubRightArea" />
+        <div class="border-area" @mousedown="mouseDown($event)">
+          <div class="border-sub-left-area" />
+          <div class="border-sub-right-area" />
         </div>
       </b-collapse>
 
-      <div :style="styleRight" class="rightArea">
+      <div :style="rightArea" class="right-area">
         <myContent />
       </div>
     </b-container>
@@ -54,7 +54,7 @@ export default {
     };
   },
   computed: {
-    styleLeft() {
+    leftArea() {
       let val = 0;
       if (this.showLeftMenu) {
         val = this.borderRatio;
@@ -65,7 +65,7 @@ export default {
         '--leftWidth': val + '%'
       };
     },
-    styleRight() {
+    rightArea() {
       let val = 0;
       if (this.showLeftMenu) {
         val = 100 - this.borderRatio;
@@ -94,23 +94,23 @@ export default {
 </script>
 
 <style scoped>
-.contentsArea {
+.contents-area {
   display: flex;
   align-items: stretch;
 }
 
-.leftArea {
+.left-area {
   --leftWidth: 40%;
   width: var(--leftWidth);
   height: 100%;
 }
 
-.borderArea {
+.border-area {
   height: 100%;
   display: flex;
 }
 
-.borderSubLeftArea {
+.border-sub-left-area {
   height: 100%;
   width: 5px;
   display: flex;
@@ -118,7 +118,7 @@ export default {
   margin-left: 8px;
 }
 
-.borderSubRightArea {
+.border-sub-right-area {
   height: 100%;
   width: 5px;
   display: flex;
@@ -127,7 +127,7 @@ export default {
   border-left: double lightgray 4px;
 }
 
-.rightArea {
+.right-area {
   --rightWidth: 0%;
   width: var(--rightWidth);
   padding-right: 0em;
@@ -135,20 +135,20 @@ export default {
 }
 
 @media screen and (max-width: 600px) {
-  .contentsArea {
+  .contents-area {
     height: var(500px);
     width: 100%;
     display: initial;
     align-items: initial;
   }
-  .leftArea {
+  .left-area {
     width: 100%;
     padding-left: 0.3em;
     padding-right: 0.3em;
     border-right: none;
     display: initial;
   }
-  .rightArea {
+  .right-area {
     width: 100%;
     padding-left: 0;
   }

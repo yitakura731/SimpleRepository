@@ -1,6 +1,6 @@
 <template>
   <b-navbar class="p-0">
-    <div class="headerArea w-100 pl-2 d-sm-flex text-center">
+    <div class="header-area w-100 pl-2 d-sm-flex text-center">
       <b-navbar-brand class="h-100 mt-1 text-white">
         <img
           src="~/static/icon.png"
@@ -14,14 +14,14 @@
       <div class="d-flex flex-fill">
         <b-navbar-nav>
           <b-nav-item v-b-toggle.menu-clsp>
-            <div class="headerButton">
+            <div class="header-button">
               <font-awesome-icon icon="align-justify" />
             </div>
           </b-nav-item>
 
           <b-nav-item-dropdown no-caret>
             <template v-slot:button-content>
-              <div class="headerButton">
+              <div class="header-button">
                 <font-awesome-icon icon="cloud-upload-alt" />
                 {{ $t('registration') }}
               </div>
@@ -44,7 +44,7 @@
 
           <b-nav-item-dropdown no-caret>
             <template v-slot:button-content>
-              <div class="headerButton">
+              <div class="header-button">
                 <font-awesome-icon icon="angle-down" />
                 {{ $t('language') }}
               </div>
@@ -137,7 +137,7 @@ export default {
 </script>
 >
 <style scoped>
-.headerArea {
+.header-area {
   color: white;
   background-color: #3b5998;
   font-size: 20px;
@@ -145,7 +145,7 @@ export default {
   vertical-align: middle;
 }
 
-.headerButton {
+.header-button {
   color: white;
   padding: 3px 6px;
   font-size: 16px;

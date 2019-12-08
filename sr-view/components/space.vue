@@ -7,7 +7,7 @@
     ok-only
   >
     <b-card no-header no-body class="h-100 py-1 border-0">
-      <div class="border listItemParent mt-0 h-100">
+      <div class="border list-item-parent mt-0 h-100">
         <div v-show="hasSpaces">
           <space-list-item
             v-for="space in spaces"
@@ -17,7 +17,7 @@
             @click="click(space)"
           />
         </div>
-        <div v-show="!hasSpaces" class="imgParent w-100 h-100">
+        <div v-show="!hasSpaces" class="img-parent w-100 h-100">
           <img
             src="~/static/no-file.png"
             class="mx-auto"
@@ -67,12 +67,12 @@ export default {
 </script>
 
 <style scoped>
-.imgParent {
+.img-parent {
   display: flex;
   align-items: center;
   background-color: lightgrey;
 }
-.listItemParent {
+.list-item-parent {
   overflow-y: scroll;
 }
 </style>

@@ -1,14 +1,14 @@
 <template>
-  <b-container fluid :style="styleContents" class="contentsArea">
-    <p class="welcomeArea pt-3">
+  <b-container fluid :style="contentsArea" class="contents-area">
+    <p class="welcome-area pt-3">
       {{ $t('welcome') }}
     </p>
-    <p class="subtitleArea">
+    <p class="subtitle-area">
       {{ $t('subtitle') }}
     </p>
     <b-row align-h="center" align-v="center" class="pt-3">
       <b-col md="4">
-        <b-card class="cardArea m-2">
+        <b-card class="card-area m-2">
           <b-form-group :label="$t('localId')" label-size="sm">
             <b-input
               v-model="localId"
@@ -38,7 +38,7 @@
       </b-col>
       <b-col md="1" />
       <b-col md="4" class="text-center">
-        <b-card class="cardArea m-2">
+        <b-card class="card-area m-2">
           <div v-for="s in strategies" :key="s.key" class="mb-2">
             <form name="socialLogin" method="post" :action="s.action">
               <b-btn
@@ -95,7 +95,7 @@ export default {
         }
       ];
     },
-    styleContents() {
+    contentsArea() {
       return {
         '--contentsHeight': window.innerHeight + 'px'
       };
@@ -122,7 +122,7 @@ export default {
 </script>
 
 <style scoped>
-.contentsArea {
+.contents-area {
   --contentsHeight: 0px;
   height: var(--contentsHeight);
   background-image: url('~@/assets/city.jpg');
@@ -130,21 +130,21 @@ export default {
   background-position: center center;
 }
 
-.welcomeArea {
+.welcome-area {
   font-size: 40px;
   color: white;
   text-align: center;
   font-family: Tahoma;
 }
 
-.subtitleArea {
+.subtitle-area {
   font-size: 20px;
   color: white;
   text-align: center;
   font-family: Tahoma;
 }
 
-.cardArea {
+.card-area {
   background-color: rgba(234, 234, 234, 0.7);
   border-style: none;
 }

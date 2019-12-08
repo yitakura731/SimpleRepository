@@ -1,5 +1,5 @@
 <template>
-  <div :class="docClass" class="border-0 py-1 m-1" @click="click()">
+  <div :class="docCard" class="border-0 py-1 m-1" @click="click()">
     <b-img
       :src="'data:image/jpeg;base64, ' + document.thumbnail"
       class="px-1"
@@ -8,7 +8,7 @@
       {{ getDocName() }}
     </p>
     <p class="m-0 ml-2">
-      <font-awesome-icon icon="tag" :style="style" class="tagColor" />
+      <font-awesome-icon icon="tag" :style="style" class="tag" />
     </p>
   </div>
 </template>
@@ -31,13 +31,13 @@ export default {
     }
   },
   computed: {
-    docClass() {
+    docCard() {
       let retVal = null;
       const current = this.$store.state.repository.selectedDocument;
       if (current != null && current.docId === this.document.docId) {
-        retVal = 'selectedDocClass';
+        retVal = 'selected-doc-card';
       } else {
-        retVal = 'docClass';
+        retVal = 'doc-card';
       }
       return retVal;
     },
@@ -77,26 +77,22 @@ export default {
 </script>
 
 <style scoped>
-.docClass {
+.doc-card {
   background-color: white;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
-.docClass:hover {
+.doc-card:hover {
   background-color: blanchedalmond;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
-.selectedDocClass {
+.selected-doc-card {
   background-color: navajowhite;
   border-radius: 5px;
   box-shadow: 3px 3px 3px rgba(0, 0, 0, 0.4);
 }
-.documentColor {
-  --tagColor: gray;
-  color: var(--tagColor);
-}
-.tagColor {
+.tag {
   --tagColor: black;
   color: var(--tagColor);
 }

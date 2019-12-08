@@ -1,16 +1,14 @@
 <template>
-  <div>
-    <div :class="spaceClass" @click="click()">
-      <p class="my-1">
-        <img
-          class="m-1"
-          :src="'data:image/png;base64, ' + space.image"
-          width="30"
-          height="30"
-        />
-        {{ space.name }}
-      </p>
-    </div>
+  <div :class="spaceItem" @click="click()">
+    <p class="my-1">
+      <img
+        class="m-1"
+        :src="'data:image/png;base64, ' + space.image"
+        width="30"
+        height="30"
+      />
+      {{ space.name }}
+    </p>
   </div>
 </template>
 
@@ -25,13 +23,13 @@ export default {
     }
   },
   computed: {
-    spaceClass() {
+    spaceItem() {
       let retVal = null;
       const current = this.$store.state.repository.selectedSpace;
       if (current != null && current.id === this.space.id) {
-        retVal = 'selectedSpace';
+        retVal = 'selected-space-item';
       } else {
-        retVal = 'space';
+        retVal = 'space-item';
       }
       return retVal;
     }
@@ -49,16 +47,16 @@ export default {
 </script>
 
 <style scoped>
-.space {
+.space-item {
   background-color: whitesmoke;
   transition: 0.5s;
 }
 
-.space:hover {
+.space-item:hover {
   background-color: blanchedalmond;
 }
 
-.selectedSpace {
+.selected-space-item {
   background-color: gold;
 }
 </style>
