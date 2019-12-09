@@ -14,7 +14,7 @@
         %
       </div>
 
-      <b-button type="button" size="sm" class="ml-5" @click="setPage(-1)">
+      <b-button type="button" size="sm" class="ml-4" @click="setPage(-1)">
         <font-awesome-icon icon="caret-left" />
       </b-button>
       <b-button type="button" size="sm" class="ml-1" @click="setPage(1)">
@@ -153,30 +153,12 @@ export default {
   z-index: 1;
   background-color: rgba(240, 240, 240, 0.7);
   border-radius: 5px;
-  padding: 6px;
   margin-left: 6px;
   margin-top: 6px;
 }
 .view-area {
   position: absolute;
   width: 100%;
-}
-@media screen and (max-width: 600px) {
-  .top-area {
-    position: initial;
-    background-color: rgba(240, 240, 240, 0.7);
-    width: 100%;
-  }
-  .operation-area {
-    position: initial;
-    background-color: rgba(240, 240, 240, 0.7);
-    border-radius: 5px;
-    padding: 1px;
-  }
-  .view-area {
-    position: initial;
-    width: 100%;
-  }
 }
 .contents-number {
   font-size: 17px;
