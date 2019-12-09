@@ -1,17 +1,20 @@
 <template>
   <div>
     <div v-if="document.dispType === 'real'">
-      <div :class="docItem" class="border-0 py-1 my-1" @click="click()">
+      <div :class="docItem" class="border-0 mt-1" @click="click()">
         <b-img
           :src="'data:image/jpeg;base64, ' + document.thumbnail"
-          class="px-1"
+          width="72"
+          height="72"
         />
-        <p class="m-0 text-center">
-          {{ getDocName() }}
-        </p>
-        <p class="m-0 ml-2">
-          <font-awesome-icon icon="tag" :style="tagStyle" class="tag" />
-        </p>
+        <div class="d-flex w-100 m-0">
+          <p class="ml-1 my-0 mr-0">
+            {{ getDocName() }}
+          </p>
+          <p class="ml-auto my-0 mr-1">
+            <font-awesome-icon icon="tag" :style="tagStyle" class="tag" />
+          </p>
+        </div>
       </div>
     </div>
     <div v-if="document.dispType === 'dummy'">
@@ -83,23 +86,21 @@ export default {
 .dummy-item {
   background-color: rgba(0, 0, 0, 0);
   margin: 0.3rem 0rem;
-  width: 108px;
-  height: 156px;
+  width: 72px;
+  height: 88px;
 }
 .doc-item {
   background-color: white;
-  border-radius: 5px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+  font-size: 0.7rem;
 }
 .doc-item:hover {
   background-color: blanchedalmond;
-  border-radius: 5px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 .selected-doc-item {
   background-color: navajowhite;
-  border-radius: 5px;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+  font-size: 0.7rem;
 }
 .tag {
   --tagColor: black;

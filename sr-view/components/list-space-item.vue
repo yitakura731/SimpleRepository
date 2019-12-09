@@ -68,8 +68,6 @@ export default {
 
 .space-item:hover {
   background-color: blanchedalmond;
-  border-radius: 3px;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
 }
 
 .selected-space-item {
