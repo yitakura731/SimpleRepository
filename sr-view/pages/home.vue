@@ -21,7 +21,12 @@
     </b-collapse>
 
     <div :style="rightArea" class="right-area">
-      <myContent />
+      <div v-if="isSmSize">
+        <my-content-dialog />
+      </div>
+      <div v-else class="h-100">
+        <my-content />
+      </div>
     </div>
     <error-dialog />
     <success-dialog />
@@ -31,6 +36,7 @@
 <script>
 import Document from '@@/components/document.vue';
 import Content from '@@/components/content.vue';
+import ContentDialog from '@@/components/content-dialog.vue';
 import ErrorDialog from '@@/components/error-dialog.vue';
 import SuccessDialog from '@@/components/success-dialog.vue';
 
@@ -40,8 +46,9 @@ export default {
   components: {
     document: Document,
     myContent: Content,
-    'error-dialog': ErrorDialog,
-    'success-dialog': SuccessDialog
+    myContentDialog: ContentDialog,
+    errorDialog: ErrorDialog,
+    successDialog: SuccessDialog
   },
   data() {
     return {
@@ -72,7 +79,15 @@ export default {
       return {
         '--rightWidth': val + '%'
       };
+    },
+    isSmSize() {
+      return window.matchMedia('screen and (max-width: 600px)').matches;
     }
+  },
+  created() {
+    this.$nuxt.$on('dispayContent', data => {
+      this.data = data;
+    });
   },
   methods: {
     mouseDown(event) {
@@ -129,13 +144,11 @@ export default {
 @media screen and (max-width: 600px) {
   .left-area {
     width: 100%;
-    padding-left: 0.3em;
-    padding-right: 0.3em;
-    border-right: none;
+    padding: 0.3em;
   }
   .right-area {
-    width: 100%;
-    padding-left: 0;
+    width: 0%;
+    height: 0%;
   }
 }
 </style>

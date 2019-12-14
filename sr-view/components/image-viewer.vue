@@ -1,6 +1,6 @@
 <template>
-  <b-card no-body no-header class="h-100 border-0 top-area">
-    <b-form inline class="operation-area">
+  <b-card no-body no-header class="h-100 w-100 border-0 top-area">
+    <b-form inline class="operation-area p-1 m-1 border-0">
       <b-button type="button" size="sm" @click="setScale(10)">
         <font-awesome-icon icon="plus" />
       </b-button>
@@ -15,11 +15,11 @@
       </div>
     </b-form>
 
-    <div ref="contentsArea" class="border h-100 view-area">
+    <div ref="contentsArea" class="border-0 h-100 w-100 view-area">
       <div
         ref="imgParent"
-        class="img-parent d-flex align-items-center"
-        :style="imgParentStyles()"
+        class="img-parent w-100 h-100 d-flex justify-content-center align-items-center"
+        :style="styles()"
       >
         <img
           ref="contentsImg"
@@ -100,8 +100,14 @@ export default {
         .then(image => {
           const contentsArea = this.$refs.imgParent;
           const contentHeight = contentsArea.clientHeight;
-          image.width = image.width * (contentHeight / image.height);
-          image.height = contentHeight;
+          const contentWidth = contentsArea.clientWidth;
+          if (image.height > image.width) {
+            image.height = contentHeight;
+            image.width = image.width * (contentHeight / image.height);
+          } else {
+            image.height = image.height * (contentWidth / image.width);
+            image.width = contentWidth;
+          }
           this.imageData = image;
           this.loading = false;
         })
@@ -110,7 +116,7 @@ export default {
           this.loading = false;
         });
     },
-    imgParentStyles() {
+    styles() {
       const contentsArea = this.$refs.contentsArea;
       let retVal = null;
       if (contentsArea != null) {
@@ -127,30 +133,24 @@ export default {
 <style scoped>
 .top-area {
   position: relative;
-  width: 100%;
 }
 .operation-area {
   position: absolute;
   z-index: 1;
   background-color: rgba(240, 240, 240, 0.7);
   border-radius: 5px;
-  padding: 4px;
-  margin-left: 6px;
-  margin-top: 6px;
 }
 .view-area {
   position: absolute;
-  width: 100%;
 }
 .image-area {
   display: block;
-  margin: 0 auto;
 }
 .contents-number {
-  font-size: 20px;
+  font-size: 17px;
   text-align: center;
   border: thin solid gray;
-  width: 60px;
+  width: 40px;
   border-radius: 5px;
   background-color: white;
 }

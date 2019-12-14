@@ -73,7 +73,7 @@ export default {
         });
         const documentArea = this.$refs.documentArea;
         if (documentArea != null) {
-          const rowCount = Math.floor(documentArea.offsetWidth / 72);
+          const rowCount = Math.floor(documentArea.offsetWidth / 106);
           const bottomCount = docList.length % rowCount;
           if (bottomCount > 0) {
             for (let idx = 0; idx < rowCount - bottomCount; idx++) {

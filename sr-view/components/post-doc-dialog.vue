@@ -1,84 +1,82 @@
 <template>
-  <div>
-    <b-modal
-      ref="postDocDialog"
-      header-bg-variant="light"
-      hide-footer
-      :title="$t('postDocDialogTitle')"
-      hide-header-close
-    >
-      <b-container fluid>
-        <b-row class="mb-1">
-          <b-col class="mt-2" cols="3">
-            {{ $t('labelSpace') }}
-          </b-col>
-          <b-col>
-            <p class="mt-2">
-              {{ docSpaceName }}
+  <b-modal
+    ref="postDocDialog"
+    header-bg-variant="light"
+    hide-footer
+    :title="$t('postDocDialogTitle')"
+    hide-header-close
+  >
+    <b-container fluid>
+      <b-row class="mb-1">
+        <b-col class="mt-2" cols="3">
+          {{ $t('labelSpace') }}
+        </b-col>
+        <b-col>
+          <p class="mt-2">
+            {{ docSpaceName }}
+          </p>
+        </b-col>
+      </b-row>
+      <b-row class="mb-3">
+        <b-col class="mt-2" cols="3">
+          {{ $t('labelTag') }}
+        </b-col>
+        <b-col>
+          <b-form-select
+            v-model="docTag"
+            :options="getTags()"
+            :state="tagState"
+          />
+          <div v-show="!tagState">
+            <p class="text-danger">
+              {{ $t('tagRequired') }}
             </p>
-          </b-col>
-        </b-row>
-        <b-row class="mb-3">
-          <b-col class="mt-2" cols="3">
-            {{ $t('labelTag') }}
-          </b-col>
-          <b-col>
-            <b-form-select
-              v-model="docTag"
-              :options="getTags()"
-              :state="tagState"
-            />
-            <div v-show="!tagState">
-              <p class="text-danger">
-                {{ $t('tagRequired') }}
-              </p>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row class="mb-3">
-          <b-col class="mt-2" cols="3">
-            {{ $t('labelFile') }}
-          </b-col>
-          <b-col>
-            <b-form-file
-              placeholder="Choose a file..."
-              :state="fileState"
-              @change="getSelectedFile"
-            />
-            <div v-show="!fileState">
-              <p class="text-danger">
-                {{ $t('fileRequired') }}
-              </p>
-            </div>
-            <div v-show="!extState">
-              <p class="text-danger">
-                {{ $t('notPDForJPEG') }}
-              </p>
-            </div>
-          </b-col>
-        </b-row>
-        <b-row class="mb-3">
-          <b-col class="mt-2" cols="3">
-            {{ $t('labelName') }}
-          </b-col>
-          <b-col>
-            <b-form-input v-model="docName" type="text" :state="nameState" />
-            <div v-show="!nameState">
-              <p class="text-danger">
-                {{ $t('nameRequired') }}
-              </p>
-            </div>
-          </b-col>
-        </b-row>
-        <hr />
-        <div class="mt-3 w-100">
-          <b-button class="w-100" variant="outline-secondary" @click="post">
-            {{ $t('labelRegist') }}
-          </b-button>
-        </div>
-      </b-container>
-    </b-modal>
-  </div>
+          </div>
+        </b-col>
+      </b-row>
+      <b-row class="mb-3">
+        <b-col class="mt-2" cols="3">
+          {{ $t('labelFile') }}
+        </b-col>
+        <b-col>
+          <b-form-file
+            placeholder="Choose a file..."
+            :state="fileState"
+            @change="getSelectedFile"
+          />
+          <div v-show="!fileState">
+            <p class="text-danger">
+              {{ $t('fileRequired') }}
+            </p>
+          </div>
+          <div v-show="!extState">
+            <p class="text-danger">
+              {{ $t('notPDForJPEG') }}
+            </p>
+          </div>
+        </b-col>
+      </b-row>
+      <b-row class="mb-3">
+        <b-col class="mt-2" cols="3">
+          {{ $t('labelName') }}
+        </b-col>
+        <b-col>
+          <b-form-input v-model="docName" type="text" :state="nameState" />
+          <div v-show="!nameState">
+            <p class="text-danger">
+              {{ $t('nameRequired') }}
+            </p>
+          </div>
+        </b-col>
+      </b-row>
+      <hr />
+      <div class="mt-3 w-100">
+        <b-button class="w-100" variant="outline-secondary" @click="post">
+          {{ $t('labelRegist') }}
+        </b-button>
+      </div>
+    </b-container>
+  </b-modal>
 </template>
 
 <script>

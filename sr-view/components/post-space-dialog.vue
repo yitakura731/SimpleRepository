@@ -1,46 +1,44 @@
 <template>
-  <div>
-    <b-modal
-      ref="postSpaceDialog"
-      header-bg-variant="light"
-      hide-footer
-      :title="$t('postSpaceDialogTitle')"
-      hide-header-close
-    >
-      <b-container fluid>
-        <b-row class="mb-3">
-          <b-col class="mt-2" cols="2">
-            {{ $t('labelName') }}
-          </b-col>
-          <b-col>
-            <b-form-input
-              v-model="spaceName"
-              type="text"
-              :state="spaceNameState"
-            />
-          </b-col>
-        </b-row>
-        <b-row>
-          <b-col class="mt-2" cols="2">
-            {{ $t('labelImage') }}
-          </b-col>
-          <b-col>
-            <b-form-file
-              accept="image/png"
-              placeholder="Choose a file..."
-              @change="getSelectedFile"
-            />
-          </b-col>
-        </b-row>
-        <hr />
-        <div class="mt-3 w-100">
-          <b-button class="w-100" variant="outline-secondary" @click="post">
-            {{ $t('labelRegist') }}
-          </b-button>
-        </div>
-      </b-container>
-    </b-modal>
-  </div>
+  <b-modal
+    ref="postSpaceDialog"
+    header-bg-variant="light"
+    hide-footer
+    :title="$t('postSpaceDialogTitle')"
+    hide-header-close
+  >
+    <b-container fluid>
+      <b-row class="mb-3">
+        <b-col class="mt-2" cols="2">
+          {{ $t('labelName') }}
+        </b-col>
+        <b-col>
+          <b-form-input
+            v-model="spaceName"
+            type="text"
+            :state="spaceNameState"
+          />
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col class="mt-2" cols="2">
+          {{ $t('labelImage') }}
+        </b-col>
+        <b-col>
+          <b-form-file
+            accept="image/png"
+            placeholder="Choose a file..."
+            @change="getSelectedFile"
+          />
+        </b-col>
+      </b-row>
+      <hr />
+      <div class="mt-3 w-100">
+        <b-button class="w-100" variant="outline-secondary" @click="post">
+          {{ $t('labelRegist') }}
+        </b-button>
+      </div>
+    </b-container>
+  </b-modal>
 </template>
 
 <script>

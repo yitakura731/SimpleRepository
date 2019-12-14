@@ -1,38 +1,36 @@
 <template>
-  <div>
-    <b-modal
-      ref="postTagDialog"
-      header-bg-variant="light"
-      hide-footer
-      :title="$t('postTagDialogTitle')"
-      hide-header-close
-    >
-      <b-container fluid>
-        <b-row class="mb-3">
-          <b-col class="mt-2" cols="2">
-            {{ $t('labelName') }}
-          </b-col>
-          <b-col>
-            <b-form-input v-model="name" type="text" :state="nameState" />
-          </b-col>
-        </b-row>
-        <b-row class="mb-1">
-          <b-col class="mt-2" cols="2">
-            {{ $t('labelColor') }}
-          </b-col>
-          <b-col>
-            <compact-picker v-model="color" class="w-100" />
-          </b-col>
-        </b-row>
-        <hr />
-        <div class="mt-3 w-100">
-          <b-button class="w-100" variant="outline-secondary" @click="post">
-            {{ $t('labelRegist') }}
-          </b-button>
-        </div>
-      </b-container>
-    </b-modal>
-  </div>
+  <b-modal
+    ref="postTagDialog"
+    header-bg-variant="light"
+    hide-footer
+    :title="$t('postTagDialogTitle')"
+    hide-header-close
+  >
+    <b-container fluid>
+      <b-row class="mb-3">
+        <b-col class="mt-2" cols="2">
+          {{ $t('labelName') }}
+        </b-col>
+        <b-col>
+          <b-form-input v-model="name" type="text" :state="nameState" />
+        </b-col>
+      </b-row>
+      <b-row class="mb-1">
+        <b-col class="mt-2" cols="2">
+          {{ $t('labelColor') }}
+        </b-col>
+        <b-col>
+          <compact-picker v-model="color" class="w-100" />
+        </b-col>
+      </b-row>
+      <hr />
+      <div class="mt-3 w-100">
+        <b-button class="w-100" variant="outline-secondary" @click="post">
+          {{ $t('labelRegist') }}
+        </b-button>
+      </div>
+    </b-container>
+  </b-modal>
 </template>
 
 <script>

@@ -1,6 +1,6 @@
 <template>
-  <b-card no-body no-header class="h-100 border-0 top-area">
-    <b-form inline class="operation-area">
+  <b-card no-body no-header class="h-100 w-100 border-0 top-area">
+    <b-form inline class="operation-area p-1 m-1 border-0">
       <b-button type="button" size="sm" @click="setScale(10)">
         <font-awesome-icon icon="plus" />
       </b-button>
@@ -31,8 +31,8 @@
       </div>
     </b-form>
 
-    <div ref="contentsArea" class="border h-100 view-area">
-      <div ref="canvasParent" class="canvas-parent" :style="styles()">
+    <div ref="contentsArea" class="border-0 h-100 w-100 view-area">
+      <div ref="canvasParent" class="canvas-parent h-100" :style="styles()">
         <canvas ref="contentsCanvas" />
       </div>
     </div>
@@ -146,19 +146,15 @@ export default {
 <style scoped>
 .top-area {
   position: relative;
-  width: 100%;
 }
 .operation-area {
   position: absolute;
   z-index: 1;
   background-color: rgba(240, 240, 240, 0.7);
   border-radius: 5px;
-  margin-left: 6px;
-  margin-top: 6px;
 }
 .view-area {
   position: absolute;
-  width: 100%;
 }
 .contents-number {
   font-size: 17px;
@@ -182,5 +178,19 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
+}
+@media screen and (max-width: 600px) {
+  .top-area {
+    position: static;
+  }
+  .operation-area {
+    position: static;
+    z-index: initial;
+    background-color: rgba(240, 240, 240, 0.7);
+    border-radius: 2px;
+  }
+  .view-area {
+    position: static;
+  }
 }
 </style>

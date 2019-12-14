@@ -4,8 +4,8 @@
       <div :class="docItem" class="border-0 mt-1" @click="click()">
         <b-img
           :src="'data:image/jpeg;base64, ' + document.thumbnail"
-          width="72"
-          height="72"
+          width="108"
+          height="108"
         />
         <div class="d-flex w-100 m-0">
           <p class="ml-1 my-0 mr-0">
@@ -77,6 +77,9 @@ export default {
     },
     click() {
       this.$store.commit('repository/selectedDocument', this.document);
+      if (window.matchMedia('screen and (max-width: 600px)').matches) {
+        this.$nuxt.$emit('showContent');
+      }
     }
   }
 };
@@ -86,12 +89,12 @@ export default {
 .dummy-item {
   background-color: rgba(0, 0, 0, 0);
   margin: 0.3rem 0rem;
-  width: 72px;
-  height: 88px;
+  width: 108px;
+  height: 108px;
 }
 .doc-item {
   background-color: white;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
   font-size: 0.7rem;
 }
 .doc-item:hover {
@@ -99,7 +102,7 @@ export default {
 }
 .selected-doc-item {
   background-color: navajowhite;
-  box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
   font-size: 0.7rem;
 }
 .tag {
