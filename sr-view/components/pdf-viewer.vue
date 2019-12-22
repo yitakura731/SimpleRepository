@@ -13,7 +13,6 @@
       <div class="ml-1 contents-label">
         %
       </div>
-
       <b-button type="button" size="sm" class="ml-4" @click="setPage(-1)">
         <font-awesome-icon icon="caret-left" />
       </b-button>
@@ -38,7 +37,7 @@
     </div>
 
     <transition name="fade">
-      <loading-spinner v-show="loading" />
+      <loading-spinner v-show="loading" class="fade-area" />
     </transition>
   </b-card>
 </template>
@@ -135,7 +134,7 @@ export default {
       if (contentsArea != null) {
         retVal = { height: contentsArea.clientHeight + 'px' };
       } else {
-        retVal = { height: 150 + 'px' };
+        retVal = { height: 450 + 'px' };
       }
       return retVal;
     }
@@ -171,6 +170,9 @@ export default {
   overflow: scroll;
   background-color: lightgray;
 }
+.fade-area {
+  position: absolute;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: opacity 2s;
@@ -181,16 +183,16 @@ export default {
 }
 @media screen and (max-width: 600px) {
   .top-area {
-    position: static;
+    position: relative;
   }
   .operation-area {
-    position: static;
+    position: relative;
     z-index: initial;
     background-color: rgba(240, 240, 240, 0.7);
     border-radius: 2px;
   }
   .view-area {
-    position: static;
+    position: relative;
   }
 }
 </style>

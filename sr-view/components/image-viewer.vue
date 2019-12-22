@@ -22,7 +22,6 @@
         :style="styles()"
       >
         <img
-          ref="contentsImg"
           class="image-area"
           :src="imageData !== null ? imageData.src : null"
           :height="imageData !== null ? imageData.height : 100"
