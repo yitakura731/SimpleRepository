@@ -1,6 +1,6 @@
 <template>
   <b-modal
-    id="select-space-modal"
+    ref="ShowSpaceDialog"
     header-bg-variant="light"
     :title="$t('selectSpaceDialog')"
     ok-variant="secondary"
@@ -73,6 +73,9 @@ export default {
     }
   },
   methods: {
+    start() {
+      this.$refs.ShowSpaceDialog.show();
+    },
     search() {
       this.$store
         .dispatch('repository/fetchSpace', { query: this.input })

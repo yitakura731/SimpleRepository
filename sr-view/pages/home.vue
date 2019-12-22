@@ -4,21 +4,14 @@
     @mouseup="mouseUp($event)"
     @mousemove="mouseMove($event)"
   >
-    <b-collapse
-      id="menu-clsp"
-      v-model="showLeftMenu"
-      :style="leftArea"
-      class="left-area p-0"
-    >
+    <div :style="leftArea" class="left-area p-0">
       <document />
-    </b-collapse>
+    </div>
 
-    <b-collapse id="menu-clsp" v-model="showLeftMenu">
-      <div class="border-area" @mousedown="mouseDown($event)">
-        <div class="border-sub-left-area" />
-        <div class="border-sub-right-area" />
-      </div>
-    </b-collapse>
+    <div class="d-none d-sm-flex h-100" @mousedown="mouseDown($event)">
+      <div class="border-sub-left-area" />
+      <div class="border-sub-right-area" />
+    </div>
 
     <div :style="rightArea" class="right-area">
       <div v-if="isSmSize">
@@ -112,23 +105,14 @@ export default {
   height: 100%;
 }
 
-.border-area {
-  height: 100%;
-  display: flex;
-}
-
 .border-sub-left-area {
-  height: 100%;
   width: 5px;
-  display: flex;
   cursor: ew-resize;
-  margin-left: 8px;
+  margin-left: 4px;
 }
 
 .border-sub-right-area {
-  height: 100%;
   width: 5px;
-  display: flex;
   cursor: ew-resize;
   margin-right: 8px;
   border-left: double lightgray 4px;
