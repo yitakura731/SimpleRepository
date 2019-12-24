@@ -11,7 +11,7 @@
           <p class="ml-1 my-0 mr-0">
             {{ getDocName() }}
           </p>
-          <p class="ml-auto my-0 mr-1">
+          <p v-show="document.tagId != null" class="ml-auto my-0 mr-1">
             <font-awesome-icon icon="tag" :style="tagStyle" class="tag" />
           </p>
         </div>
@@ -33,7 +33,6 @@ export default {
         return (
           typeof obj.docId === 'string' &&
           typeof obj.docName === 'string' &&
-          typeof obj.tagId === 'string' &&
           typeof obj.mimetype === 'string' &&
           typeof obj.thumbnail === 'string' &&
           typeof obj.dispType === 'string'

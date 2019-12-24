@@ -11,15 +11,15 @@
         {{ selectedSpace.name }}
       </small>
     </b-nav-item>
-    <space ref="ShowSpaceDialog" />
+    <show-space-dialog ref="ShowSpaceDialog" />
   </div>
 </template>
 
 <script>
-import Space from './space.vue';
+import ShowSpaceDialog from './show-space-dialog.vue';
 export default {
   components: {
-    space: Space
+    showSpaceDialog: ShowSpaceDialog
   },
   computed: {
     selectedSpace() {

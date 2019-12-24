@@ -30,11 +30,12 @@ module.exports = class Repository {
   async postDocumet(user, spaceId, tagId, name, file) {
     util.checkEmpty(user, i18next.t('nullUser'));
     util.checkEmpty(spaceId, i18next.t('nullSpaceId'));
-    util.checkEmpty(tagId, i18next.t('nullTagId'));
     util.checkEmpty(name, i18next.t('nullName'));
     util.checkNull(name, i18next.t('nullFile'));
     database.checkId(spaceId, i18next.t('invalidSpaceId'));
-    database.checkId(tagId, i18next.t('invalidTagId'));
+    if (tagId != null) {
+      database.checkId(tagId, i18next.t('invalidTagId'));
+    }
     util.checkFileSize(file.size);
     util.checkSupportedFormat(file.mimetype);
     const ext = util.getExtent(file.mimetype);
