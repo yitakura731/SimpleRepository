@@ -32,7 +32,12 @@
     "errorOccured" : "エラーが発生しました",
     "emptyUserIdOrPassword" : "ユーザーIDまたはパスワードが空です",
     "selectSpaceDialog" : "スペース一覧",
+    "errorDialog" : "エラーが発生しました",
+    "successDialog" : "成功",
+    "close" : "閉じる",
     "language" : "言語",
+    "required" : "必須",
+    "choice" : "選択",
     "label_ja" : "日本語",
     "label_en" : "英語"
 }

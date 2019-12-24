@@ -4,7 +4,9 @@
     header-bg-variant="light"
     :title="$t('selectSpaceDialog')"
     ok-variant="secondary"
-    ok-only
+    hide-header-close
+    footer-class="border-0 m-0 pt-0"
+    header-class="py-1 d-flex justify-content-center"
   >
     <b-card
       ref="spaceArea"
@@ -29,6 +31,12 @@
         <img src="~/static/no-file.png" width="200" height="200" />
       </div>
     </b-card>
+
+    <template v-slot:modal-footer="{ ok }" class="w-100">
+      <b-button class="w-100" variant="outline-secondary" @click="ok()">
+        {{ $t('choice') }}
+      </b-button>
+    </template>
   </b-modal>
 </template>
 

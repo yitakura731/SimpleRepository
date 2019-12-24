@@ -32,7 +32,12 @@
     "errorOccured" : "Error occured",
     "emptyUserIdOrPassword" : "UserId or Password is Empty",
     "selectSpaceDialog" : "Space list",
+    "errorDialog" : "Error has occured",
+    "successDialog" : "Success",
+    "close" : "Close",
     "language" : "Lang",
+    "required" : "Required",
+    "choice" : "Choice",
     "label_ja" : "Japanese",
     "label_en" : "English"
 }

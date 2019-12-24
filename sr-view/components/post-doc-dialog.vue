@@ -1,81 +1,65 @@
 <template>
   <b-modal
     ref="postDocDialog"
-    header-bg-variant="light"
     hide-footer
-    :title="$t('postDocDialogTitle')"
-    hide-header-close
+    header-bg-variant="light"
+    header-class="py-2 justify-content-center"
   >
-    <b-container fluid>
-      <b-row class="mb-1">
-        <b-col class="mt-2" cols="3">
-          {{ $t('labelSpace') }}
-        </b-col>
-        <b-col>
-          <p class="mt-2">
-            {{ docSpaceName }}
-          </p>
-        </b-col>
-      </b-row>
-      <b-row class="mb-3">
-        <b-col class="mt-2" cols="3">
-          {{ $t('labelTag') }}
-        </b-col>
-        <b-col>
-          <b-form-select
-            v-model="docTag"
-            :options="getTags()"
-            :state="tagState"
-          />
-          <div v-show="!tagState">
-            <p class="text-danger">
-              {{ $t('tagRequired') }}
-            </p>
-          </div>
-        </b-col>
-      </b-row>
-      <b-row class="mb-3">
-        <b-col class="mt-2" cols="3">
-          {{ $t('labelFile') }}
-        </b-col>
-        <b-col>
-          <b-form-file
-            placeholder="Choose a file..."
-            :state="fileState"
-            @change="getSelectedFile"
-          />
-          <div v-show="!fileState">
-            <p class="text-danger">
-              {{ $t('fileRequired') }}
-            </p>
-          </div>
-          <div v-show="!extState">
-            <p class="text-danger">
-              {{ $t('notPDForJPEG') }}
-            </p>
-          </div>
-        </b-col>
-      </b-row>
-      <b-row class="mb-3">
-        <b-col class="mt-2" cols="3">
-          {{ $t('labelName') }}
-        </b-col>
-        <b-col>
-          <b-form-input v-model="docName" type="text" :state="nameState" />
-          <div v-show="!nameState">
-            <p class="text-danger">
-              {{ $t('nameRequired') }}
-            </p>
-          </div>
-        </b-col>
-      </b-row>
-      <hr />
-      <div class="mt-3 w-100">
-        <b-button class="w-100" variant="outline-secondary" @click="post">
-          {{ $t('labelRegist') }}
-        </b-button>
+    <template v-slot:modal-header="{}">
+      <span class="d-flex align-items-center">
+        <h5 class="m-0">
+          {{ $t('postDocDialogTitle') }}
+        </h5>
+        <b-img
+          :src="'data:image/png;base64,' + selectedSpace.image"
+          width="28"
+          height="28"
+          class="pl-1 ml-3 mr-1"
+        />
+        {{ selectedSpace.name }}
+      </span>
+    </template>
+    <b-form-group>
+      <label class="mb-1">
+        {{ $t('labelFile') }}
+        <b-badge pill variant="info">
+          {{ $t('required') }}
+        </b-badge>
+      </label>
+      <b-form-file
+        placeholder="Choose a file..."
+        :state="fileState"
+        @change="getSelectedFile"
+      />
+      <div v-show="!fileState" class="text-danger">
+        <small>{{ $t('fileRequired') }}</small>
       </div>
-    </b-container>
+      <div v-show="!extState" class="text-danger">
+        <small>{{ $t('notPDForJPEG') }}</small>
+      </div>
+    </b-form-group>
+    <b-form-group>
+      <label class="mb-1">
+        {{ $t('labelName') }}
+        <b-badge pill variant="info">
+          {{ $t('required') }}
+        </b-badge>
+      </label>
+      <b-form-input v-model="docName" type="text" :state="nameState" />
+      <div v-show="!nameState" class="text-danger">
+        <small>{{ $t('nameRequired') }}</small>
+      </div>
+    </b-form-group>
+    <b-form-group>
+      <label class="mb-1">
+        {{ $t('labelTag') }}
+      </label>
+      <b-form-select v-model="docTag" :options="getTags()" />
+    </b-form-group>
+    <hr />
+    <b-button class="w-100" variant="outline-secondary" @click="post">
+      {{ $t('labelRegist') }}
+    </b-button>
   </b-modal>
 </template>
 
@@ -90,20 +74,17 @@ export default {
     };
   },
   computed: {
-    docSpaceName() {
-      let retVal = null;
-      if (this.$store.state.repository.selectedSpace != null) {
-        retVal = this.$store.state.repository.selectedSpace.name;
-      } else {
-        retVal = '';
+    selectedSpace() {
+      let retVal = this.$store.state.repository.selectedSpace;
+      if (retVal == null) {
+        retVal = {};
+        retVal.image = '';
+        retVal.name = '';
       }
       return retVal;
     },
     nameState() {
       return this.docName.length > 0;
-    },
-    tagState() {
-      return this.docTag != null;
     },
     fileState() {
       return this.docFile != null;
@@ -125,6 +106,10 @@ export default {
   },
   methods: {
     start() {
+      this.docName = '';
+      this.docFile = null;
+      this.docExt = null;
+      this.docTag = null;
       this.$refs.postDocDialog.show();
     },
     getTags() {
@@ -153,7 +138,9 @@ export default {
       const fData = new FormData();
       fData.append('spaceId', this.$store.state.repository.selectedSpace.id);
       fData.append('docName', this.docName);
-      fData.append('tagId', this.docTag);
+      if (this.docTag != null) {
+        fData.append('tagId', this.docTag);
+      }
       fData.append('docFile', this.docFile);
       this.$store
         .dispatch('repository/postDocument', { data: fData })

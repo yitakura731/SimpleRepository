@@ -11,7 +11,7 @@
           <header-search-area />
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto d-flex align-items-center mr-2">
-          <header-global-button />
+          <header-global-button class="mr-2" />
           <header-account-button />
         </b-navbar-nav>
       </div>

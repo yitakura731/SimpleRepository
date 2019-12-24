@@ -1,35 +1,31 @@
 <template>
   <b-modal
     ref="postTagDialog"
-    header-bg-variant="light"
-    hide-footer
     :title="$t('postTagDialogTitle')"
+    header-bg-variant="light"
+    header-class="py-2 justify-content-center"
     hide-header-close
+    hide-footer
   >
-    <b-container fluid>
-      <b-row class="mb-3">
-        <b-col class="mt-2" cols="2">
-          {{ $t('labelName') }}
-        </b-col>
-        <b-col>
-          <b-form-input v-model="name" type="text" :state="nameState" />
-        </b-col>
-      </b-row>
-      <b-row class="mb-1">
-        <b-col class="mt-2" cols="2">
-          {{ $t('labelColor') }}
-        </b-col>
-        <b-col>
-          <compact-picker v-model="color" class="w-100" />
-        </b-col>
-      </b-row>
-      <hr />
-      <div class="mt-3 w-100">
-        <b-button class="w-100" variant="outline-secondary" @click="post">
-          {{ $t('labelRegist') }}
-        </b-button>
-      </div>
-    </b-container>
+    <b-form-group>
+      <label class="mb-1">
+        {{ $t('labelName') }}
+        <b-badge pill variant="info">
+          {{ $t('required') }}
+        </b-badge>
+      </label>
+      <b-form-input v-model="name" type="text" :state="nameState" />
+    </b-form-group>
+    <b-form-group>
+      <label class="mb-1">
+        {{ $t('labelColor') }}
+      </label>
+      <compact-picker v-model="color" class="w-100" />
+    </b-form-group>
+    <hr />
+    <b-button class="w-100" variant="outline-secondary" @click="post">
+      {{ $t('labelRegist') }}
+    </b-button>
   </b-modal>
 </template>
 
@@ -53,6 +49,8 @@ export default {
   },
   methods: {
     start() {
+      this.name = '';
+      this.color = { hex: '#194d33' };
       this.$refs.postTagDialog.show();
     },
     post() {
