@@ -1,17 +1,17 @@
 <template>
   <b-modal
     id="content-dialog"
-    dialog-class="m-0 h-100 w-100"
-    content-class="p-0 m-0 h-100"
-    body-class="p-0 m-0"
+    dialog-class="p-0 m-0 h-100 w-100"
+    content-class="p-0 m-0 vh-100 vw-100"
+    body-class="p-0 m-0 vh-100 vw-100"
     hide-header
     hide-footer
   >
     <div v-if="content != null" class="h-100 w-100">
-      <div v-if="content.mimetype === 'application/pdf'" class="h-100">
+      <div v-if="content.mimetype === 'application/pdf'" class="h-100 w-100">
         <pdf-viewer :content="content" />
       </div>
-      <div v-else class="h-100">
+      <div v-else class="h-100 w-100">
         <image-viewer :content="content" />
       </div>
     </div>

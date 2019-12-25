@@ -1,6 +1,6 @@
 <template>
   <b-navbar class="p-0">
-    <div class="header-area w-100 d-sm-flex align-items-center">
+    <div class="header-area w-100 d-md-flex align-items-center">
       <div class="d-flex justify-content-center">
         <header-brand />
       </div>

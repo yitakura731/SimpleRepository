@@ -6,16 +6,13 @@
     ok-variant="secondary"
     hide-header-close
     footer-class="border-0 m-0 pt-0"
+    body-class="py-2"
     header-class="py-1 d-flex justify-content-center"
   >
-    <b-card
-      ref="spaceArea"
-      no-header
-      no-body
-      class="border-0 list-space-parent overflow-auto"
-    >
+    <div ref="spaceArea" class="list-space-parent overflow-auto">
       <div
-        class="d-flex justify-content-around flex-wrap align-content-start p-1"
+        v-if="hasSpaces"
+        class="list-space-area d-flex justify-content-around flex-wrap align-content-start p-1"
       >
         <space-list-item
           v-for="space in spaces"
@@ -30,7 +27,7 @@
       >
         <img src="~/static/no-file.png" width="200" height="200" />
       </div>
-    </b-card>
+    </div>
 
     <template v-slot:modal-footer="{ ok }" class="w-100">
       <b-button class="w-100" variant="outline-secondary" @click="ok()">
@@ -96,7 +93,10 @@ export default {
 </script>
 
 <style scoped>
-.list-space-parent {
+.list-space-area {
   background-color: gainsboro;
+}
+.list-space-parent {
+  height: 200px;
 }
 </style>

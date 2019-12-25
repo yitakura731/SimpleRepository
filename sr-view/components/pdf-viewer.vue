@@ -181,7 +181,7 @@ export default {
 .fade-leave-to {
   opacity: 0;
 }
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .top-area {
     position: relative;
   }

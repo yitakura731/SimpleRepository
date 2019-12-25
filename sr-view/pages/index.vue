@@ -125,7 +125,7 @@ export default {
 .contents-area {
   --contentsHeight: 0px;
   height: var(--contentsHeight);
-  background-image: url('~@/assets/city.jpg');
+  background-image: url('~@/assets/background.jpg');
   background-size: cover;
   background-position: center center;
 }

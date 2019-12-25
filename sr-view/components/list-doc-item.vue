@@ -76,7 +76,7 @@ export default {
     },
     click() {
       this.$store.commit('repository/selectedDocument', this.document);
-      if (window.matchMedia('screen and (max-width: 600px)').matches) {
+      if (window.matchMedia('screen and (max-width: 768px)').matches) {
         this.$nuxt.$emit('showContent');
       }
     }

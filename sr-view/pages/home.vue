@@ -1,6 +1,6 @@
 <template>
   <div
-    class="d-sm-flex h-100 w-100 px-1 px-sm-3"
+    class="d-md-flex h-100 w-100 px-1 px-md-3"
     @mouseup="mouseUp($event)"
     @mousemove="mouseMove($event)"
   >
@@ -8,7 +8,7 @@
       <document />
     </div>
 
-    <div class="d-none d-sm-flex h-100" @mousedown="mouseDown($event)">
+    <div class="d-none d-md-flex h-100" @mousedown="mouseDown($event)">
       <div class="border-sub-left-area" />
       <div class="border-sub-right-area" />
     </div>
@@ -74,7 +74,7 @@ export default {
       };
     },
     isSmSize() {
-      return window.matchMedia('screen and (max-width: 600px)').matches;
+      return window.matchMedia('screen and (max-width: 768px)').matches;
     }
   },
   created() {
@@ -125,7 +125,7 @@ export default {
   height: 100%;
 }
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 768px) {
   .left-area {
     width: 100%;
     padding: 0.3em;
