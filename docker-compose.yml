@@ -11,9 +11,9 @@ services:
     env_file:
       - ./sr-db/db.env
     volumes:
-      - '${DB_DATA_PATH}:/data/db'
+      - '/sr-storage/db:/data/db'
     ports:
-      - "${DB_PORT}:${DB_PORT}"
+      - "27017:27017"
 
 
   rep:
@@ -25,10 +25,10 @@ services:
     env_file:
       - ./sr-repository/rep.env
     volumes:
-      - "${REPOSITORY_DATA_PATH}:${REPOSITORY_DATA_PATH}"
-      - "${REPOSITORY_CERT_STORE}:/src/cert"
+      - "/sr-storage/files:/sr-storage/files"
+      - "/SimpleRepository/sr-repository/cert:/src/cert"
     ports:
-      - "${REPOSITORY_PORT}:${REPOSITORY_PORT}"
+      - "3000:3000"
     depends_on: 
       - db
 
@@ -38,14 +38,12 @@ services:
     build:
       context: ./sr-view/
       dockerfile: Dockerfile
-      args: 
-        APP_NAME: ${APP_NAME}
     container_name: sr-web
     env_file:
       - ./sr-view/app.env
     volumes:
-      - "${WEB_SERVER_CERT_STORE}:/certs"
+      - "/SimpleRepository/sr-view/cert:/certs"
     ports:
-      - "${WEB_SERVER_PORT}:${WEB_SERVER_PORT}"
+      - "443:443"
     depends_on:
       - rep

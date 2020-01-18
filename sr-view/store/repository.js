@@ -54,7 +54,7 @@ export const actions = {
   },
 
   async fetchSpace({ commit, dispatch }, args) {
-    let url = `/api/rep/spaces`;
+    let url = `${process.env.REP_APP_NAME}/api/rep/spaces`;
     if (args != null && args.query != null) {
       url += `?q=${encodeURIComponent(args.query)}`;
     }
@@ -74,9 +74,9 @@ export const actions = {
   async fetchDocument({ commit, dispatch, state }, arg) {
     let url = null;
     if (arg.query != null) {
-      url = `/api/rep/documents?spaceId=${arg.spaceId}&q=${arg.query}`;
+      url = `${process.env.REP_APP_NAME}/api/rep/documents?spaceId=${arg.spaceId}&q=${arg.query}`;
     } else {
-      url = `/api/rep/documents?spaceId=${arg.spaceId}`;
+      url = `${process.env.REP_APP_NAME}/api/rep/documents?spaceId=${arg.spaceId}`;
     }
     const response = await this.$axios.$get(url);
     if (response.length > 0) {
@@ -89,36 +89,50 @@ export const actions = {
   },
 
   async fetchTag({ commit }, args) {
-    const response = await this.$axios.$get('/api/rep/tags');
+    const response = await this.$axios.$get(
+      `${process.env.REP_APP_NAME}/api/rep/tags`
+    );
     commit('tags', response);
   },
 
   async postTag({ dispatch }, args) {
-    await this.$axios.$post('/api/rep/tags', args.data);
+    await this.$axios.$post(
+      `${process.env.REP_APP_NAME}/api/rep/tags`,
+      args.data
+    );
     await dispatch('fetchTag');
   },
 
   async postSpace({ dispatch }, args) {
-    await this.$axios.$post('/api/rep/spaces', args.data);
+    await this.$axios.$post(
+      `${process.env.REP_APP_NAME}/api/rep/spaces`,
+      args.data
+    );
     await dispatch('fetchSpace');
   },
 
   async postDocument({ dispatch }, args) {
-    await this.$axios.$post('/api/rep/documents', args.data);
+    await this.$axios.$post(
+      `${process.env.REP_APP_NAME}/api/rep/documents`,
+      args.data
+    );
     await dispatch('fetchDocument', { spaceId: args.data.get('spaceId') });
   },
 
   fetchPDF({ dispatch }, args) {
     const loadingTask = pdfjsLib.getDocument({
-      url: `/${process.env.APP_NAME}/api/rep/documents/${args.contentId}/contents`,
+      url: `/${process.env.REP_APP_NAME}/api/rep/documents/${args.contentId}/contents`,
       httpHeaders: { Authorization: Cookies.get('sr.auth.token') }
     });
     return loadingTask.promise;
   },
 
   fetchImage({ dispatch }, args) {
-    return this.$axios.$get(`/api/rep/documents/${args.contentId}/contents`, {
-      headers: { 'Content-type': 'image/jpeg' }
-    });
+    return this.$axios.$get(
+      `${process.env.REP_APP_NAME}/api/rep/documents/${args.contentId}/contents`,
+      {
+        headers: { 'Content-type': 'image/jpeg' }
+      }
+    );
   }
 };

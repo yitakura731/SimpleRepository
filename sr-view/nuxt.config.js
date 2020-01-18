@@ -2,29 +2,25 @@ const pkg = require('./package');
 require('dotenv').config({ path: './app.env' });
 
 const repositoryURL = process.env.REPOSITORY_URL;
-const appName = process.env.APP_NAME;
-const webServerPort = process.env.WEB_SERVER_PORT;
-const proxyURL = `/${process.env.APP_NAME}/api`;
+const authURL = process.env.AUTH_URL;
 
 /* eslint no-console: "off" */
 console.log(`repositoryURL = ${repositoryURL}`);
-console.log(`appName = ${appName}`);
-console.log(`webServerPort = ${webServerPort}`);
-console.log(`proxyURL = ${proxyURL}`);
+console.log(`authURL = ${authURL}`);
 
 module.exports = {
   mode: 'spa',
 
   router: {
     linkActiveClass: 'active',
-    base: `/${appName}/`
+    base: '/SimpleRepository/'
   },
 
   /*
    ** Headers of the page
    */
   head: {
-    title: appName,
+    title: 'SimpleRepository',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width, initial-scale=1' },
@@ -78,7 +74,6 @@ module.exports = {
    ** Axios module configuration
    */
   axios: {
-    prefix: `/${appName}`,
     proxy: true
   },
 
@@ -86,11 +81,16 @@ module.exports = {
     '/SimpleRepository/api': {
       target: repositoryURL,
       secure: false
+    },
+    '/SimpleAuth/api': {
+      target: authURL,
+      secure: false
     }
   },
 
   env: {
-    APP_NAME: process.env.APP_NAME
+    REP_APP_NAME: 'SimpleRepository',
+    AUTH_APP_NAME: 'SimpleAuth'
   },
 
   build: {

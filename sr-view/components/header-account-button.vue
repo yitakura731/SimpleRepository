@@ -20,7 +20,6 @@ export default {
   computed: {
     strategy() {
       const retVal = {};
-      retVal.username = this.$store.state.auth.username;
       const strategy = this.$store.state.auth.strategy;
       if (strategy === 'github') {
         retVal.icon = ['fab', 'github'];
@@ -28,6 +27,16 @@ export default {
         retVal.icon = ['fab', 'facebook'];
       } else if (strategy === 'local') {
         retVal.icon = ['fas', 'database'];
+      }
+      const name = this.$store.state.auth.username;
+      if (strategy === 'local') {
+        if (this.$i18n.locale === 'ja') {
+          retVal.username = name.ja;
+        } else {
+          retVal.username = name.en;
+        }
+      } else {
+        retVal.username = name;
       }
       return retVal;
     }

@@ -1,6 +1,6 @@
 server {
-    listen  ${WEB_SERVER_PORT}  ssl;
-    server_name  ${APP_NAME};
+    listen  443  ssl;
+    server_name  SimpleRepository;
     ssl_certificate  ${SSL_CERT_PATH};
     ssl_certificate_key  ${SSL_KEY_PATH};
 
@@ -15,11 +15,11 @@ server {
         root   /usr/share/nginx/html;
     }
 
-    location /${APP_NAME}/api {
+    location /SimpleRepository/api {
        proxy_pass ${REPOSITORY_URL};
     }
 
-    location /${APP_NAME}/ {
+    location /SimpleRepository/ {
         root   /usr/share/nginx/html;
         index  index.html index.htm;
     }

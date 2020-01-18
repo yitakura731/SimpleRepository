@@ -25,9 +25,13 @@ export const getters = {
 
 export const actions = {
   async localLogin({ commit, dispatch }, args) {
-    const response = await this.$axios.$post('/api/auth/login/local', args, {
-      withCredentials: false
-    });
+    const response = await this.$axios.$post(
+      `${process.env.AUTH_APP_NAME}/api/auth/login/local`,
+      args,
+      {
+        withCredentials: false
+      }
+    );
     if (response.accessToken != null) {
       Cookies.set('sr.auth.token', response.accessToken);
       this.$router.push('/home');
@@ -35,12 +39,15 @@ export const actions = {
   },
 
   me({ commit, dispatch }, args) {
-    return this.$axios.$get('/api/auth/me', args);
+    return this.$axios.$get(`${process.env.AUTH_APP_NAME}/api/auth/me`, args);
   },
 
   async logout({ commit, dispatch }, args) {
     try {
-      await this.$axios.$post('/api/auth/logout', args);
+      await this.$axios.$post(
+        `${process.env.AUTH_APP_NAME}/api/auth/logout`,
+        args
+      );
     } catch {
     } finally {
       Cookies.remove('sr.auth.token');

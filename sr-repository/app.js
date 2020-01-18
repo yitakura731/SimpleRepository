@@ -14,7 +14,6 @@ const passport = require('passport');
 
 const database = require('./model/database');
 const repController = require('./controller/repController');
-const authController = require('./controller/authController');
 
 const app = express();
 
@@ -62,9 +61,6 @@ const swaggerSpec = swaggerJSDoc({
 app.use(`/${process.env.APP_NAME}/api/docs`, swaggerUi.serve);
 app.get(`/${process.env.APP_NAME}/api/docs`, swaggerUi.setup(swaggerSpec));
 
-// Authorization api
-app.use(`/${process.env.APP_NAME}/api/auth`, authController);
-
 // Repository api
 app.use(`/${process.env.APP_NAME}/api/rep`, repController);
 
@@ -83,7 +79,6 @@ app.use((err, req, res, next) => {
       message: err.message
     });
   } else {
-    console.log(err);
     res.status(500).json({
       StatusCode: 500,
       error: 'Internal Server Error',

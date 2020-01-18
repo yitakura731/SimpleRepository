@@ -16,13 +16,4 @@ db.createCollection("tags")
 
 db.createCollection("spaces")
 
-db.createCollection("users")
-
-db.users.insert({
-  "strategy" : "local",
-  "localId" : "admin",
-  "username" : "管理者ユーザー",
-  "password" : "admin"
-})
-
 EOF

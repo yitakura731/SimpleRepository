@@ -110,7 +110,7 @@ export default {
       }
       await this.$store
         .dispatch('auth/localLogin', {
-          localId: this.localId,
+          loginId: this.localId,
           password: this.password
         })
         .catch(e => {

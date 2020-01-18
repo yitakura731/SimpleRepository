@@ -54,7 +54,7 @@ module.exports = class Repository {
     const document = new Document({
       _id: new mongoose.Types.ObjectId(),
       name,
-      userId: user._id,
+      userId: user.userId,
       tagId,
       createDate: new Date(),
       spaceId,
@@ -75,7 +75,7 @@ module.exports = class Repository {
       return fse.writeFile(path.join(this.spaceFileRoot, storeFileName), file.buffer).then(() => {
         const space = new Space({
           _id: new mongoose.Types.ObjectId(),
-          userId: user._id,
+          userId: user.userId,
           spaceName: name,
           createDate: new Date(),
           fileName: storeFileName
@@ -85,7 +85,7 @@ module.exports = class Repository {
     }
     const space = new Space({
       _id: new mongoose.Types.ObjectId(),
-      userId: user._id,
+      userId: user.userId,
       spaceName: name,
       createDate: new Date(),
       fileName: ''
@@ -99,7 +99,7 @@ module.exports = class Repository {
     util.checkEmpty(color, i18next.t('nullColor'));
     const tag = new Tag({
       _id: new mongoose.Types.ObjectId(),
-      userId: user._id,
+      userId: user.userId,
       name,
       createDate: new Date(),
       color
@@ -113,14 +113,14 @@ module.exports = class Repository {
     if (spaceId != null) {
       database.checkId(spaceId, i18next.t('invalidSpaceId'));
       if (q != null) {
-        query = Document.find({ spaceId, userId: user._id, name: new RegExp(`.*${q}.*`) });
+        query = Document.find({ spaceId, userId: user.userId, name: new RegExp(`.*${q}.*`) });
       } else {
-        query = Document.find({ spaceId, userId: user._id });
+        query = Document.find({ spaceId, userId: user.userId });
       }
     } else if (q != null) {
-      query = Document.find({ userId: user._id, name: new RegExp(`.*${q}.*`) });
+      query = Document.find({ userId: user.userId, name: new RegExp(`.*${q}.*`) });
     } else {
-      query = Document.find({ userId: user._id });
+      query = Document.find({ userId: user.userId });
     }
     const result = await query.sort({ createDate: -1 }).exec();
     const documents = [];
@@ -155,7 +155,7 @@ module.exports = class Repository {
 
   async getTags(user) {
     util.checkEmpty(user, i18next.t('nullUser'));
-    const result = await Tag.find({ userId: user._id }).exec();
+    const result = await Tag.find({ userId: user.userId }).exec();
     const retVal = [];
     result.forEach(e => {
       retVal.push({
@@ -172,11 +172,11 @@ module.exports = class Repository {
     let query = null;
     if (q !== null) {
       query = Space.find({
-        userId: user._id,
+        userId: user.userId,
         spaceName: new RegExp(`.*${q}.*`)
       });
     } else {
-      query = Space.find({ userId: user._id });
+      query = Space.find({ userId: user.userId });
     }
     const result = await query.sort({ createDate: -1 }).exec();
     const retVal = [];

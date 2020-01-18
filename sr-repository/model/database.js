@@ -5,20 +5,10 @@ require('dotenv').config({ path: './rep.env' });
 class Database {
   constructor() {
     const Schema = mongoose.Schema;
-    /** User */
-    const UserSchema = new Schema({
-      _id: Schema.Types.ObjectId,
-      strategy: String,
-      localId: String,
-      githubId: String,
-      facebookId: String,
-      username: String,
-      password: String
-    });
     /** Space */
     const SpaceSchema = new Schema({
       _id: Schema.Types.ObjectId,
-      userId: Schema.Types.ObjectId,
+      userId: Number,
       spaceName: String,
       createDate: Date,
       fileName: String
@@ -26,7 +16,7 @@ class Database {
     /** Tag */
     const TagSchema = new Schema({
       _id: Schema.Types.ObjectId,
-      userId: Schema.Types.ObjectId,
+      userId: Number,
       name: String,
       createDate: Date,
       color: String
@@ -35,7 +25,7 @@ class Database {
     const DocumentSchema = new Schema({
       _id: Schema.Types.ObjectId,
       name: String,
-      userId: Schema.Types.ObjectId,
+      userId: Number,
       tagId: Schema.Types.ObjectId,
       createDate: Date,
       spaceId: Schema.Types.ObjectId,
@@ -46,7 +36,6 @@ class Database {
     mongoose.model('spaces', SpaceSchema, 'spaces');
     mongoose.model('documents', DocumentSchema, 'documents');
     mongoose.model('tags', TagSchema, 'tags');
-    mongoose.model('users', UserSchema, 'users');
   }
 
   connect() {

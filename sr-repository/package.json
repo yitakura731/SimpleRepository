@@ -34,6 +34,7 @@
     "passport-jwt": "^4.0.0",
     "passport-local": "^1.0.0",
     "puid": "^1.0.7",
+    "request": "^2.88.0",
     "swagger-jsdoc": "^3.2.9",
     "swagger-ui": "^3.24.3",
     "swagger-ui-dist": "^3.22.3",

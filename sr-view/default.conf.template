@@ -1,6 +1,6 @@
 server {
-    listen  ${WEB_SERVER_PORT};
-    server_name  ${APP_NAME};
+    listen  80;
+    server_name SimpleRepository;
 
     location / {
         root   /usr/share/nginx/html;
@@ -13,11 +13,11 @@ server {
         root   /usr/share/nginx/html;
     }
 
-    location /${APP_NAME}/api {
+    location /SimpleRepository/api {
        proxy_pass ${REPOSITORY_URL};
     }
 
-    location /${APP_NAME}/ {
+    location /SimpleRepository/ {
         root   /usr/share/nginx/html;
         index  index.html index.htm;
     }

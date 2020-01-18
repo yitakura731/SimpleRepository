@@ -9,6 +9,7 @@ const storage = multer.memoryStorage();
 const upload = multer({ storage });
 const passport = require('passport');
 const Repository = require('../model/repository');
+const Authenticate = require('../model/authenticate');
 
 const contentsStorage = `${process.env.REPOSITORY_DATA_PATH}/contents`;
 const spaceStorage = `${process.env.REPOSITORY_DATA_PATH}/spaces`;

@@ -1,4 +1,3 @@
-require('dotenv').config({ path: './rep.env' });
 const i18next = require('i18next');
 
 const MAX_FILE_SIZE = process.env.MAX_FILE_SIZE || 512;
