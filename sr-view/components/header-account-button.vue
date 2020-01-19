@@ -4,8 +4,8 @@
       <font-awesome-icon :icon="['fa', 'user-circle']" class="text-white" />
     </template>
     <b-dropdown-item>
-      <font-awesome-icon icon="database" />
-      {{ strategy.username }}
+      <font-awesome-icon :icon="strategy" />
+      {{ username }}
     </b-dropdown-item>
     <hr class="my-1" />
     <b-dropdown-item @click="logout()">
@@ -19,24 +19,26 @@
 export default {
   computed: {
     strategy() {
-      const retVal = {};
+      let retVal = null;
       const strategy = this.$store.state.auth.strategy;
       if (strategy === 'github') {
-        retVal.icon = ['fab', 'github'];
+        retVal = ['fab', 'github'];
       } else if (strategy === 'facebook') {
-        retVal.icon = ['fab', 'facebook'];
-      } else if (strategy === 'local') {
-        retVal.icon = ['fas', 'database'];
-      }
-      const name = this.$store.state.auth.username;
-      if (strategy === 'local') {
-        if (this.$i18n.locale === 'ja') {
-          retVal.username = name.ja;
-        } else {
-          retVal.username = name.en;
-        }
+        retVal = ['fab', 'facebook'];
       } else {
-        retVal.username = name;
+        retVal = ['fas', 'database'];
+      }
+      return retVal;
+    },
+    username() {
+      let retVal = '';
+      const name = this.$store.state.auth.username;
+      if (name != null) {
+        if (this.$i18n.locale === 'ja') {
+          retVal = name.ja;
+        } else {
+          retVal = name.en;
+        }
       }
       return retVal;
     }
