@@ -1,11 +1,11 @@
 <template>
-  <div>
+  <div v-if="selectedSpace.image !== ''">
     <b-nav-item @click="showSpaceDialog()">
       <b-img
         :src="'data:image/png;base64,' + selectedSpace.image"
-        width="36"
-        height="30"
-        class="py-1 px-2 space-icon rounded-sm"
+        width="38"
+        height="32"
+        class="space-icon rounded-sm p-1"
       />
       <small class="text-white pb-1">
         {{ selectedSpace.name }}
@@ -43,5 +43,6 @@ export default {
 <style scoped>
 .space-icon {
   background-color: lightsteelblue;
+  border: 0px;
 }
 </style>
