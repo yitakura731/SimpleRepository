@@ -83,15 +83,14 @@ export default {
           name: 'Git Hub',
           color: '#333',
           icon: ['fab', 'github'],
-          action: `api/auth/login/github`
+          action: `/${process.env.AUTH_APP_NAME}/api/auth/login/github`
         },
         {
           key: 'facebook',
           name: 'facebook',
           color: '#3C5A99',
           icon: ['fab', 'facebook'],
-          action: `
-          api/auth/login/facebook`
+          action: `/${process.env.AUTH_APP_NAME}/api/auth/login/facebook`
         }
       ];
     },
