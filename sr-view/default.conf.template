@@ -14,11 +14,15 @@ server {
     }
 
     location /SimpleRepository/api {
+       proxy_read_timeout 300s;
+       proxy_connect_timeout 75s;
        proxy_pass ${REPOSITORY_URL};
     }
 
     location /SimpleRepository/ {
         root   /usr/share/nginx/html;
+        proxy_read_timeout 300s;
+        proxy_connect_timeout 75s;
         index  index.html index.htm;
     }
 }
