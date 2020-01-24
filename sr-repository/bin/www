@@ -37,7 +37,7 @@ if (process.env.REPOSITORY_HTTPS.toUpperCase() === 'TRUE') {
 server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
-
+server.setTimeout(60000);
 /**
  * Normalize a port into a number, string, or false.
  */

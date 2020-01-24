@@ -113,7 +113,11 @@ export default {
           password: this.password
         })
         .catch(e => {
-          this.error = e.response.data.info.message;
+          if (e.response.data.info && e.response.data.info.message) {
+            this.error = e.response.data.info.message;
+          } else {
+            this.error = e.response;
+          }
         });
     }
   }
