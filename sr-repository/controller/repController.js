@@ -183,7 +183,7 @@ router.get(
             .contentType('application/pdf')
             .send(content.file);
         } else if (content.mimetype === 'image/jpeg') {
-          const base64Image = new Buffer(content.file, 'binary').toString('base64');
+          const base64Image = Buffer.from(content.file, 'binary').toString('base64');
           res
             .status(200)
             .contentType('image/jpeg')

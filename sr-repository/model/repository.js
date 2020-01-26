@@ -5,12 +5,16 @@ const fse = require('fs-extra');
 const Puid = require('puid');
 const i18next = require('i18next');
 const Jimp = require('jimp');
+const log4js = require('log4js');
 const database = require('./database');
 const util = require('../helper/util');
 
 const Space = mongoose.model('spaces');
 const Document = mongoose.model('documents');
 const Tag = mongoose.model('tags');
+
+const logger = log4js.getLogger();
+logger.level = process.env.LOGLEVEL || 'error';
 
 module.exports = class Repository {
   constructor(docFileRoot, spaceFileRoot) {
@@ -38,10 +42,12 @@ module.exports = class Repository {
     }
     util.checkFileSize(file.size);
     util.checkSupportedFormat(file.mimetype);
+    logger.debug('postDocument: check request argument');
     const ext = util.getExtent(file.mimetype);
     const puid = new Puid(false);
     const filename = `${puid.generate()}.${ext}`;
     await fse.writeFile(path.join(this.docFileRoot, filename), file.buffer);
+    logger.debug('postDocument: store primary file');
     let thumbnailName = null;
     if (file.mimetype === 'image/jpeg') {
       thumbnailName = `${puid.generate()}.jpg`;
@@ -51,6 +57,7 @@ module.exports = class Repository {
     } else {
       thumbnailName = 'pdfNail.png';
     }
+    logger.debug('postDocument: store thumnail file');
     const document = new Document({
       _id: new mongoose.Types.ObjectId(),
       name,
@@ -63,6 +70,7 @@ module.exports = class Repository {
       mimetype: file.mimetype
     });
     await document.save();
+    logger.debug('postDocument: save metadata to database');
     return document;
   }
 

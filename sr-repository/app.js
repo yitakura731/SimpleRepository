@@ -11,9 +11,13 @@ const boom = require('boom');
 const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerUi = require('swagger-ui-express');
 const passport = require('passport');
+const log4js = require('log4js');
 
 const database = require('./model/database');
 const repController = require('./controller/repController');
+
+const logger = log4js.getLogger();
+logger.level = process.env.LOGLEVEL || 'error';
 
 const app = express();
 
@@ -70,6 +74,7 @@ app.use((req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
+  logger.error(err);
   if (boom.isBoom(err)) {
     res.status(err.output.statusCode).json(err.output.payload);
   } else if (err instanceof TypeError) {
