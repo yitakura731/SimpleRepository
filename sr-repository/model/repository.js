@@ -42,22 +42,23 @@ module.exports = class Repository {
     }
     util.checkFileSize(file.size);
     util.checkSupportedFormat(file.mimetype);
-    logger.debug('postDocument: check request argument');
+    logger.debug('postDocument: end check request argument');
     const ext = util.getExtent(file.mimetype);
     const puid = new Puid(false);
     const filename = `${puid.generate()}.${ext}`;
     await fse.writeFile(path.join(this.docFileRoot, filename), file.buffer);
-    logger.debug('postDocument: store primary file');
+    logger.debug('postDocument: end store primary file');
     let thumbnailName = null;
     if (file.mimetype === 'image/jpeg') {
       thumbnailName = `${puid.generate()}.jpg`;
       const thumbnai = await Jimp.read(path.join(this.docFileRoot, filename));
       await thumbnai.resize(100, 100);
       await thumbnai.write(path.join(this.docFileRoot, thumbnailName));
+      logger.debug('postDocument: end store jpeg thumnail file');
     } else {
       thumbnailName = 'pdfNail.png';
     }
-    logger.debug('postDocument: store thumnail file');
+    logger.debug('postDocument: start save metadata to database');
     const document = new Document({
       _id: new mongoose.Types.ObjectId(),
       name,
@@ -70,7 +71,7 @@ module.exports = class Repository {
       mimetype: file.mimetype
     });
     await document.save();
-    logger.debug('postDocument: save metadata to database');
+    logger.debug('postDocument: end save metadata');
     return document;
   }
 
