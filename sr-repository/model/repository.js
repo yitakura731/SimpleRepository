@@ -51,16 +51,12 @@ module.exports = class Repository {
     let thumbnailName = null;
     if (file.mimetype === 'image/jpeg') {
       thumbnailName = `${puid.generate()}.jpg`;
-      try {
-        const thumbnai = await Jimp.read(path.join(this.docFileRoot, filename));
-        logger.debug(`postDocument: read jpeg thumnail file ${thumbnailName}`);
-        await thumbnai.resize(100, 100);
-        logger.debug(`postDocument: resize jpeg thumnail file`);
-        await thumbnai.write(path.join(this.docFileRoot, thumbnailName));
-        logger.debug('postDocument: end store jpeg thumnail file');
-      } catch (err) {
-        logger.debug(err);
-      }
+      const thumbnai = await Jimp.read(path.join(this.docFileRoot, filename));
+      logger.debug(`postDocument: read jpeg thumnail file ${thumbnailName}`);
+      await thumbnai.resize(100, 100);
+      logger.debug(`postDocument: resize jpeg thumnail file`);
+      await thumbnai.writeAsync(path.join(this.docFileRoot, thumbnailName));
+      logger.debug('postDocument: end store jpeg thumnail file');
     } else {
       thumbnailName = 'pdfNail.png';
     }

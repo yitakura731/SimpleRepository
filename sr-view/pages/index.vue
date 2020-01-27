@@ -32,7 +32,13 @@
             </b-btn>
           </div>
         </b-card>
-        <b-alert v-if="error" show variant="danger" class="mt-1 text-center">
+        <b-alert
+          v-if="error"
+          show
+          variant="danger"
+          class="mt-1 text-center"
+          dismissible
+        >
           {{ error }}
         </b-alert>
       </b-col>
@@ -115,6 +121,8 @@ export default {
         .catch(e => {
           if (e.response.data.info && e.response.data.info.message) {
             this.error = e.response.data.info.message;
+          } else if (e.response.data) {
+            this.error = e.response.data;
           } else {
             this.error = e.response;
           }

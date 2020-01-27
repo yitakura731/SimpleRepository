@@ -19,12 +19,6 @@
       {{ message }}
     </h5>
 
-    <h6 class="my-3">
-      <div class="stack-trace-area">
-        {{ stack }}
-      </div>
-    </h6>
-
     <template v-slot:modal-footer="{ ok }" class="w-100">
       <b-button class="w-100" variant="outline-secondary" @click="ok()">
         {{ $t('close') }}
@@ -38,8 +32,7 @@ export default {
   data() {
     return {
       title: 'Error',
-      message: '',
-      stack: ''
+      message: ''
     };
   },
   mounted() {
@@ -54,7 +47,6 @@ export default {
       } else {
         this.message = error.message;
       }
-      this.stack = error.stack;
       this.$refs.errorDialog.show();
     });
   }
