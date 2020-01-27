@@ -96,10 +96,10 @@ app.use((err, req, res, next) => {
 database
   .connect()
   .then(() => {
-    log4jsLogger.ingo('Connected to mongodb successfully');
+    log4jsLogger.info('Connected to mongodb successfully');
   })
   .catch(err => {
-    log4jsLogger.ingo(err);
+    log4jsLogger.info(err);
   });
 
 module.exports = app;
