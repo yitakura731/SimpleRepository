@@ -17,7 +17,7 @@ FROM nginx as production-stage
 COPY  --from=build-stage ./src/dist/ /usr/share/nginx/html/SimpleRepository
 
 # NGINX設定ファイル
-COPY ./default.conf.template /etc/nginx/conf.d/default.conf.template
+COPY ./default.conf.ssl.template /etc/nginx/conf.d/default.conf.template
 
 # 起動
-CMD ["/bin/bash", "-c", "envsubst '$$REPOSITORY_URL' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
+CMD ["/bin/bash", "-c", "envsubst '$$AUTH_URL$$REPOSITORY_URL$$SSL_CERT_PATH$$SSL_KEY_PATH' < /etc/nginx/conf.d/default.conf.template > /etc/nginx/conf.d/default.conf && nginx -g 'daemon off;'"]
