@@ -83,8 +83,12 @@ module.exports = class Repository {
             .writeAsync(path.join(this.docFileRoot, thumbnailFileName));
         })
         .then(resp => {
-          logger.debug(`end create thumnail '${thumbnailFileName}'`);
+          logger.debug(`end create thumbnail '${thumbnailFileName}'`);
           return Promise.resolve(thumbnailFileName);
+        })
+        .catch(err => {
+          logger.debug(`error create thumbnail '${err}'`);
+          return Promise.reject(err);
         });
     }
     return Promise.resolve('pdfNail.png');
