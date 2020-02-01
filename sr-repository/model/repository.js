@@ -29,6 +29,8 @@ module.exports = class Repository {
       fse.mkdirsSync(spaceFileRoot);
     }
     this.spaceFileRoot = spaceFileRoot;
+
+    this.puid = new Puid(false);
   }
 
   async postDocumet(user, spaceId, tagId, name, file) {
@@ -42,56 +44,57 @@ module.exports = class Repository {
     }
     util.checkFileSize(file.size);
     util.checkSupportedFormat(file.mimetype);
-    logger.debug('postDocument: end check request argument');
+    logger.debug('end check request argument');
 
     const ext = util.getExtent(file.mimetype);
-    const puid = new Puid(false);
-    const filename = `${puid.generate()}.${ext}`;
+    const filename = `${this.puid.generate()}.${ext}`;
     await fse.writeFile(path.join(this.docFileRoot, filename), file.buffer);
-    logger.debug('postDocument: end store primary');
+    logger.debug('end store primary');
 
-    let thumbnailName = null;
-    if (file.mimetype === 'image/jpeg') {
-      thumbnailName = `${puid.generate()}.jpg`;
-      const thumbnai = await Jimp.read(path.join(this.docFileRoot, filename));
-      logger.debug(`postDocument: end read thumnail '${thumbnailName}'`);
-
-      await thumbnai.resize(100, 100).catch(err => {
-        logger.debug(`postDocument: error resize thumnail '${err}'`);
+    return this.createThumbnail(file.mimetype, filename)
+      .then(thumbnailName => {
+        const document = new Document({
+          _id: new mongoose.Types.ObjectId(),
+          name,
+          userId: user.userId,
+          tagId,
+          createDate: new Date(),
+          spaceId,
+          filename,
+          thumbnailName,
+          mimetype: file.mimetype
+        });
+        return document.save();
+      })
+      .catch(err => {
+        logger.debug(`error: '${err}'`);
+        return Promise.reject(err);
       });
-      logger.debug(`postDocument: end resize thumnail`);
+  }
 
-      await thumbnai.writeAsync(path.join(this.docFileRoot, thumbnailName)).catch(err => {
-        logger.debug(`postDocument: error store thumnail '${err}'`);
-      });
-      logger.debug('postDocument: end store thumnail');
-    } else {
-      thumbnailName = 'pdfNail.png';
+  async createThumbnail(mimetype, primaryFileName) {
+    if (mimetype === 'image/jpeg') {
+      const thumbnailFileName = `${this.puid.generate()}.jpg`;
+      return Jimp.read(path.join(this.docFileRoot, primaryFileName))
+        .then(thumbnail => {
+          logger.debug(`end load primary '${primaryFileName}' for thumbnail`);
+          return thumbnail
+            .resize(100, 100)
+            .writeAsync(path.join(this.docFileRoot, thumbnailFileName));
+        })
+        .then(resp => {
+          logger.debug(`end create thumnail '${thumbnailFileName}'`);
+          return Promise.resolve(thumbnailFileName);
+        });
     }
-
-    const document = new Document({
-      _id: new mongoose.Types.ObjectId(),
-      name,
-      userId: user.userId,
-      tagId,
-      createDate: new Date(),
-      spaceId,
-      filename,
-      thumbnailName,
-      mimetype: file.mimetype
-    });
-    await document.save();
-    logger.debug('postDocument: end save metadata');
-
-    return document;
+    return Promise.resolve('pdfNail.png');
   }
 
   async postSpace(user, name, file) {
     util.checkEmpty(user, i18next.t('nullUser'));
     util.checkEmpty(name, i18next.t('nullName'));
     if (file != null) {
-      const puid = new Puid(false);
-      const storeFileName = `${puid.generate()}.png`;
+      const storeFileName = `${this.puid.generate()}.png`;
       return fse.writeFile(path.join(this.spaceFileRoot, storeFileName), file.buffer).then(() => {
         const space = new Space({
           _id: new mongoose.Types.ObjectId(),
