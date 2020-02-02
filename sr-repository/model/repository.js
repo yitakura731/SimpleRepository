@@ -51,7 +51,7 @@ module.exports = class Repository {
     await fse.writeFile(path.join(this.docFileRoot, filename), file.buffer);
     logger.debug('end store primary');
 
-    return this.createThumbnail(file.mimetype, filename)
+    return this.createThumbnail(file.mimetype, file.buffer)
       .then(thumbnailName => {
         const document = new Document({
           _id: new mongoose.Types.ObjectId(),
@@ -72,12 +72,12 @@ module.exports = class Repository {
       });
   }
 
-  async createThumbnail(mimetype, primaryFileName) {
+  async createThumbnail(mimetype, primaryFileBuffer) {
     if (mimetype === 'image/jpeg') {
       const thumbnailFileName = `${this.puid.generate()}.jpg`;
-      return Jimp.read(path.join(this.docFileRoot, primaryFileName))
+      return Jimp.read(primaryFileBuffer)
         .then(thumbnail => {
-          logger.debug(`end load primary '${primaryFileName}' for thumbnail`);
+          logger.debug(`read primary buffer for thumbnail`);
           return thumbnail
             .resize(100, 100)
             .writeAsync(path.join(this.docFileRoot, thumbnailFileName));
