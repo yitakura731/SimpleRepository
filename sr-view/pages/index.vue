@@ -6,7 +6,27 @@
     <p class="subtitle-area">
       {{ $t('subtitle') }}
     </p>
-    <b-row align-h="center" align-v="center" class="pt-3">
+    <b-row align-h="center" align-v="center" class="pb-4">
+      <b-col md="4 text-center">
+        <b-link
+          href="https://github.com/yitakura731/SimpleRepository"
+          class="text-white link-area"
+        >
+          <font-awesome-icon :icon="['fab', 'github']" />
+          Simple Repository
+        </b-link>
+      </b-col>
+      <b-col md="4 text-center">
+        <b-link
+          href="https://github.com/yitakura731/SimpleAuth"
+          class="text-white link-area"
+        >
+          <font-awesome-icon :icon="['fab', 'github']" />
+          Simple Auth
+        </b-link>
+      </b-col>
+    </b-row>
+    <b-row align-h="center" align-v="center" class="pt-3 ">
       <b-col md="4">
         <b-card class="card-area m-2">
           <b-form-group :label="$t('localId')" label-size="sm">
@@ -145,6 +165,12 @@ export default {
   font-size: 40px;
   color: white;
   text-align: center;
+  font-family: Tahoma;
+}
+
+.link-area {
+  display: block;
+  font-size: 24px;
   font-family: Tahoma;
 }
 

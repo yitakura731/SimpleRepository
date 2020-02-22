@@ -1,44 +1,57 @@
 # Simple Repository
-* This is a sample application for my own study
-* Store pdf or jpeg with tagging, at a specified location
-* View registerd file via browser
+This is a sample application for my own study. This application is able to store pdf or jpeg file with tagging at a specified location, and view registerd file via browser
 
-## Architecture
-Simple Reposioty is composed of the following components.
+# Architecture
+Simple Repository is one of the microservice which offer repository service. [Simple Auth](https://github.com/yitakura731/SimpleAuth) is another microservice which offer authentication service.  
+Simple Repository is composed of three components.
 
-<img src=./capture/architect.jpg width="800">
+<img src=./capture/architect.png width="700">
 
-* All component is dockernized.
+All components are dockernized and published at the docer-hub.
+* [Simple Repository web](https://hub.docker.com/repository/docker/yitakura731/simple-repository-web)
 
-### Database
-- Save meta data of the file in JSON format
-- Using mongo DB
-### Repository
-- Offer REST API of the repository to client
-- Using express for application framework
-- Using swagger for REST api documentation viewer
-### Web Server
-- Publish web page
-- Using Nginx for web server
-- Using Nuxt for front end js framework
-- Using BootstrapVue for css framework
+* [Simple Repository rep](https://hub.docker.com/repository/docker/yitakura731/simple-repository-rep)
 
-## Overview of this application 
-### Login 
-<img src=./capture/login.jpg width="800">
+* [Simple Repository db](https://hub.docker.com/repository/docker/yitakura731/simple-repository-db)
+
+## Database
+- Save a meta data of the stored file in JSON format
+- Use mongo DB
+## Repository
+- Offer REST API of the repository operation to client
+- Use express.js for node.js backend framework
+- Use swagger for REST api documentation viewer
+## Web Server
+- This is a web server for publishing single page application and SSL end point
+- Use Nginx for web server
+- Use Nuxt for frontend js framework
+- Use BootstrapVue for css framework
+
+# Overview of this application 
+## Login 
+<img src=./capture/cap05.png width="600">  
 
 * Sign in with local account or social account (Github and Facebook)
 
-### Viewer
-<img src=./capture/home.jpg width="800">
+## Viewer
+* Thumbnails of the jpeg or pdf are listed at the left side of the viewer
+* Selected jpeg or pdf is shown in the right side of the viewer
 
-* Registerd pdfs/images are listed at the left area
-* Selected pdfs/image is shown in the right area
+### Jpeg Viewer
+<img src=./capture/cap01.png width="600">
+
+### PDF Viewer
+<img src=./capture/cap02.png width="600">  
+
+## Responsive view
+
+<img src=./capture/cap06.png width="200" height="380">
+<img src=./capture/cap03.png width="200" height="380">
+<img src=./capture/cap04.png width="200" height="380">
+
 
 ### API document
-<img src=./capture/api-documentation.png width="800">
-
-* Use swagger for repository api documentation framework
+<img src=./capture/api-doc.png width="600">
 
 ## Get start
 
