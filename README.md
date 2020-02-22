@@ -45,10 +45,7 @@ All components are dockernized and published at the docer-hub.
 
 ## Responsive view
 
-<img src=./capture/cap06.png width="170" height="340">
-<img src=./capture/cap03.png width="170" height="340">
-<img src=./capture/cap04.png width="170" height="340">
-
+<img src=./capture/cap07.png width="600">
 
 ### API document
 <img src=./capture/api-doc.png width="600">
