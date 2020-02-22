@@ -2,8 +2,9 @@
 This is a sample application for my own study. This application is able to store pdf or jpeg file with tagging at a specified location, and view registerd file via browser
 
 # Architecture
-Simple Repository is one of the microservice which offer repository service. [Simple Auth](https://github.com/yitakura731/SimpleAuth) is another microservice which offer authentication service.  
-Simple Repository is composed of three components.
+* Simple Repository is one of the microservice which offer repository service. 
+* [Simple Auth](https://github.com/yitakura731/SimpleAuth) is another microservice which offer authentication service.  
+* Simple Repository is composed of three components.
 
 <img src=./capture/architect.png width="700">
 
